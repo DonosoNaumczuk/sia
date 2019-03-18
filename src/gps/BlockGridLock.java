@@ -42,4 +42,16 @@ public class BlockGridLock {
     public String toString() {
         return String.valueOf(id);
     }
+
+    public Point getBegin() {
+        return begin;
+    }
+
+    public Point getEnd() {
+        return end;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

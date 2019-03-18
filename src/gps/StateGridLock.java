@@ -16,6 +16,10 @@ public class StateGridLock implements State {
         return false;
     }
 
+    public BoardGridLock getBoard() {
+        return board;
+    }
+
     @Override
     public String getRepresentation() {
         return board.toString();
