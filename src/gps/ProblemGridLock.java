@@ -1,3 +1,5 @@
+package gps;
+
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
