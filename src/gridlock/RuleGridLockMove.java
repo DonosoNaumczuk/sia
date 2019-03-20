@@ -2,15 +2,14 @@ package gridlock;
 
 import gps.api.Rule;
 import gps.api.State;
-
 import java.util.Optional;
 import gridlock.BoardGridLock.BlockGridLock;
 
 
 public class RuleGridLockMove implements Rule {
 
-    BlockGridLock block;
-    Direction direction;
+    private BlockGridLock block;
+    private Direction direction;
 
     public RuleGridLockMove(BlockGridLock block, Direction direction) {
         this.block     = block;
@@ -24,28 +23,31 @@ public class RuleGridLockMove implements Rule {
 
     @Override
     public String getName() {
-        String aux = "Move block #" + block.toString() + " 1 block to ";
+        String aux = "Move block #" + block.toString() + " one cell ";
+
         switch (direction) {
             case RIGHT:
-                aux = aux + "right";
+                aux += "to the right";
                 break;
             case LEFT:
-                aux = aux + "left";
+                aux += "to the left";
                 break;
             case DOWN:
-                aux = aux + "down";
+                aux += "down";
                 break;
             case UP:
-                aux = aux + "up";
+                aux += "up";
                 break;
         }
+
         return aux;
     }
 
     @Override
     public Optional<State> apply(State state) {
         if (state instanceof StateGridLock)
-            return Optional.of(((StateGridLock) state).move(block, direction));
+            return Optional.of(new StateGridLock((StateGridLock) state, block, direction));
+
         return Optional.empty();
     }
 }

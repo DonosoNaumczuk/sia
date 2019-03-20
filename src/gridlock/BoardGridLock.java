@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import static gridlock.Direction.*;
 
 public class BoardGridLock {
 
@@ -14,10 +15,10 @@ public class BoardGridLock {
 
     /**
      * Constructor to initialize the first gridlock board
-     * @param boardFile path to the file that have a representation of the board
+     * @param boardFile path to the file that have a JSON representation of the board
      */
     public BoardGridLock(Path boardFile) {
-        //TODO: fill board using a given file
+        //TODO: fill board using a given JSON file
     }
 
     /**
@@ -45,6 +46,11 @@ public class BoardGridLock {
         blocks.add(new BlockGridLock(7, new Point(0, 5), new Point(2, 5)));
     }
 
+    public BoardGridLock move(BlockGridLock block, Direction direction) {
+        //TODO: return a new board with the given movement done. Take in account that it has to be an IMMUTABLE board!
+        return null;
+    }
+
     public BlockGridLock getGoalBlock() {
         return goalBlock;
     }
@@ -57,9 +63,15 @@ public class BoardGridLock {
         return exit;
     }
 
-    public BoardGridLock move(BlockGridLock block, Direction direction) {
-        //TODO: return a new board with the given movement done
-        return null;
+    @Override
+    public int hashCode() {
+        return board.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        //TODO: do a deep comparison between boards, that is different than board.equals(obj)!
+        return board.equals(obj);
     }
 
     /**
@@ -69,17 +81,30 @@ public class BoardGridLock {
         private Point begin;
         private Point end;
         private Direction firstDirection;
-        private Direction secondDirection; //TODO: find a better way to store directions, this is temporary
+        private Direction secondDirection;
         private int id;
 
         BlockGridLock(int id, Point begin, Point end) {
             if (id < 0)
                 throw new IllegalArgumentException("Block id can't be negative");
 
-            this.id = id;
-            this.begin = begin;
-            this.end = end;
-            //TODO: remember to initialize directions looking at what coordinate difference is zero at (begin - end)
+            this.id     = id;
+            this.begin  = begin;
+            this.end    = end;
+            setDirections();
+        }
+
+        private void setDirections() {
+            if (begin.x - end.x == 0) {
+                firstDirection  = RIGHT;
+                secondDirection = LEFT;
+            }
+            else if (begin.y - end.y == 0) {
+                firstDirection  = UP;
+                secondDirection = DOWN;
+            }
+            else
+                throw new RuntimeException("Invalid block coordinates");
         }
 
         @Override
@@ -104,10 +129,6 @@ public class BoardGridLock {
         @Override
         public String toString() {
             return String.valueOf(id);
-        }
-
-        public int getId() {
-            return id;
         }
 
         public Point getEnd() {

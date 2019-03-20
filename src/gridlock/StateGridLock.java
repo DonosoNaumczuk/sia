@@ -11,6 +11,10 @@ public class StateGridLock implements State {
         this.board = board;
     }
 
+    public StateGridLock(StateGridLock state, BlockGridLock block, Direction direction) {
+        this.board = state.board.move(block, direction);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null)
@@ -34,10 +38,8 @@ public class StateGridLock implements State {
         return board.toString();
     }
 
-    StateGridLock move(BlockGridLock block, Direction direction) { //TODO: constuctor
-        //StateGridLock aux = this.clone();//TODO:exeption
-        //TODO: aux.board.move(block, direction);
-        //return aux;
-        return null;
+    @Override
+    public int hashCode() {
+        return board.hashCode();
     }
 }
