@@ -6,12 +6,13 @@ import java.awt.*;
  * Block pieces that fill the gridlock board
  */
 public class BlockGridLock {
+
     private Point begin;
     private Point end;
     private int id;
 
     public BlockGridLock(int id, Point begin, Point end) {
-        if(id < 0)
+        if (id < 0)
             throw new IllegalArgumentException("Block id can't be negative");
 
         this.id = id;
@@ -21,13 +22,13 @@ public class BlockGridLock {
 
     @Override
     public boolean equals(Object object) {
-        if(object == null)
+        if (object == null)
             return false;
 
-        if(object == this)
+        if (object == this)
             return true;
 
-        if(object instanceof BlockGridLock)
+        if (object instanceof BlockGridLock)
             return ((BlockGridLock) object).id == this.id;
 
         return false;

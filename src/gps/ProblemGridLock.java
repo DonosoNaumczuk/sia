@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.List;
 
 public class ProblemGridLock implements Problem {
+
     private List<Rule> rules;
     private StateGridLock initState;
 

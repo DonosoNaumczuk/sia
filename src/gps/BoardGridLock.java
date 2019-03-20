@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class BoardGridLock {
+
     private int[][] board;
     private Point exit;
     private BlockGridLock goalBlock;

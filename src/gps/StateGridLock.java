@@ -3,6 +3,7 @@ package gps;
 import gps.api.State;
 
 public class StateGridLock implements State {
+
     private BoardGridLock board;
 
     public StateGridLock(BoardGridLock board) {
@@ -11,13 +12,13 @@ public class StateGridLock implements State {
 
     @Override
     public boolean equals(Object object) {
-        if(object == null)
+        if (object == null)
             return false;
 
-        if(object == this)
+        if (object == this)
             return true;
 
-        if(object instanceof StateGridLock)
+        if (object instanceof StateGridLock)
             return ((StateGridLock) object).board.equals(this.board);
 
         return false;

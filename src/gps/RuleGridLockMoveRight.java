@@ -8,6 +8,7 @@ import java.util.Optional;
 import static gps.Direction.RIGHT;
 
 public class RuleGridLockMoveRight implements Rule {
+
     BlockGridLock block;
 
     @Override
@@ -22,7 +23,7 @@ public class RuleGridLockMoveRight implements Rule {
 
     @Override
     public Optional<State> apply(State state) {
-        if(state.getClass() == StateGridLock.class)
+        if (state.getClass() == StateGridLock.class)
             return Optional.of(((StateGridLock) state).move(block, RIGHT));
         return Optional.empty();
     }

@@ -6,11 +6,8 @@ import gps.api.State;
 public class GPSNode {
 
 	private State state;
-
 	private GPSNode parent;
-
 	private Integer cost;
-
 	private Rule generationRule;
 
 	public GPSNode(State state, Integer cost, Rule generationRule) {
