@@ -20,15 +20,15 @@ public class BlockGridLock {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(obj == null)
+    public boolean equals(Object object) {
+        if(object == null)
             return false;
 
-        if(obj == this)
+        if(object == this)
             return true;
 
-        if(obj instanceof BlockGridLock)
-            return ((BlockGridLock) obj).id == this.id;
+        if(object instanceof BlockGridLock)
+            return ((BlockGridLock) object).id == this.id;
 
         return false;
     }

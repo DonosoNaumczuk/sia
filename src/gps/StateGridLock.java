@@ -10,9 +10,16 @@ public class StateGridLock implements State {
     }
 
     @Override
-    boolean equals(Object state) {
-        if(state.getClass() == StateGridLock.class)
-            return this.board.equals((StateGridLock)state.board);
+    public boolean equals(Object object) {
+        if(object == null)
+            return false;
+
+        if(object == this)
+            return true;
+
+        if(object instanceof StateGridLock)
+            return ((StateGridLock) object).board.equals(this.board);
+
         return false;
     }
 
@@ -28,6 +35,7 @@ public class StateGridLock implements State {
     StateGridLock move(BlockGridLock block, Direction direction) { //TODO: constuctor
         //StateGridLock aux = this.clone();//TODO:exeption
         //TODO: aux.board.move(block, direction);
-        return aux;
+        //return aux;
+        return null;
     }
 }

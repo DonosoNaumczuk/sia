@@ -28,9 +28,6 @@ public class ProblemGridLock implements Problem {
         BlockGridLock goalBlock = stateGridLock.getBoard().getGoalBlock();
         Point exit = stateGridLock.getBoard().getExit();
 
-        if(goalBlock.getBegin().equals(exit) || goalBlock.getEnd().equals(exit))
-            return true;
-
-        return false;
+        return goalBlock.getBegin().equals(exit) || goalBlock.getEnd().equals(exit);
     }
 }

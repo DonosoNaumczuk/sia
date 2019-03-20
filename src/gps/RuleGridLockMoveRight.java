@@ -11,7 +11,7 @@ public class RuleGridLockMoveRight implements Rule {
     BlockGridLock block;
 
     @Override
-    Integer getCost() {
+    public Integer getCost() {
         return 1;
     }
 
@@ -23,7 +23,7 @@ public class RuleGridLockMoveRight implements Rule {
     @Override
     public Optional<State> apply(State state) {
         if(state.getClass() == StateGridLock.class)
-            return Optional.of(((StateGridLock) state).move(block, RIGHT)):
+            return Optional.of(((StateGridLock) state).move(block, RIGHT));
         return Optional.empty();
     }
 }
