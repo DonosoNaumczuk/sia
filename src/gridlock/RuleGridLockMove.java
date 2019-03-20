@@ -4,6 +4,8 @@ import gps.api.Rule;
 import gps.api.State;
 
 import java.util.Optional;
+import gridlock.BoardGridLock.BlockGridLock;
+
 
 public class RuleGridLockMove implements Rule {
 
@@ -22,7 +24,7 @@ public class RuleGridLockMove implements Rule {
 
     @Override
     public String getName() {
-        String aux = "Move block " + block.toString() + " 1 block to ";
+        String aux = "Move block #" + block.toString() + " 1 block to ";
         switch (direction) {
             case RIGHT:
                 aux = aux + "right";

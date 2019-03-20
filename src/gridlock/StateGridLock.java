@@ -1,6 +1,7 @@
 package gridlock;
 
 import gps.api.State;
+import gridlock.BoardGridLock.BlockGridLock;
 
 public class StateGridLock implements State {
 
