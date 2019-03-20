@@ -48,6 +48,6 @@ public class RuleGridLockMove implements Rule {
         if (state instanceof StateGridLock)
             return Optional.of(new StateGridLock((StateGridLock) state, block, direction));
 
-        return Optional.empty();
+        return Optional.empty(); //TODO: I think this have to be a RuntimeException instead of an Optional.empty()
     }
 }

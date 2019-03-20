@@ -19,7 +19,7 @@ public class ProblemGridLock implements Problem {
 
         for (BlockGridLock block : initState.getBoard().getBlocks()) {
             rules.add(new RuleGridLockMove(block, block.getFirstDirection()));
-            rules.add(new RuleGridLockMove(block, block.getSecondDirection())); //TODO: check if exist a better way to get directions
+            rules.add(new RuleGridLockMove(block, block.getSecondDirection()));
         }
     }
 
