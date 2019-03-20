@@ -2,6 +2,7 @@ package gps;
 
 import java.awt.*;
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BoardGridLock {
@@ -33,6 +34,7 @@ public class BoardGridLock {
 
         exit = new Point(5, 2);
         goalBlock = new BlockGridLock(0, new Point(2, 1), new Point(2, 2));
+        blocks = new LinkedList<>();
         blocks.add(goalBlock);
         blocks.add(new BlockGridLock(1, new Point(0, 0), new Point(0, 1)));
         blocks.add(new BlockGridLock(2, new Point(1, 0), new Point(3, 0)));
@@ -40,15 +42,11 @@ public class BoardGridLock {
         blocks.add(new BlockGridLock(4, new Point(5, 2), new Point(5, 4)));
         blocks.add(new BlockGridLock(5, new Point(1, 3), new Point(3, 3)));
         blocks.add(new BlockGridLock(6, new Point(4, 4), new Point(4, 5)));
-        blocks.add(new BlockGridLock(7, new Point(0, ), new Point(2, )));
+        blocks.add(new BlockGridLock(7, new Point(0, 5), new Point(2, 5)));
     }
 
     public BlockGridLock getGoalBlock() {
         return goalBlock;
-    }
-
-    public int[][] getBoard() {
-        return board;
     }
 
     public List<BlockGridLock> getBlocks() {
