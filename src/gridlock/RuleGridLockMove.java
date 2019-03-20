@@ -1,4 +1,4 @@
-package gps;
+package gridlock;
 
 import gps.api.Rule;
 import gps.api.State;
@@ -8,7 +8,7 @@ import java.util.Optional;
 public class RuleGridLockMove implements Rule {
 
     BlockGridLock block;
-    Direction     direction;
+    Direction direction;
 
     public RuleGridLockMove(BlockGridLock block, Direction direction) {
         this.block     = block;

@@ -1,4 +1,4 @@
-package gps;
+package gridlock;
 
 import gps.api.Problem;
 import gps.api.Rule;
