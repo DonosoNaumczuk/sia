@@ -33,7 +33,7 @@ public class BoardGridLock {
                              { 3, -1, -1, -1,  6,  6},  // 4
                              { 3, -1,  4,  4,  4, -1}}; // 5 (^ X)
 
-        exit = new Point(5, 2);
+        exit = new Point(2, 5);
         goalBlock = new BlockGridLock(0, new Point(2, 1), new Point(2, 2));
         blocks = new LinkedList<>();
         blocks.add(goalBlock);
