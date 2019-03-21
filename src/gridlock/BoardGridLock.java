@@ -51,6 +51,25 @@ public class BoardGridLock {
         return null;
     }
 
+    public boolean canMove(BlockGridLock block, Direction direction) {
+        //TODO: return if the block can be moved in the given direction
+        if (block.getBegin().getX() == block.getEnd().getX()) {
+            if (direction == UP || direction == DOWN)
+                return false;
+
+            return true; //TODO: check if can move the given in the give vertical direction
+
+        }
+        else if (block.getBegin().getY() == block.getEnd().getY()) {
+            if (direction == RIGHT || direction == LEFT)
+                return false;
+
+            return true; //TODO: check if can move the given in the give horizontal direction
+        }
+        else
+            throw new IllegalArgumentException("The given block has an invalid shape");
+    }
+
     public BlockGridLock getGoalBlock() {
         return goalBlock;
     }
@@ -65,13 +84,45 @@ public class BoardGridLock {
 
     @Override
     public int hashCode() {
-        return board.hashCode();
+        /* TODO: iterate over board and hash every int as a single object, then hash the exit too
+        ** TODO: or hash the List of blocks and the exit point
+        */
+        return board.hashCode() * exit.hashCode();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        //TODO: do a deep comparison between boards, that is different than board.equals(obj)!
-        return board.equals(obj);
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+
+        if (object == this)
+            return true;
+
+        if (!(object instanceof BoardGridLock)) {
+            return false;
+        }
+
+        BoardGridLock otherBoard = (BoardGridLock) object;
+
+        return exit.equals(otherBoard.exit) && equalBoard(otherBoard.board);
+    }
+
+    private boolean equalBoard(int[][] otherBoard) {
+        if (otherBoard == null)
+            return false;
+
+        if (otherBoard.length != board.length)
+            return false;
+
+        if (otherBoard[0].length != board[0].length)
+            return false;
+
+        for (int x = 0; x < board.length; x++)
+            for (int y = 0; y < board[x].length; y++)
+                if (board[x][y] != otherBoard[x][y])
+                    return false;
+
+        return true;
     }
 
     /**

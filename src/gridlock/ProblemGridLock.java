@@ -18,8 +18,8 @@ public class ProblemGridLock implements Problem {
         this.rules      = new LinkedList<>();
 
         for (BlockGridLock block : initState.getBoard().getBlocks()) {
-            rules.add(new RuleGridLockMove(block, block.getFirstDirection()));
-            rules.add(new RuleGridLockMove(block, block.getSecondDirection()));
+            rules.add(new RuleGridLock(block, block.getFirstDirection()));
+            rules.add(new RuleGridLock(block, block.getSecondDirection()));
         }
     }
 
@@ -35,6 +35,21 @@ public class ProblemGridLock implements Problem {
     @Override
     public State getInitState() {
         return initState;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+
+        if (object == this)
+            return true;
+
+        if (object instanceof ProblemGridLock)
+            return ((ProblemGridLock) object).initState.equals(this.initState) &&
+                    ((ProblemGridLock) object).rules.equals(this.rules);
+
+        return false;
     }
 
     @Override

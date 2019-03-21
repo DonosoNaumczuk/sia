@@ -1,7 +1,6 @@
 package gridlock;
 
 import gps.api.State;
-import gridlock.BoardGridLock.BlockGridLock;
 
 public class StateGridLock implements State {
 
@@ -11,8 +10,8 @@ public class StateGridLock implements State {
         this.board = board;
     }
 
-    public StateGridLock(StateGridLock state, BlockGridLock block, Direction direction) {
-        this.board = state.board.move(block, direction);
+    public StateGridLock(StateGridLock state, RuleGridLock rule) {
+        this(state.board.move(rule.getBlock(), rule.getDirection()));
     }
 
     @Override
@@ -27,6 +26,10 @@ public class StateGridLock implements State {
             return ((StateGridLock) object).board.equals(this.board);
 
         return false;
+    }
+
+    public boolean canTransitionByApplying(RuleGridLock rule) {
+        return board.canMove(rule.getBlock(), rule.getDirection());
     }
 
     public BoardGridLock getBoard() {
