@@ -1,17 +1,13 @@
 package gps;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
+
+import static gps.SearchStrategy.GREEDY;
 
 public class GPSEngine {
 
@@ -28,7 +24,6 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-		// TODO: open = *Su queue favorito, TENIENDO EN CUENTA EL ORDEN DE LOS NODOS*
 		bestCosts = new HashMap<>();
 		this.problem = problem;
 		this.strategy = strategy;
@@ -36,6 +31,12 @@ public class GPSEngine {
 		explosionCounter = 0;
 		finished = false;
 		failed = false;
+		if(strategy == GREEDY) {
+			open = new LinkedList<>();
+		}
+		else {
+			// TODO: open = *Su queue favorito, TENIENDO EN CUENTA EL ORDEN DE LOS NODOS*
+		}
 	}
 
 	public void findSolution() {
@@ -84,9 +85,12 @@ public class GPSEngine {
 			// TODO: ¿Cómo se agregan los nodos a open en IDDFS?
 			break;
 		case GREEDY:
-			newCandidates = new PriorityQueue<>(/* TODO: Comparator! */);
+			newCandidates = initGpsPriorityQueue();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en GREEDY?
+
+			for (GPSNode candidate: newCandidates) {
+				((LinkedList<GPSNode>)open).push(candidate);
+			}
 			break;
 		case ASTAR:
 			if (!isBest(node.getState(), node.getCost())) {
@@ -120,6 +124,29 @@ public class GPSEngine {
 		bestCosts.put(node.getState(), node.getCost());
 	}
 
+	private PriorityQueue<GPSNode> initGpsPriorityQueue(){
+		Comparator<GPSNode> comparator;
+		if(heuristic.isPresent()) {
+			comparator =
+					(n1, n2) -> {
+                        int aux = heuristic.get().getValue(n2.getState())
+                                .compareTo(heuristic.get().getValue(n1.getState())); //TODO: puede que sea al revez
+                        if(aux != 0) {
+                            return aux;
+                        }
+                        if(Math.random() > 0.5) { //random equals
+                            return 1;
+                        }
+                        else {
+                            return -1;
+                        }
+                    };//TODO: multiplicar por -1 si los ordena al reves
+		}
+		else {
+			throw new RuntimeException("Cannot perform Greedy without heuristic");
+		}
+		return new PriorityQueue<>(comparator);
+	}
 	// GETTERS FOR THE PEOPLE!
 
 	public Queue<GPSNode> getOpen() {
