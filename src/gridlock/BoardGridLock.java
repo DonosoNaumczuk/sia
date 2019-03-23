@@ -28,16 +28,16 @@ public class BoardGridLock {
         JSONGridLockBoardParser.JSONBoard jsonBoard = new Gson().fromJson(parser.parse(reader),
                 JSONGridLockBoardParser.JSONBoard.class);
 
-        exit = jsonBoard.exit;
-        board = new int[jsonBoard.rows][jsonBoard.columns];
+        exit   = jsonBoard.exit;
+        board  = new int[jsonBoard.rows][jsonBoard.columns];
         setAllBoardCellsToEmpty();
         blocks = new ArrayList<>();
 
         for (int i = 0; i < jsonBoard.blocks.length; i++) {
             JSONGridLockBoardParser.JSONBlock block = jsonBoard.blocks[i];
-            BlockGridLock blockGridLock = new BlockGridLock(i, block.firstPoint, block.secondPoint);
+            BlockGridLock blockGridLock             = new BlockGridLock(i, block.firstPoint, block.secondPoint);
             blocks.add(blockGridLock);
-            fillBlockInBoard(blockGridLock);
+            fillBoardWithBlock(blockGridLock);
         }
 
         goalBlock = blocks.get(0);
@@ -100,7 +100,7 @@ public class BoardGridLock {
                 board[i][j] = EMPTY_CELL;
     }
 
-    private void fillBlockInBoard(BlockGridLock block) {
+    private void fillBoardWithBlock(BlockGridLock block) {
         if (block.firstDirection == LEFT)
             for (int y = block.begin.y; y < block.end.y; y++)
                 board[block.begin.x][y] = block.id;
