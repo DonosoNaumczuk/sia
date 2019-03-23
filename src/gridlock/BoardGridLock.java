@@ -1,13 +1,17 @@
 package gridlock;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import java.awt.Point;
-import java.nio.file.Path;
-import java.util.LinkedList;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import static gridlock.Direction.*;
 
 public class BoardGridLock {
 
+    private static int EMPTY_CELL = -1;
     private int[][] board;
     private Point exit;
     private BlockGridLock goalBlock;
@@ -15,10 +19,28 @@ public class BoardGridLock {
 
     /**
      * Constructor to initialize the first gridlock board
-     * @param boardFile path to the file that have a JSON representation of the board
+     * @param path path to the file that have a JSON representation of the board
+     * First block of the file will be always set as the goal block
      */
-    public BoardGridLock(Path boardFile) {
-        //TODO: fill board using a given JSON file
+    public BoardGridLock(String path) throws FileNotFoundException {
+        FileReader reader = new FileReader(path);
+        JsonParser parser = new JsonParser();
+        JSONGridLockBoardParser.JSONBoard jsonBoard = new Gson().fromJson(parser.parse(reader),
+                JSONGridLockBoardParser.JSONBoard.class);
+
+        exit = jsonBoard.exit;
+        board = new int[jsonBoard.rows][jsonBoard.columns];
+        setAllBoardCellsToEmpty();
+        blocks = new ArrayList<>();
+
+        for (int i = 0; i < jsonBoard.blocks.length; i++) {
+            JSONGridLockBoardParser.JSONBlock block = jsonBoard.blocks[i];
+            BlockGridLock blockGridLock = new BlockGridLock(i, block.firstPoint, block.secondPoint);
+            blocks.add(blockGridLock);
+            fillBlockInBoard(blockGridLock);
+        }
+
+        goalBlock = blocks.get(0);
     }
 
     /**
@@ -35,7 +57,7 @@ public class BoardGridLock {
 
         exit = new Point(2, 5);
         goalBlock = new BlockGridLock(0, new Point(2, 1), new Point(2, 2));
-        blocks = new LinkedList<>();
+        blocks = new ArrayList<>();
         blocks.add(goalBlock);
         blocks.add(new BlockGridLock(1, new Point(0, 0), new Point(0, 1)));
         blocks.add(new BlockGridLock(2, new Point(1, 0), new Point(3, 0)));
@@ -55,14 +77,14 @@ public class BoardGridLock {
      *  @return if the block can be moved in the given direction
      */
     public boolean canMove(BlockGridLock block, Direction direction) {
-        if (block.getBegin().getX() == block.getEnd().getX()) {
+        if (block.begin.x == block.end.x) {
             if (direction == UP || direction == DOWN)
                 return false;
 
             return true; //TODO: check if can move the given in the give vertical direction
 
         }
-        else if (block.getBegin().getY() == block.getEnd().getY()) {
+        else if (block.begin.y == block.end.y) {
             if (direction == RIGHT || direction == LEFT)
                 return false;
 
@@ -70,6 +92,21 @@ public class BoardGridLock {
         }
         else
             throw new IllegalArgumentException("The given block has an invalid shape");
+    }
+
+    private void setAllBoardCellsToEmpty() {
+        for (int i = 0; i < board.length; i++)
+            for (int j = 0; j < board[i].length; j++)
+                board[i][j] = EMPTY_CELL;
+    }
+
+    private void fillBlockInBoard(BlockGridLock block) {
+        if (block.firstDirection == LEFT)
+            for (int y = block.begin.y; y < block.end.y; y++)
+                board[block.begin.x][y] = block.id;
+        else
+            for (int x = block.begin.x; x < block.end.x; x++)
+                board[x][block.begin.y] = block.id;
     }
 
     public BlockGridLock getGoalBlock() {
@@ -137,22 +174,37 @@ public class BoardGridLock {
         private Direction secondDirection;
         private int id;
 
-        BlockGridLock(int id, Point begin, Point end) {
+        BlockGridLock(int id, Point firstPoint, Point secondPoint) {
             if (id < 0)
                 throw new IllegalArgumentException("Block id can't be negative");
 
-            this.id     = id;
-            this.begin  = begin;
-            this.end    = end;
-            setDirections();
+            this.id = id;
+            setDirections(firstPoint, secondPoint);
+            setBeginAndEndPoints(firstPoint, secondPoint);
         }
 
-        private void setDirections() {
-            if (begin.x - end.x == 0) {
-                firstDirection  = RIGHT;
-                secondDirection = LEFT;
+        /**
+         * Set begin point always as left most point (for horizontal pieces) or upper point (for vertical pieces) in
+         * order to optimize move and canMove functions from the BoardGridLock class
+         */
+        private void setBeginAndEndPoints(Point firstPoint, Point secondPoint) {
+            if (((firstDirection == LEFT) && (firstPoint.y < secondPoint.y)) ||
+                    ((firstDirection == UP) && (firstPoint.x < secondPoint.x))) {
+                begin = firstPoint;
+                end = secondPoint;
             }
-            else if (begin.y - end.y == 0) {
+            else {
+                begin   = secondPoint;
+                end     = firstPoint;
+            }
+        }
+
+        private void setDirections(Point firstPoint, Point secondPoint) {
+            if (firstPoint.x - secondPoint.x == 0) {
+                firstDirection  = LEFT;
+                secondDirection = RIGHT;
+            }
+            else if (firstPoint.y - secondPoint.y == 0) {
                 firstDirection  = UP;
                 secondDirection = DOWN;
             }
@@ -198,6 +250,23 @@ public class BoardGridLock {
 
         public Direction getSecondDirection() {
             return secondDirection;
+        }
+    }
+
+    /**
+     * A class done just to make the JSON parsing easier
+     */
+     private class JSONGridLockBoardParser {
+        class JSONBoard {
+            int rows;
+            int columns;
+            Point exit;
+            JSONBlock[] blocks;
+        }
+
+        class JSONBlock {
+            Point firstPoint;
+            Point secondPoint;
         }
     }
 }

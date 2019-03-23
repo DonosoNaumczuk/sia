@@ -5,6 +5,7 @@ import gps.api.Heuristic;
 import gridlock.BoardGridLock;
 import gridlock.ProblemGridLock;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -25,7 +26,9 @@ public class GridLockSolver {
     private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        new BoardGridLock("boardsJSON/board1.json");
+
         //Parse parameters
         SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
         Heuristic heuristic = parseHeuristic(args[1]);

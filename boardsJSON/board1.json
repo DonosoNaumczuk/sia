@@ -1,0 +1,80 @@
+{
+	"rows": 6,
+	"columns": 6,
+	"exit": {
+		"x": 7,
+		"y": 3
+	},
+	"blocks": [
+		{
+			"firstPoint": {
+				"x": 2,
+				"y": 3
+			},
+			"secondPoint": {
+				"x": 3,
+				"y": 3
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 1,
+				"y": 1
+			},
+			"secondPoint": {
+				"x": 3,
+				"y": 1
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 1,
+				"y": 2
+			},
+			"secondPoint": {
+				"x": 1,
+				"y": 3
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 1,
+				"y": 5
+			},
+			"secondPoint": {
+				"x": 1,
+				"y": 6
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 4,
+				"y": 2
+			},
+			"secondPoint": {
+				"x": 4,
+				"y": 4
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 3,
+				"y": 6
+			},
+			"secondPoint": {
+				"x": 5,
+				"y": 6
+			}
+		},
+		{
+			"firstPoint": {
+				"x": 6,
+				"y": 1
+			},
+			"secondPoint": {
+				"x": 6,
+				"y": 3
+			}
+		}
+	]
+}
