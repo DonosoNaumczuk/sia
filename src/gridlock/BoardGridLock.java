@@ -51,8 +51,10 @@ public class BoardGridLock {
         return null;
     }
 
+    /**
+     *  @return if the block can be moved in the given direction
+     */
     public boolean canMove(BlockGridLock block, Direction direction) {
-        //TODO: return if the block can be moved in the given direction
         if (block.getBegin().getX() == block.getEnd().getX()) {
             if (direction == UP || direction == DOWN)
                 return false;
@@ -85,7 +87,7 @@ public class BoardGridLock {
     @Override
     public int hashCode() {
         /* TODO: iterate over board and hash every int as a single object, then hash the exit too
-        ** TODO: or hash the List of blocks and the exit point
+        ** or hash the List of blocks and the exit point
         */
         return board.hashCode() * exit.hashCode();
     }

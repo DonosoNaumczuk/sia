@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import static gps.SearchStrategy.*;
 
 public class GridLockSolver {
+    //TODO: I think this Strings must be in English to be consistent
     private static String ALGORITHM_RESULT_TEXT       = "Se uso el algoritmo: ";
     private static String NO_HEURISTIC_RESULT_TEXT    = "No se uso una heuristica";
     private static String HEURISTIC_RESULT_TEXT       = "La heuristica usada es: ";
@@ -17,7 +18,7 @@ public class GridLockSolver {
     private static String SUCCESS_TEXT                = "exito";
     private static String FAILURE_TEXT                = "fracaso";
     private static String NODES_EXPANDED_RESULT_TEXT  = "Nodos expandidos: ";
-    private static String STATES_ANALYZED_RESULT_TEXT = "Estados analisados: "
+    private static String STATES_ANALYZED_RESULT_TEXT = "Estados analisados: ";
     private static String NODES_FRONTIER_RESULT_TEXT  = "Nodos frontera: ";
     private static String SOLUTION_DEEP_RESULT_TEXT   = "Profundidad de la solucion: ";
     private static String SOLUTION_COST_RESULT_TEXT   = "Costo de la solucion: " ;
