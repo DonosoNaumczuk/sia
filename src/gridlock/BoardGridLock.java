@@ -186,8 +186,36 @@ public class BoardGridLock {
 
     @Override
     public String toString() {
-        //TODO: print board
-        return "Oops, not implemented yet :(";
+        String[] colors     = {"\033[1;31m", "\033[1;32m", "\033[1;33m", "\033[1;34m", "\033[1;35m", "\033[1;36m",
+                               "\033[1;37m", "\033[0;31m", "\033[0;32m", "\033[0;33m", "\033[0;34m", "\033[0;35m",
+                               "\033[0;36m", "\033[0;37m",};
+        String resetColors  = "\033[0m";
+        String background   = "\033[0;100m";
+        String underline    = "\033[4;37m";
+
+        StringBuilder boardString = new StringBuilder();
+        int digits = String.valueOf(blocks.size()).length();
+
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {
+                if (exit.x == x && exit.y == y)
+                    boardString.append(background);
+
+                if (board[x][y] == EMPTY_CELL) {
+                    boardString.append(underline);
+                    for (int i = 0; i < digits; i++)
+                        boardString.append(" ");
+                }
+                else
+                    boardString.append(colors[board[x][y] % colors.length]).append(board[x][y]);
+
+                boardString.append(resetColors).append("\t");
+            }
+
+            boardString.append("\n");
+        }
+
+        return boardString.toString();
     }
 
     @Override
