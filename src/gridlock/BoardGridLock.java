@@ -151,10 +151,10 @@ public class BoardGridLock {
 
     private void fillBoardWithBlock(BlockGridLock block) {
         if (block.firstDirection == LEFT)
-            for (int y = block.begin.y; y < block.end.y; y++)
+            for (int y = block.begin.y; y <= block.end.y; y++)
                 board[block.begin.x][y] = block.id;
         else
-            for (int x = block.begin.x; x < block.end.x; x++)
+            for (int x = block.begin.x; x <= block.end.x; x++)
                 board[x][block.begin.y] = block.id;
     }
 
