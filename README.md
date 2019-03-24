@@ -6,7 +6,7 @@
 * **columns**: number of board columns
 * **exit**: this is a cell in the board, the **x** is the row coordinate _(from **0** to **rows - 1**)_ and the **y** the column coordinate _(from **0** to **columns - 1**)_
 * **blocks**: an array of **block** elements. The first block will be set as the goal block.
-* **block**: this is a block in the board. This have an **firstPoint** and **secondPoint**, both of them have their **x** and **y** coordinates, with the same meaning as we explained for the **exit** element. The **fristPoint** and **secondPoint** must be the points in the board that marks the ends of the block. Don't worry about the order, the program will set one point as begin and the other as end, following this convention: ```For an HORIZONTAL block, BEGIN will be the LEFT MOST end. For a VERTICAL block, BEGIN will be the UPPER end```
+* **block**: this is a block in the board. This have a **firstPoint** and a **secondPoint**, both of them have their **x** and **y** coordinates, with the same meaning as we explained for the **exit** element. The **fristPoint** and **secondPoint** must be the points in the board that marks the ends of the block. Don't worry about the order, the program will set one point as begin and the other as end, following this convention: ```For an HORIZONTAL block, BEGIN will be the LEFT MOST end. For a VERTICAL block, BEGIN will be the UPPER end```
 
 ### Location
 Save the board files as ```the-filename-you-want.json``` in ```sia-tp1-gridlock/boardsJSON/```
