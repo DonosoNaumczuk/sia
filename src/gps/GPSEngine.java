@@ -65,7 +65,8 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en BFS?
+			for(GPSNode n : newCandidates)
+				open.offer(n);
 			break;
 		case DFS:
 			if (bestCosts.containsKey(node.getState())) {
