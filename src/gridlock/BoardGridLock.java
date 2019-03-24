@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import static gridlock.Direction.*;
 
@@ -43,6 +44,13 @@ public class BoardGridLock {
         goalBlock = blocks.get(0);
     }
 
+    private BoardGridLock(int[][] board, Point exit, List<BlockGridLock> blocks, BlockGridLock goalBlock) {
+        this.board      = board;
+        this.exit       = exit;
+        this.blocks     = blocks;
+        this.goalBlock  = goalBlock;
+    }
+
     /**
      * Constructor to initialize the first gridlock board with a hardcoded
      * the configuration, given at level 1 of http://www.gtds.net/Gridlock/
@@ -69,29 +77,71 @@ public class BoardGridLock {
     }
 
     public BoardGridLock move(BlockGridLock block, Direction direction) {
-        //TODO: return a new board with the given movement done. Take in account that it has to be an IMMUTABLE board!
-        return null;
+        if (!canMove(block, direction))
+            throw new RuntimeException("Can't perform a movement with the given block and directions");
+
+        List<BlockGridLock> newBlocks = new LinkedList<>(this.blocks);
+        int[][] newBoard = new int[board.length][board[0].length];
+
+        for (int i = 0; i < board.length; i++)
+            newBoard[i] = board[i].clone();
+
+        BlockGridLock newBlock = move(newBoard, block, direction);
+        newBlocks.set(block.id, newBlock);
+
+        return new BoardGridLock(newBoard, exit, newBlocks, newBlocks.get(0));
+    }
+
+    private BlockGridLock move(int[][] board, BlockGridLock block, Direction direction) {
+        if (direction == LEFT) {
+            board[block.begin.x][block.begin.y - 1] = block.id;
+            board[block.end.x][block.end.y]         = EMPTY_CELL;
+            return new BlockGridLock(block.id, new Point(block.begin.x, block.begin.y - 1), new Point(block.end.x,
+                    block.end.y - 1));
+        }
+        else if (direction == RIGHT) {
+            board[block.end.x][block.end.y + 1] = block.id;
+            board[block.begin.x][block.begin.y] = EMPTY_CELL;
+            return new BlockGridLock(block.id, new Point(block.begin.x, block.begin.y + 1), new Point(block.end.x,
+                    block.end.y + 1));
+        }
+        else if (direction == UP) {
+            board[block.begin.x - 1][block.begin.y] = block.id;
+            board[block.end.x][block.end.y]         = EMPTY_CELL;
+            return new BlockGridLock(block.id, new Point(block.begin.x - 1, block.begin.y),
+                    new Point(block.end.x - 1, block.end.y));
+        }
+        else {
+            board[block.end.x + 1][block.end.y] = block.id;
+            board[block.begin.x][block.begin.y] = EMPTY_CELL;
+            return new BlockGridLock(block.id, new Point(block.begin.x + 1, block.begin.y),
+                    new Point(block.end.x + 1, block.end.y));
+        }
     }
 
     /**
      *  @return if the block can be moved in the given direction
      */
     public boolean canMove(BlockGridLock block, Direction direction) {
-        if (block.begin.x == block.end.x) {
+        if (block.firstDirection == LEFT) {
             if (direction == UP || direction == DOWN)
                 return false;
 
-            return true; //TODO: check if can move the given in the give vertical direction
-
+            if (direction == LEFT)
+                return block.begin.y != 0 && board[block.begin.x][block.begin.y - 1] == EMPTY_CELL;
+            else
+                return block.end.y != board[0].length - 1 && board[block.end.x][block.end.y + 1] == EMPTY_CELL;
         }
-        else if (block.begin.y == block.end.y) {
-            if (direction == RIGHT || direction == LEFT)
-                return false;
 
-            return true; //TODO: check if can move the given in the give horizontal direction
+        if (direction == RIGHT || direction == LEFT)
+            return false;
+
+        if (direction == UP) {
+            return block.begin.x != 0 && board[block.begin.x - 1][block.begin.y] == EMPTY_CELL;
         }
-        else
-            throw new IllegalArgumentException("The given block has an invalid shape");
+        else {
+            return block.end.x != board.length - 1 && board[block.end.x + 1][block.end.y] == EMPTY_CELL;
+        }
     }
 
     private void setAllBoardCellsToEmpty() {
@@ -123,10 +173,22 @@ public class BoardGridLock {
 
     @Override
     public int hashCode() {
-        /* TODO: iterate over board and hash every int as a single object, then hash the exit too
-        ** or hash the List of blocks and the exit point
-        */
-        return board.hashCode() * exit.hashCode();
+        int prime = 31;
+        int hash = 1;
+
+        for (int x = 0; x < board.length; x++)
+            for (int y = 0; y < board[x].length; y++)
+                hash = prime * hash + board[x][y];
+
+        hash = prime * hash + exit.hashCode();
+
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        //TODO: print board
+        return "Oops, not implemented yet :(";
     }
 
     @Override
