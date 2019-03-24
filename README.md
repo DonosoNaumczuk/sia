@@ -43,4 +43,4 @@ A 6x6 board with the exit in _(row: 2, column: 5)_ and two blocks.
 			}
 		}
 	]
-}```
+}
