@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import static gridlock.Direction.*;
 
@@ -80,7 +79,7 @@ public class BoardGridLock {
         if (!canMove(block, direction))
             throw new RuntimeException("Can't perform a movement with the given block and directions");
 
-        List<BlockGridLock> newBlocks = new LinkedList<>(this.blocks);
+        List<BlockGridLock> newBlocks = new ArrayList<>(this.blocks);
         int[][] newBoard = new int[board.length][board[0].length];
 
         for (int i = 0; i < board.length; i++)
