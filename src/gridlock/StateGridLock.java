@@ -11,7 +11,7 @@ public class StateGridLock implements State {
     }
 
     public StateGridLock(StateGridLock state, RuleGridLock rule) {
-        this(state.board.move(state.board.getBlocks().get(rule.getBlock().getId()), rule.getDirection())); //TODO: get new reference to block
+        this(state.board.move(state.getBoard().getBlockById(rule.getBlockId()), rule.getDirection()));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class StateGridLock implements State {
     }
 
     public boolean canTransitionByApplying(RuleGridLock rule) {
-        return board.canMove(rule.getBlock(), rule.getDirection());
+        return board.canMove(board.getBlockById(rule.getBlockId()), rule.getDirection());
     }
 
     public BoardGridLock getBoard() {
