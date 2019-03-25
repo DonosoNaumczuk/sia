@@ -57,19 +57,12 @@ public class GridLockSolver {
             // Print the path to solution
             int step = 1;
             for (GPSNode node: path) {
-<<<<<<< HEAD
-                if(node.getGenerationRule() != null) {
-                    System.out.println(node.getGenerationRule().getName());
-                }
-                System.out.println(node.getState().getRepresentation());
-=======
                 if (node.getGenerationRule() != null)
                     System.out.println("Step #" + step + ": " + node.getGenerationRule().getName());
                 else
                     System.out.println("Step #" + step + ": Initial state");
                 System.out.println(node.getState().getRepresentation());
                 step++;
->>>>>>> master
             }
             System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
         }
