@@ -6,6 +6,7 @@ import gridlock.BoardGridLock;
 import gridlock.ProblemGridLock;
 import gridlock.RandomHeuristic;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -26,24 +27,18 @@ public class GridLockSolver {
     private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
         // Parse parameters
         SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
         Heuristic heuristic = parseHeuristic(args[1]);
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock()), searchStrategy, heuristic);
+        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level3.json")), searchStrategy, heuristic);
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
         // Start prints of results
-        System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
-        System.out.println((heuristic == null)?NO_HEURISTIC_RESULT_TEXT:HEURISTIC_RESULT_TEXT + heuristic.toString());
-        System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
-        System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
-        System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
-        System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());//TODO: no sé si cuenta la solución en la fontera
         if(!gpsEngine.isFailed()) {
             LinkedList<GPSNode> path = new LinkedList<>();
             GPSNode current = gpsEngine.getSolutionNode();
@@ -51,8 +46,6 @@ public class GridLockSolver {
                 path.push(current);
                 current = current.getParent();
             }
-            System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
-            System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
 
             // Print the path to solution
             int step = 1;
@@ -64,6 +57,14 @@ public class GridLockSolver {
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }
+            System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
+            System.out.println((heuristic == null)?NO_HEURISTIC_RESULT_TEXT:HEURISTIC_RESULT_TEXT + heuristic.toString());
+            System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
+            System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
+            System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
+            System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());//TODO: no sé si cuenta la solución en la fontera
+            System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
+            System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
             System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
         }
     }
