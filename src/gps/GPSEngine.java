@@ -43,7 +43,7 @@ public class GPSEngine {
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
 		open.add(rootNode);
 		// TODO: ¿Lógica de IDDFS?
-		while (open.size() <= 0) {
+		while (open.size() > 0) {
 			GPSNode currentNode = open.remove();
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
@@ -85,12 +85,7 @@ public class GPSEngine {
 			// TODO: ¿Cómo se agregan los nodos a open en IDDFS?
 			break;
 		case GREEDY:
-			newCandidates = initGpsPriorityQueue();
-			addCandidates(node, newCandidates);
-
-			for (GPSNode candidate: newCandidates) {
-				((LinkedList<GPSNode>)open).push(candidate);
-			}
+			greedy(node);
 			break;
 		case ASTAR:
 			if (!isBest(node.getState(), node.getCost())) {
@@ -124,29 +119,47 @@ public class GPSEngine {
 		bestCosts.put(node.getState(), node.getCost());
 	}
 
-	private PriorityQueue<GPSNode> initGpsPriorityQueue(){
+	private void greedy(GPSNode node) {
+		Collection<GPSNode> newCandidates;
+		if (bestCosts.containsKey(node.getState())) {
+			return;
+		}
+
 		Comparator<GPSNode> comparator;
 		if(heuristic.isPresent()) {
 			comparator =
 					(n1, n2) -> {
-                        int aux = heuristic.get().getValue(n2.getState())
-                                .compareTo(heuristic.get().getValue(n1.getState())); //TODO: puede que sea al revez
-                        if(aux != 0) {
-                            return aux;
-                        }
-                        if(Math.random() > 0.5) { //random equals
-                            return 1;
-                        }
-                        else {
-                            return -1;
-                        }
-                    };//TODO: multiplicar por -1 si los ordena al reves
+						int aux = heuristic.get().getValue(n1.getState())
+								.compareTo(heuristic.get().getValue(n2.getState()));
+						return aux;
+					};
 		}
 		else {
 			throw new RuntimeException("Cannot perform Greedy without heuristic");
 		}
-		return new PriorityQueue<>(comparator);
+
+		newCandidates =  new PriorityQueue<>(comparator);
+		addCandidates(node, newCandidates);
+
+		GPSNode last = null;
+		LinkedList<GPSNode> aux = new LinkedList<>();
+		for (GPSNode candidate: newCandidates) {
+			if(last != null && comparator.compare(last, candidate) != 0) {
+				Collections.shuffle(aux); //Random equals
+				for (GPSNode nodeEquals : aux) {
+					((LinkedList<GPSNode>) open).push(nodeEquals);
+				}
+				aux.clear();
+			}
+			last = candidate;
+			aux.add(candidate);
+		}
+		Collections.shuffle(aux); //Random equals
+		for (GPSNode nodeEquals : aux) {
+			((LinkedList<GPSNode>) open).push(nodeEquals);
+		}
 	}
+
 	// GETTERS FOR THE PEOPLE!
 
 	public Queue<GPSNode> getOpen() {

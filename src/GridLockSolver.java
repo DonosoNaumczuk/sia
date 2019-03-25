@@ -3,6 +3,7 @@ import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gridlock.BoardGridLock;
+import gridlock.HeuristicGridLock1;
 import gridlock.ProblemGridLock;
 import java.util.LinkedList;
 
@@ -91,7 +92,7 @@ public class GridLockSolver {
         Heuristic heuristic = null;
         switch (s) {
             case "0":
-                //TODO: heuristic 1
+                heuristic = new HeuristicGridLock1();
                 break;
             case "1":
                 //TODO: heuristic 1
