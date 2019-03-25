@@ -1,17 +1,12 @@
 package gps;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
+import gridlock.StateGridLock;
 
 public class GPSEngine {
 
@@ -28,7 +23,7 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-		// TODO: open = *Su queue favorito, TENIENDO EN CUENTA EL ORDEN DE LOS NODOS*
+		open = new LinkedList<>();
 		bestCosts = new HashMap<>();
 		this.problem = problem;
 		this.strategy = strategy;
@@ -42,7 +37,7 @@ public class GPSEngine {
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
 		open.add(rootNode);
 		// TODO: ¿Lógica de IDDFS?
-		while (open.size() <= 0) {
+		while (open.size() > 0) {
 			GPSNode currentNode = open.remove();
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
@@ -63,6 +58,7 @@ public class GPSEngine {
 			if (bestCosts.containsKey(node.getState())) {
 				return;
 			}
+			// System.out.println(((StateGridLock)node.getState()).getBoard().toString());
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
 			for(GPSNode n : newCandidates)
