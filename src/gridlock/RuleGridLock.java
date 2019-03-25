@@ -3,15 +3,14 @@ package gridlock;
 import gps.api.Rule;
 import gps.api.State;
 import java.util.Optional;
-import gridlock.BoardGridLock.BlockGridLock;
 
 public class RuleGridLock implements Rule {
 
-    private BlockGridLock block;
+    private int blockId;
     private Direction direction;
 
-    public RuleGridLock(BlockGridLock block, Direction direction) {
-        this.block     = block;
+    public RuleGridLock(int blockId, Direction direction) {
+        this.blockId   = blockId;
         this.direction = direction;
     }
 
@@ -22,7 +21,7 @@ public class RuleGridLock implements Rule {
 
     @Override
     public String getName() {
-        String aux = "Move block #" + block.toString() + " one cell ";
+        String aux = "Move block #" + blockId + " one cell ";
 
         switch (direction) {
             case RIGHT:
@@ -58,8 +57,8 @@ public class RuleGridLock implements Rule {
         return Optional.empty();
     }
 
-    public BlockGridLock getBlock() {
-        return block;
+    public int getBlockId() {
+        return blockId;
     }
 
     public Direction getDirection() {
@@ -75,7 +74,7 @@ public class RuleGridLock implements Rule {
             return true;
 
         if (object instanceof RuleGridLock)
-            return ((RuleGridLock) object).block.equals(this.block) &&
+            return ((RuleGridLock) object).blockId == this.blockId &&
                     ((RuleGridLock) object).direction == direction;
 
         return false;
