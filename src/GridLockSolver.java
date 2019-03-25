@@ -28,7 +28,7 @@ public class GridLockSolver {
     private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
         SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
         Heuristic heuristic = parseHeuristic(args[1]);
@@ -98,8 +98,7 @@ public class GridLockSolver {
     private static Heuristic parseHeuristic(String s) {
         switch (s) {
             case "0":
-                heuristic = new HeuristicGridLock1();
-                break;
+                return new HeuristicGridLock1();
             case "1":
                 return null; // TODO: heuristic 1
             case "2":

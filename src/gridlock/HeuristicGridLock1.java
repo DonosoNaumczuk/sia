@@ -24,4 +24,9 @@ public class HeuristicGridLock1 implements Heuristic{
         }
         return ans;
     }
+
+    @Override
+    public String toString() {
+        return "Return the distance from the block to the exit";
+    }
 }
