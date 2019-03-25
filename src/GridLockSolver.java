@@ -57,9 +57,9 @@ public class GridLockSolver {
             // print the path to solution
             for (GPSNode node: path) {
                 if(node.getGenerationRule() != null) {
-                    System.out.println(node.getGenerationRule().toString());
+                    System.out.println(node.getGenerationRule().getName());
                 }
-                System.out.println(node.toString()); //TODO: asumo que el toString imprime una representacion del tablero
+                System.out.println(node.getState().getRepresentation());
             }
             System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
         }
