@@ -11,7 +11,7 @@ public class StateGridLock implements State {
     }
 
     public StateGridLock(StateGridLock state, RuleGridLock rule) {
-        this(state.board.move(rule.getBlock(), rule.getDirection()));
+        this(state.board.move(state.board.getBlocks().get(rule.getBlock().getId()), rule.getDirection())); //TODO: get new reference to block
     }
 
     @Override

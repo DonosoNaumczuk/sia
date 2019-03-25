@@ -4,6 +4,8 @@ import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gridlock.BoardGridLock;
 import gridlock.ProblemGridLock;
+import gridlock.RandomHeuristic;
+
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -95,7 +97,8 @@ public class GridLockSolver {
                 break;
             case "1":
                 // TODO: heuristic 1
-                break;
+            case "2":
+                return new RandomHeuristic();
             default:
                 throw new RuntimeException("Invalid heuristic");// TODO: no sé si debería ser una excepción
         }
