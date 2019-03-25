@@ -6,7 +6,6 @@ import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
-import gridlock.StateGridLock;
 
 public class GPSEngine {
 
@@ -27,7 +26,7 @@ public class GPSEngine {
 		bestCosts = new HashMap<>();
 		this.problem = problem;
 		this.strategy = strategy;
-		this.heuristic = Optional.of(heuristic);
+		this.heuristic = heuristic == null? Optional.empty() : Optional.of(heuristic);
 		explosionCounter = 0;
 		finished = false;
 		failed = false;

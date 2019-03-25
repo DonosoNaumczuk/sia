@@ -58,7 +58,8 @@ public class GridLockSolver {
                 step++;
             }
             System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
-            System.out.println((heuristic == null)?NO_HEURISTIC_RESULT_TEXT:HEURISTIC_RESULT_TEXT + heuristic.toString());
+            System.out.println(heuristic == null? NO_HEURISTIC_RESULT_TEXT :
+                    HEURISTIC_RESULT_TEXT + heuristic.toString());
             System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
             System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
             System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
@@ -94,18 +95,15 @@ public class GridLockSolver {
     }
 
     private static Heuristic parseHeuristic(String s) {
-        Heuristic heuristic = null;
         switch (s) {
             case "0":
-                // TODO: heuristic 1
-                break;
+                return null; // TODO: heuristic 1
             case "1":
-                // TODO: heuristic 1
+                return null; // TODO: heuristic 1
             case "2":
                 return new RandomHeuristic();
             default:
-                throw new RuntimeException("Invalid heuristic");// TODO: no sé si debería ser una excepción
+                return null;
         }
-        return heuristic;
     }
 }

@@ -10,4 +10,9 @@ public class RandomHeuristic implements Heuristic {
     public Integer getValue(State state) {
         return new Random().nextInt(10) + 1;
     }
+
+    @Override
+    public String toString() {
+        return "Return random integers";
+    }
 }
