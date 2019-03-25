@@ -24,19 +24,14 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
+		open = new LinkedList<>();
 		bestCosts = new HashMap<>();
 		this.problem = problem;
 		this.strategy = strategy;
-		this.heuristic = Optional.of(heuristic);
+		this.heuristic = heuristic == null? Optional.empty() : Optional.of(heuristic);
 		explosionCounter = 0;
 		finished = false;
 		failed = false;
-		if(strategy == GREEDY) {
-			open = new LinkedList<>();
-		}
-		else {
-			// TODO: open = *Su queue favorito, TENIENDO EN CUENTA EL ORDEN DE LOS NODOS*
-		}
 	}
 
 	public void findSolution() {
@@ -66,7 +61,8 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en BFS?
+			for(GPSNode n : newCandidates)
+				open.offer(n);
 			break;
 		case DFS:
 			if (bestCosts.containsKey(node.getState())) {
@@ -74,7 +70,8 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en DFS?
+			for(GPSNode n : newCandidates)
+				((LinkedList<GPSNode>)open).push(n);
 			break;
 		case IDDFS:
 			if (bestCosts.containsKey(node.getState())) {
