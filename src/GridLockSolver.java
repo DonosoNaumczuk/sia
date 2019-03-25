@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import static gps.SearchStrategy.*;
 
 public class GridLockSolver {
-    //TODO: I think this Strings must be in English to be consistent
+    //TODO: I think the Strings should be in English to be consistent
     private static String ALGORITHM_RESULT_TEXT       = "Se uso el algoritmo: ";
     private static String NO_HEURISTIC_RESULT_TEXT    = "No se uso una heuristica";
     private static String HEURISTIC_RESULT_TEXT       = "La heuristica usada es: ";

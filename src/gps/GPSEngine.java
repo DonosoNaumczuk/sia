@@ -42,7 +42,7 @@ public class GPSEngine {
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
 		open.add(rootNode);
 		// TODO: ¿Lógica de IDDFS?
-		while (open.size() <= 0) {
+		while (open.size() > 0) {
 			GPSNode currentNode = open.remove();
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
@@ -52,6 +52,29 @@ public class GPSEngine {
 				explode(currentNode);
 			}
 		}
+
+		// TODO: Pasar lo siguiente a un metodo de IDDFS
+		/*int maxDepth = 15; // Número mágico, habría que definir el maxDepth según la heurística
+
+		for (int depthBound = 0; depthBound <= maxDepth; depthBound++) {
+			while (open.size() > 0) {
+				GPSNode currentNode = open.remove();
+
+				if (problem.isGoal(currentNode.getState())) {
+					finished = true;
+					solutionNode = currentNode;
+					return;
+				} else if (currLevel < depthBound){
+					explode(currentNode);
+				}
+			}
+		}
+
+		failed = true;
+		finished = true;
+		*/
+		// Aca termina el IDDFS
+
 		failed = true;
 		finished = true;
 	}
@@ -76,12 +99,15 @@ public class GPSEngine {
 			// TODO: ¿Cómo se agregan los nodos a open en DFS?
 			break;
 		case IDDFS:
-			if (bestCosts.containsKey(node.getState())) {
+			if (bestCosts.containsKey(node.getState()))
 				return;
-			}
+
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en IDDFS?
+
+			for (GPSNode node : newCandidates)
+				open.offer(node);
+
 			break;
 		case GREEDY:
 			newCandidates = new PriorityQueue<>(/* TODO: Comparator! */);
