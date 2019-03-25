@@ -18,8 +18,8 @@ public class ProblemGridLock implements Problem {
         this.rules      = new LinkedList<>();
 
         for (BlockGridLock block : initState.getBoard().getBlocks()) {
-            rules.add(new RuleGridLock(block, block.getFirstDirection()));
-            rules.add(new RuleGridLock(block, block.getSecondDirection()));
+            rules.add(new RuleGridLock(block.getId(), block.getFirstDirection()));
+            rules.add(new RuleGridLock(block.getId(), block.getSecondDirection()));
         }
     }
 

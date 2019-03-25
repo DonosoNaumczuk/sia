@@ -118,6 +118,10 @@ public class BoardGridLock {
         }
     }
 
+    public BlockGridLock getBlockById(int id) {
+        return blocks.get(id);
+    }
+
     /**
      *  @return if the block can be moved in the given direction
      */
@@ -317,6 +321,10 @@ public class BoardGridLock {
 
         @Override
         public int hashCode() {
+            return id;
+        }
+
+        public int getId() {
             return id;
         }
 
