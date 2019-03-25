@@ -39,13 +39,6 @@ public class GPSEngine {
 		// TODO: ¿Lógica de IDDFS?
 		while (open.size() > 0) {
 			GPSNode currentNode = open.remove();
-			if (currentNode != null) {
-				if (currentNode.getGenerationRule() == null)
-					System.out.println("NULLETE");
-				else
-					System.out.println(currentNode.getGenerationRule().getName());
-				System.out.println(currentNode.getState().getRepresentation());
-			}
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
 				solutionNode = currentNode;
@@ -65,7 +58,6 @@ public class GPSEngine {
 			if (bestCosts.containsKey(node.getState())) {
 				return;
 			}
-			// System.out.println(((StateGridLock)node.getState()).getBoard().toString());
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
 			for(GPSNode n : newCandidates)
@@ -77,7 +69,8 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en DFS?
+			for(GPSNode n : newCandidates)
+				((LinkedList<GPSNode>)open).push(n);
 			break;
 		case IDDFS:
 			if (bestCosts.containsKey(node.getState())) {
