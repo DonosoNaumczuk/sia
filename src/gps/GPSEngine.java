@@ -6,8 +6,6 @@ import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
 
-import static gps.SearchStrategy.GREEDY;
-
 public class GPSEngine {
 
 	Queue<GPSNode> open;
@@ -149,9 +147,9 @@ public class GPSEngine {
 			return;
 		}
 
-
 		Comparator<GPSNode> comparator;
-		if(heuristic.isPresent()) {
+
+		if (heuristic.isPresent()) {
 			comparator =
 					(n1, n2) -> {
 						int aux = heuristic.get().getValue(n2.getState())
