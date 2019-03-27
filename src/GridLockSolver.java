@@ -55,6 +55,7 @@ public class GridLockSolver {
                     System.out.println("Step #" + step + ": " + node.getGenerationRule().getName());
                 else
                     System.out.println("Step #" + step + ": Initial state");
+                System.out.println("Heuristic:" + heuristic.getValue(node.getState()));
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }

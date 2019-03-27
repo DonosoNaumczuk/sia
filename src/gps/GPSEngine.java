@@ -126,8 +126,8 @@ public class GPSEngine {
 		if(heuristic.isPresent()) {
 			comparator =
 					(n1, n2) -> {
-						int aux = heuristic.get().getValue(n1.getState())
-								.compareTo(heuristic.get().getValue(n2.getState()));
+						int aux = heuristic.get().getValue(n2.getState())
+								.compareTo(heuristic.get().getValue(n1.getState()));
 						return aux;
 					};
 		}

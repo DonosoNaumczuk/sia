@@ -11,16 +11,47 @@ public class HeuristicGridLock1 implements Heuristic{
         }
         BoardGridLock aux = ((StateGridLock)state).getBoard();
 
-        int aux1, aux2, ans;
+        int ans = 0;
+        int exitX = aux.getExit().x;
+        int exitY = aux.getExit().y;
+        int[][] board = aux.getBoard();
         if(aux.getGoalBlock().getFirstDirection() == Direction.UP) {
-            aux1 = Math.abs(aux.getGoalBlock().getBegin().y - aux.getExit().y);
-            aux2 = Math.abs(aux.getGoalBlock().getEnd().y - aux.getExit().y);
-            ans = (aux1<aux2)?aux1:aux2;
+            int currentX;
+            int dir;
+            if (exitX == 0) {
+                currentX = aux.getGoalBlock().getBegin().x;
+                dir = -1;
+            }
+            else {
+                currentX = aux.getGoalBlock().getEnd().x;
+                dir = 1;
+            }
+            while (currentX != exitX) {
+                ans++;
+                currentX = currentX + dir;
+                if(board[currentX][exitY] != -1) {
+                    ans++;
+                }
+            }
         }
         else {
-            aux1 = Math.abs(aux.getGoalBlock().getBegin().x - aux.getExit().x);
-            aux2 = Math.abs(aux.getGoalBlock().getEnd().x - aux.getExit().x);
-            ans = (aux1<aux2)?aux1:aux2;
+            int currentY;
+            int dir;
+            if (exitY == 0) {
+                currentY = aux.getGoalBlock().getBegin().y;
+                dir = -1;
+            }
+            else {
+                currentY = aux.getGoalBlock().getEnd().y;
+                dir = 1;
+            }
+            while (currentY != exitY) {
+                ans++;
+                currentY = currentY + dir;
+                if(board[exitX][currentY] != -1) {
+                    ans++;
+                }
+            }
         }
         return ans;
     }
