@@ -148,8 +148,7 @@ public class GPSEngine {
 		if (bestCosts.containsKey(node.getState())) {
 			return;
 		}
-		
-		Collection<GPSNode> newCandidates = new PriorityQueue<>(comparator);
+
 
 		Comparator<GPSNode> comparator;
 		if(heuristic.isPresent()) {
@@ -164,6 +163,7 @@ public class GPSEngine {
 			throw new RuntimeException("Cannot perform Greedy without heuristic");
 		}
 
+		Collection<GPSNode> newCandidates = new PriorityQueue<>(comparator);
 		addCandidates(node, newCandidates);
 
 		GPSNode last = null;
