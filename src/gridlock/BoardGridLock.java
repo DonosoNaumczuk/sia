@@ -257,6 +257,14 @@ public class BoardGridLock {
         return true;
     }
 
+    public int[][] getBoard() {
+        int[][] newBoard = new int[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++)
+            newBoard[i] = board[i].clone();
+
+        return newBoard;
+    }
+
     /**
      * Block pieces that fill the gridlock board
      */

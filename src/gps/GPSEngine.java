@@ -6,6 +6,8 @@ import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
 
+import static gps.SearchStrategy.GREEDY;
+
 public class GPSEngine {
 
 	Queue<GPSNode> open;
@@ -79,9 +81,7 @@ public class GPSEngine {
 			// TODO: ¿Cómo se agregan los nodos a open en IDDFS?
 			break;
 		case GREEDY:
-			newCandidates = new PriorityQueue<>(/* TODO: Comparator! */);
-			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en GREEDY?
+			greedy(node);
 			break;
 		case ASTAR:
 			aStar(node);
@@ -144,7 +144,49 @@ public class GPSEngine {
 		bestCosts.put(node.getState(), node.getCost());
 	}
 
-    // GETTERS FOR THE PEOPLE!
+	private void greedy(GPSNode node) {
+		if (bestCosts.containsKey(node.getState())) {
+			return;
+		}
+		
+		Collection<GPSNode> newCandidates = new PriorityQueue<>(comparator);
+
+		Comparator<GPSNode> comparator;
+		if(heuristic.isPresent()) {
+			comparator =
+					(n1, n2) -> {
+						int aux = heuristic.get().getValue(n2.getState())
+								.compareTo(heuristic.get().getValue(n1.getState()));
+						return aux;
+					};
+		}
+		else {
+			throw new RuntimeException("Cannot perform Greedy without heuristic");
+		}
+
+		addCandidates(node, newCandidates);
+
+		GPSNode last = null;
+		LinkedList<GPSNode> aux = new LinkedList<>();
+		for (GPSNode candidate: newCandidates) {
+			if(last != null && comparator.compare(last, candidate) != 0) {
+				Collections.shuffle(aux); //Random equals
+				for (GPSNode nodeEquals : aux) {
+					((LinkedList<GPSNode>) open).push(nodeEquals);
+				}
+				aux.clear();
+			}
+			last = candidate;
+			aux.add(candidate);
+		}
+		Collections.shuffle(aux); //Random equals
+		for (GPSNode nodeEquals : aux) {
+			((LinkedList<GPSNode>) open).push(nodeEquals);
+		}
+	}
+
+	// GETTERS FOR THE PEOPLE!
+
 	public Queue<GPSNode> getOpen() {
 		return open;
 	}

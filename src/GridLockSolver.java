@@ -3,6 +3,7 @@ import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gridlock.BoardGridLock;
+import gridlock.HeuristicGridLock1;
 import gridlock.ProblemGridLock;
 import gridlock.RandomHeuristic;
 
@@ -27,7 +28,7 @@ public class GridLockSolver {
     private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
         SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
         Heuristic heuristic = parseHeuristic(args[1]);
@@ -54,6 +55,7 @@ public class GridLockSolver {
                     System.out.println("Step #" + step + ": " + node.getGenerationRule().getName());
                 else
                     System.out.println("Step #" + step + ": Initial state");
+                System.out.println("Heuristic:" + heuristic.getValue(node.getState()));
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }
@@ -97,7 +99,7 @@ public class GridLockSolver {
     private static Heuristic parseHeuristic(String s) {
         switch (s) {
             case "0":
-                return null; // TODO: heuristic 1
+                return new HeuristicGridLock1();
             case "1":
                 return null; // TODO: heuristic 1
             case "2":
