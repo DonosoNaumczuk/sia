@@ -39,8 +39,9 @@ public class GridLockSolver {
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
         // Start prints of results
+        LinkedList<GPSNode> path = new LinkedList<>();
+
         if(!gpsEngine.isFailed()) {
-            LinkedList<GPSNode> path = new LinkedList<>();
             GPSNode current = gpsEngine.getSolutionNode();
             while (current.getParent() != null) {
                 path.push(current);
@@ -59,17 +60,20 @@ public class GridLockSolver {
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }
-            System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
-            System.out.println(heuristic == null? NO_HEURISTIC_RESULT_TEXT :
-                    HEURISTIC_RESULT_TEXT + heuristic.toString());
-            System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
-            System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
-            System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
-            System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());
+        }
+
+        System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
+        System.out.println(heuristic == null? NO_HEURISTIC_RESULT_TEXT :
+                HEURISTIC_RESULT_TEXT + heuristic.toString());
+        System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
+        System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
+        System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
+        System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size()); //TODO: IDDFS clears open structure, and lose information
+        if (!gpsEngine.isFailed()) {
             System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
             System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
-            System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
         }
+        System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
     }
 
     private static SearchStrategy parseSearchStrategy(String s) {

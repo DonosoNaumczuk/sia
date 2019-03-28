@@ -94,7 +94,8 @@ public class GPSEngine {
 				System.out.println("ES NULL");
 			else
 				System.out.println(node.getGenerationRule().getName());
-			System.out.println(depthBound);
+            System.out.println("Current depth bound: " + depthBound);
+			System.out.println("Node depth: " + node.getLevel());
 			System.out.println(node.getState().getRepresentation());
 		}
 	}
@@ -122,9 +123,8 @@ public class GPSEngine {
 			break;
 		case IDDFS:
 			if (!bestCosts.containsKey(node.getState()))
-				addCandidates(node, open);
+                addCandidates(node, open);
 			break;
-
 		case GREEDY:
 			greedy(node);
 			break;
