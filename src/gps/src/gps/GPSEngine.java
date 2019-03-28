@@ -41,14 +41,15 @@ public class GPSEngine {
 	public void findSolution() {
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
 		rootNode.setLevel(0);
-		open.add(rootNode);
 
 		if (strategy == IDDFS) {
 			int maxDepth = 50;
 			IDDFS(maxDepth, rootNode);
 			return;
 		} else {
-			while (open.size() > 0) {
+            open.add(rootNode);
+
+            while (open.size() > 0) {
 				GPSNode currentNode = open.remove();
 				if (problem.isGoal(currentNode.getState())) {
 					finished = true;
@@ -66,14 +67,13 @@ public class GPSEngine {
 
 	private void IDDFS(int maxDepth, GPSNode rootNode) {
 		for (int depthBound = 0; depthBound <= maxDepth; depthBound++) {
-			DFSWithDepthBound(depthBound);
+            bestCosts.clear();
+            ((LinkedList<GPSNode>)open).push(rootNode);
+            DFSWithDepthBound(depthBound);
 
-			if (finished) {
-				return;
-			}
-
-			bestCosts.clear();
-			((LinkedList<GPSNode>)open).push(rootNode);
+            if (finished) {
+                return;
+            }
 		}
 
 		failed = true;
