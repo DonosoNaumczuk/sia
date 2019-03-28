@@ -2,7 +2,7 @@
 
 ##Run intruction
 *    mvn package
-*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar main.GridLockSolver BFS 0
+*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar GridLockSolver BFS 0
 
 ## JSON Boards convention
 ### Element description

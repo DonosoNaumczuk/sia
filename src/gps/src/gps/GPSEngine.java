@@ -82,7 +82,7 @@ public class GPSEngine {
 			greedy(node);
 			break;
 		case ASTAR:
-			aStar(node);
+			//aStar(node);
             break;
 		}
 	}
