@@ -1,3 +1,5 @@
+package main;
+
 import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
@@ -34,7 +36,7 @@ public class GridLockSolver {
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level3.json")), searchStrategy, heuristic);
+        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level1.json")), searchStrategy, heuristic);
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
