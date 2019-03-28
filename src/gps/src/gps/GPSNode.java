@@ -33,10 +33,6 @@ public class GPSNode {
 		return cost;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
 	public void setLevel(int level) {
 		this.level = level;
 	}
@@ -77,5 +73,9 @@ public class GPSNode {
 	public void setGenerationRule(Rule generationRule) {
 		this.generationRule = generationRule;
 	}
+
+	public Integer getDepth() {
+        return level;
+    }
 
 }
