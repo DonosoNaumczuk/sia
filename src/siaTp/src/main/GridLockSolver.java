@@ -1,10 +1,9 @@
-package main;
-
 import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gridlock.BoardGridLock;
+import gridlock.HeuristicGridLock1;
 import gridlock.ProblemGridLock;
 import gridlock.RandomHeuristic;
 
@@ -15,28 +14,28 @@ import static gps.SearchStrategy.*;
 
 public class GridLockSolver {
     //TODO: I think this Strings must be in English to be consistent
-    private static String ALGORITHM_RESULT_TEXT       = "Se usó el algoritmo: ";
-    private static String NO_HEURISTIC_RESULT_TEXT    = "No se usó una heurística";
-    private static String HEURISTIC_RESULT_TEXT       = "La heurística usada es: ";
-    private static String SUCCESS_RESULT_TEXT         = "La búsqueda fue un ";
-    private static String SUCCESS_TEXT                = "éxito";
-    private static String FAILURE_TEXT                = "fracaso";
-    private static String NODES_EXPANDED_RESULT_TEXT  = "Nodos expandidos: ";
-    private static String STATES_ANALYZED_RESULT_TEXT = "Estados analizados: ";
-    private static String NODES_FRONTIER_RESULT_TEXT  = "Nodos frontera: ";
-    private static String SOLUTION_DEEP_RESULT_TEXT   = "Profundidad de la solución: ";
-    private static String SOLUTION_COST_RESULT_TEXT   = "Costo de la solución: " ;
-    private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
+    private static String ALGORITHM_RESULT_TEXT       = "\033[0;1mSearch strategy: \u001B[0m";
+    private static String NO_HEURISTIC_RESULT_TEXT    = "\033[0;1mHeuristics was not used \u001B[0m";
+    private static String HEURISTIC_RESULT_TEXT       = "\033[0;1mHeuristic description: \u001B[0m";
+    private static String SUCCESS_RESULT_TEXT         = "\033[0;1mThe search was a ";
+    private static String SUCCESS_TEXT                = "success\u001B[0m";
+    private static String FAILURE_TEXT                = "failure\u001B[0m";
+    private static String NODES_EXPANDED_RESULT_TEXT  = "\033[0;1mExpanded nodes: \u001B[0m";
+    private static String STATES_ANALYZED_RESULT_TEXT = "\033[0;1mAnalyzed states: \u001B[0m";
+    private static String NODES_FRONTIER_RESULT_TEXT  = "\033[0;1mFrontier nodes: \u001B[0m";
+    private static String SOLUTION_DEEP_RESULT_TEXT   = "\033[0;1mSolution depth: \u001B[0m";
+    private static String SOLUTION_COST_RESULT_TEXT   = "\033[0;1mSolution cost: \u001B[0m";
+    private static String TIME_RESULT_TEXT            = "\033[0;1mProcess time: \u001B[0m";
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
         SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
         Heuristic heuristic = parseHeuristic(args[1]);
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level1.json")), searchStrategy, heuristic);
+        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock()), searchStrategy, heuristic);
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
@@ -56,6 +55,8 @@ public class GridLockSolver {
                     System.out.println("Step #" + step + ": " + node.getGenerationRule().getName());
                 else
                     System.out.println("Step #" + step + ": Initial state");
+                if (heuristic != null)
+                    System.out.println("Heuristic = " + heuristic.getValue(node.getState()));
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }
@@ -65,7 +66,7 @@ public class GridLockSolver {
             System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
             System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
             System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
-            System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());//TODO: no sé si cuenta la solución en la fontera
+            System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());
             System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
             System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
             System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
@@ -91,7 +92,7 @@ public class GridLockSolver {
                 searchStrategy = ASTAR;
                 break;
             default:
-                throw new RuntimeException("Invalid search strategy"); // TODO: no se si debería ser una excepción
+                throw new RuntimeException("Invalid search strategy");
         }
         return searchStrategy;
     }
@@ -99,7 +100,7 @@ public class GridLockSolver {
     private static Heuristic parseHeuristic(String s) {
         switch (s) {
             case "0":
-                return null; // TODO: heuristic 1
+                return new HeuristicGridLock1();
             case "1":
                 return null; // TODO: heuristic 1
             case "2":

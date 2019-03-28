@@ -1,7 +1,6 @@
 package gps;
 
 import java.util.*;
-
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
@@ -22,9 +21,9 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-		open = new LinkedList<>();
-		bestCosts = new HashMap<>();
-		this.problem = problem;
+	    open = new LinkedList<>();
+        bestCosts = new HashMap<>();
+        this.problem = problem;
 		this.strategy = strategy;
 		this.heuristic = heuristic == null? Optional.empty() : Optional.of(heuristic);
 		explosionCounter = 0;
@@ -80,20 +79,40 @@ public class GPSEngine {
 			// TODO: ¿Cómo se agregan los nodos a open en IDDFS?
 			break;
 		case GREEDY:
-			newCandidates = new PriorityQueue<>(/* TODO: Comparator! */);
-			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en GREEDY?
+			greedy(node);
 			break;
 		case ASTAR:
-			if (!isBest(node.getState(), node.getCost())) {
-				return;
-			}
-			newCandidates = new ArrayList<>();
-			addCandidates(node, newCandidates);
-			// TODO: ¿Cómo se agregan los nodos a open en A*?
-			break;
+			aStar(node);
+            break;
 		}
 	}
+
+    private void aStar(GPSNode nodeToExplode) {
+        if (!isBest(nodeToExplode.getState(), nodeToExplode.getCost()))
+            return;
+
+        Comparator<GPSNode> comparator = new CostPlusHeuristicComparator();
+        PriorityQueue<GPSNode> candidates = new PriorityQueue<>(comparator);
+        addCandidates(nodeToExplode, candidates);
+
+        while (!open.isEmpty())
+            candidates.add(open.remove());
+
+        while (!candidates.isEmpty()) {
+            GPSNode node = candidates.poll();
+            List<GPSNode> tiedNodes = new ArrayList<>();
+            tiedNodes.add(node);
+
+            while (!candidates.isEmpty() && comparator.compare(candidates.peek(), node) == 0)
+                tiedNodes.add(candidates.poll());
+
+            if (tiedNodes.size() > 1)
+                Collections.shuffle(tiedNodes);
+
+            for (GPSNode n : tiedNodes)
+                open.offer(n);
+        }
+    }
 
 	private void addCandidates(GPSNode node, Collection<GPSNode> candidates) {
 		explosionCounter++;
@@ -108,12 +127,60 @@ public class GPSEngine {
 		}
 	}
 
+	private Integer getCostPlusHeuristic(GPSNode node) {
+        if (!heuristic.isPresent())
+            throw new RuntimeException("Not heuristic found for A* algorithm");
+
+        return heuristic.get().getValue(node.getState()) + node.getCost();
+    }
+
 	private boolean isBest(State state, Integer cost) {
 		return !bestCosts.containsKey(state) || cost < bestCosts.get(state);
 	}
 
 	private void updateBest(GPSNode node) {
 		bestCosts.put(node.getState(), node.getCost());
+	}
+
+	private void greedy(GPSNode node) {
+		if (bestCosts.containsKey(node.getState())) {
+			return;
+		}
+
+		Comparator<GPSNode> comparator;
+
+		if (heuristic.isPresent()) {
+			comparator =
+					(n1, n2) -> {
+						int aux = heuristic.get().getValue(n2.getState())
+								.compareTo(heuristic.get().getValue(n1.getState()));
+						return aux;
+					};
+		}
+		else {
+			throw new RuntimeException("Cannot perform Greedy without heuristic");
+		}
+
+		Collection<GPSNode> newCandidates = new PriorityQueue<>(comparator);
+		addCandidates(node, newCandidates);
+
+		GPSNode last = null;
+		LinkedList<GPSNode> aux = new LinkedList<>();
+		for (GPSNode candidate: newCandidates) {
+			if(last != null && comparator.compare(last, candidate) != 0) {
+				Collections.shuffle(aux); //Random equals
+				for (GPSNode nodeEquals : aux) {
+					((LinkedList<GPSNode>) open).push(nodeEquals);
+				}
+				aux.clear();
+			}
+			last = candidate;
+			aux.add(candidate);
+		}
+		Collections.shuffle(aux); //Random equals
+		for (GPSNode nodeEquals : aux) {
+			((LinkedList<GPSNode>) open).push(nodeEquals);
+		}
 	}
 
 	// GETTERS FOR THE PEOPLE!
@@ -150,4 +217,24 @@ public class GPSEngine {
 		return strategy;
 	}
 
+    /**
+     * Order by less HEURISTIC + COST
+     * If they are equal, try to order by less HEURISTIC
+     */
+    class CostPlusHeuristicComparator implements Comparator<GPSNode> {
+
+        @Override
+        public int compare(GPSNode node1, GPSNode node2) {
+            if (!heuristic.isPresent())
+                throw new RuntimeException("Not heuristic found for A* algorithm");
+
+            Heuristic h = heuristic.get();
+            int firstComparison = getCostPlusHeuristic(node1).compareTo(getCostPlusHeuristic(node2));
+
+            if (firstComparison != 0)
+                return firstComparison;
+
+            return h.getValue(node1.getState()).compareTo(h.getValue(node2.getState()));
+        }
+    }
 }
