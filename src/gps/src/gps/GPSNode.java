@@ -78,4 +78,8 @@ public class GPSNode {
 		this.generationRule = generationRule;
 	}
 
+	public Integer getDepth() {
+        return level;
+    }
+
 }
