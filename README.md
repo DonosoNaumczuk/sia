@@ -2,7 +2,9 @@
 
 ## Run Intructions
 *    mvn package
-*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar GridLockSolver BFS 0
+*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar GridLockSolver search_algorithm heuristic
+	
+where search_algorithm can be replaced by any of: "BFS", "DFS", "IDDFS", "ASTAR" or "GREEDY" and heuristic can be either 0 or 1. Where heuristic 0 takes into account the distance between the main block and the exit plus the ammount of blocks between the main block and the exit. Heuristic 1 is still under implementation. For algorithms BFS, DFS and IDDFS the heuristic field is not required. Leaving this field empty for the other algorithms will throw an index out of bounds exception
 
 ## JSON Boards convention
 ### Element description
