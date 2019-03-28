@@ -13,22 +13,6 @@ import java.util.LinkedList;
 import static gps.SearchStrategy.*;
 
 public class GridLockSolver {
-//<<<<<<< HEAD
-    //TODO: I think the Strings should be in English to be consistent
-    private static String ALGORITHM_RESULT_TEXT       = "Se uso el algoritmo: ";
-    private static String NO_HEURISTIC_RESULT_TEXT    = "No se uso una heuristica";
-    private static String HEURISTIC_RESULT_TEXT       = "La heuristica usada es: ";
-    private static String SUCCESS_RESULT_TEXT         = "La busqueda fue un ";
-    private static String SUCCESS_TEXT                = "exito";
-    private static String FAILURE_TEXT                = "fracaso";
-    private static String NODES_EXPANDED_RESULT_TEXT  = "Nodos expandidos: ";
-    private static String STATES_ANALYZED_RESULT_TEXT = "Estados analizados: ";
-    private static String NODES_FRONTIER_RESULT_TEXT  = "Nodos frontera: ";
-    private static String SOLUTION_DEEP_RESULT_TEXT   = "Profundidad de la solucion: ";
-    private static String SOLUTION_COST_RESULT_TEXT   = "Costo de la solucion: " ;
-    private static String TIME_RESULT_TEXT            = "Tiempo de procesamiento: " ;
-/*=======
-    //TODO: I think this Strings must be in English to be consistent
     private static String ALGORITHM_RESULT_TEXT       = "\033[0;1mSearch strategy: \u001B[0m";
     private static String NO_HEURISTIC_RESULT_TEXT    = "\033[0;1mHeuristics was not used \u001B[0m";
     private static String HEURISTIC_RESULT_TEXT       = "\033[0;1mHeuristic description: \u001B[0m";
@@ -41,7 +25,6 @@ public class GridLockSolver {
     private static String SOLUTION_DEEP_RESULT_TEXT   = "\033[0;1mSolution depth: \u001B[0m";
     private static String SOLUTION_COST_RESULT_TEXT   = "\033[0;1mSolution cost: \u001B[0m";
     private static String TIME_RESULT_TEXT            = "\033[0;1mProcess time: \u001B[0m";
->>>>>>> master*/
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
     public static void main(String[] args) throws FileNotFoundException {
