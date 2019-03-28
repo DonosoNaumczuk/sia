@@ -88,20 +88,6 @@ public class GPSEngine {
 		}
 	}
 
-	private void printBoardRepresentation(GPSNode node, int depthBound) {
-		if (node != null) { //TODO: Limpiar esto
-			if (node.getGenerationRule() == null)
-				System.out.println("ES NULL");
-			else
-				System.out.println(node.getGenerationRule().getName());
-			System.out.println("hashCode: " + node.getState().hashCode());
-			System.out.println("parent hashCode: " + node.getParent().hashCode());
-            System.out.println("Current depth bound: " + depthBound);
-			System.out.println("Node depth: " + node.getLevel());
-			System.out.println(node.getState().getRepresentation());
-		}
-	}
-
 	private void explode(GPSNode node) {
 		Collection<GPSNode> newCandidates;
 		switch (strategy) {
