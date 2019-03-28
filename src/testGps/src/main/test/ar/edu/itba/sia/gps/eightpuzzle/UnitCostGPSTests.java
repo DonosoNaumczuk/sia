@@ -56,7 +56,7 @@ public class UnitCostGPSTests {
 			MessageFormat.format("{0} solution must have same cost as {1} solution. {0} cost: {2}, {1} cost: {3}",
 				engine1.getStrategy().name(), engine2.getStrategy().name(),
 				engine1SolutionNode.getCost(), engine2SolutionNode.getCost());
-		assert engine1SolutionNode.getCost().equals(engine1SolutionNode.getDepth()) :
+		assert engine1SolutionNode.getDepth().equals(engine1SolutionNode.getDepth()) :
 			MessageFormat.format("{0} solution must have same cost and depth. {0} cost: {1}, {0} depth: {2}",
 				engine1.getStrategy(),
 				engine1SolutionNode.getCost(), engine1SolutionNode.getDepth());

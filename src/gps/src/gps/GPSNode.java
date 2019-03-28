@@ -69,7 +69,7 @@ public class GPSNode {
 		this.generationRule = generationRule;
 	}
 
-	public int getDepth() { //TODO: lo puse para que compile poner el de la branch de iddf
+	public Integer getDepth() { //TODO: lo puse para que compile poner el de la branch de iddf
 		return 0;
 	}
 }
