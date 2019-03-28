@@ -1,0 +1,21 @@
+{
+    "rows": 6,
+    "columns": 6,
+    "exit": {
+        "y": 5,
+        "x": 2
+    },
+    "blocks": [
+        {
+          "firstPoint": {
+              "x": 2,
+              "y": 0
+          },
+          "secondPoint": {
+              "x": 2,
+              "y": 1
+          }
+        },
+
+  ]
+}
