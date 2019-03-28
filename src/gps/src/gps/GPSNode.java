@@ -33,7 +33,7 @@ public class GPSNode {
 		return cost;
 	}
 
-	public int getLevel() {
+	public Integer getDepth() {
 		return level;
 	}
 

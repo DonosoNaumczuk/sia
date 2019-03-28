@@ -23,7 +23,12 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-	    open = new LinkedList<>();
+		if(strategy == ASTAR) {
+			Comparator<GPSNode> comparator = new CostPlusHeuristicComparator();
+			open = new PriorityQueue<>(comparator);
+		} else {
+			open = new LinkedList<>();
+		}
         bestCosts = new HashMap<>();
         this.problem = problem;
 		this.strategy = strategy;
@@ -39,7 +44,7 @@ public class GPSEngine {
 		open.add(rootNode);
 
 		if (strategy == IDDFS) {
-			int maxDepth = 16;
+			int maxDepth = 50;
 			IDDFS(maxDepth, rootNode);
 			return;
 		} else {
@@ -82,7 +87,7 @@ public class GPSEngine {
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
 				solutionNode = currentNode;
-			} else if (currentNode.getLevel() < depthBound) {
+			} else if (currentNode.getDepth() < depthBound) {
 				explode(currentNode);
 			}
 		}
@@ -97,7 +102,7 @@ public class GPSEngine {
 			System.out.println("hashCode: " + node.getState().hashCode());
 			System.out.println("parent hashCode: " + node.getParent().hashCode());
             System.out.println("Current depth bound: " + depthBound);
-			System.out.println("Node depth: " + node.getLevel());
+			System.out.println("Node depth: " + node.getDepth());
 			System.out.println(node.getState().getRepresentation());
 		}
 	}
@@ -144,23 +149,27 @@ public class GPSEngine {
         PriorityQueue<GPSNode> candidates = new PriorityQueue<>(comparator);
         addCandidates(nodeToExplode, candidates);
 
-        while (!open.isEmpty())
-            candidates.add(open.remove());
 
-        while (!candidates.isEmpty()) {
-            GPSNode node = candidates.poll();
-            List<GPSNode> tiedNodes = new ArrayList<>();
-            tiedNodes.add(node);
-
-            while (!candidates.isEmpty() && comparator.compare(candidates.peek(), node) == 0)
-                tiedNodes.add(candidates.poll());
-
-            if (tiedNodes.size() > 1)
-                Collections.shuffle(tiedNodes);
-
-            for (GPSNode n : tiedNodes)
-                open.offer(n);
-        }
+		for (GPSNode candidate:candidates) {
+			open.add(candidate);
+		}
+//        while (!open.isEmpty())
+//            candidates.add(open.remove());
+//
+//        while (!candidates.isEmpty()) {
+//            GPSNode node = candidates.poll();
+//            List<GPSNode> tiedNodes = new ArrayList<>();
+//            tiedNodes.add(node);
+//
+//            while (!candidates.isEmpty() && comparator.compare(candidates.peek(), node) == 0)
+//                tiedNodes.add(candidates.poll());
+//
+//            if (tiedNodes.size() > 1)
+//                Collections.shuffle(tiedNodes);
+//
+//            for (GPSNode n : tiedNodes)
+//                open.offer(n);
+//        }
     }
 
 	private void addCandidates(GPSNode node, Collection<GPSNode> candidates) {
@@ -171,7 +180,7 @@ public class GPSEngine {
 			if (newState.isPresent()) {
 				GPSNode newNode = new GPSNode(newState.get(), node.getCost() + rule.getCost(), rule);
 				newNode.setParent(node);
-				newNode.setLevel(node.getLevel() + 1);
+				newNode.setLevel(node.getDepth() + 1);
 				candidates.add(newNode);
 			}
 		}
