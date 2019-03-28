@@ -1,3 +1,5 @@
+package main;
+
 import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
@@ -8,6 +10,7 @@ import gridlock.ProblemGridLock;
 import gridlock.RandomHeuristic;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -27,10 +30,25 @@ public class GridLockSolver {
     private static String TIME_RESULT_TEXT            = "\033[0;1mProcess time: \u001B[0m";
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
 
+    private static int UNINFORMED_SEARCH_ARGS_LENGTH = 1;
+    private static int INFORMED_SEARCH_ARGS_LENGTH = 2;
+    private static SearchStrategy DEFAULT_SEARCH_STRATEGY = BFS;
+
     public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
-        SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
-        Heuristic heuristic = parseHeuristic(args[1]);
+        SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
+        Heuristic heuristic = new RandomHeuristic();
+
+        if (!isInformedSearch(args) && !isUninformedSearch(args))
+            args = new String[]{"BFS"};
+        else
+            searchStrategy = parseSearchStrategy(args[0]);
+
+        System.out.println(args.length);
+
+        if (isInformedSearch(args))
+            heuristic = parseHeuristic(args[1]);
+
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
@@ -41,7 +59,7 @@ public class GridLockSolver {
         // Start prints of results
         LinkedList<GPSNode> path = new LinkedList<>();
 
-        if(!gpsEngine.isFailed()) {
+        if (!gpsEngine.isFailed()) {
             GPSNode current = gpsEngine.getSolutionNode();
             while (current.getParent() != null) {
                 path.push(current);
@@ -111,5 +129,13 @@ public class GridLockSolver {
             default:
                 return null;
         }
+    }
+
+    private static boolean isInformedSearch(String[] args) {
+        return args.length == INFORMED_SEARCH_ARGS_LENGTH;
+    }
+
+    private static boolean isUninformedSearch(String[] args) {
+        return args.length == UNINFORMED_SEARCH_ARGS_LENGTH;
     }
 }
