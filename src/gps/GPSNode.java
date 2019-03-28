@@ -8,6 +8,7 @@ public class GPSNode {
 	private State state;
 	private GPSNode parent;
 	private Integer cost;
+	private int level;
 	private Rule generationRule;
 
 	public GPSNode(State state, Integer cost, Rule generationRule) {
@@ -30,6 +31,14 @@ public class GPSNode {
 
 	public Integer getCost() {
 		return cost;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	@Override

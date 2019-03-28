@@ -6,6 +6,8 @@ import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
 
+import static gps.SearchStrategy.*;
+
 public class GPSEngine {
 
 	Queue<GPSNode> open;
@@ -33,31 +35,21 @@ public class GPSEngine {
 
 	public void findSolution() {
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
+		rootNode.setLevel(0);
 		open.add(rootNode);
-		// TODO: ¿Lógica de IDDFS?
-		while (open.size() > 0) {
-			GPSNode currentNode = open.remove();
-			if (problem.isGoal(currentNode.getState())) {
-				finished = true;
-				solutionNode = currentNode;
-				return;
-			} else {
-				explode(currentNode);
-			}
-		}
 
-		// TODO: Pasar lo siguiente a un metodo de IDDFS
-		/*int maxDepth = 15; // Número mágico, habría que definir el maxDepth según la heurística
-
-		for (int depthBound = 0; depthBound <= maxDepth; depthBound++) {
+		if (strategy == IDDFS) {
+			int maxDepth = 30;
+			IDDFS(maxDepth, rootNode);
+			return;
+		} else {
 			while (open.size() > 0) {
 				GPSNode currentNode = open.remove();
-
 				if (problem.isGoal(currentNode.getState())) {
 					finished = true;
 					solutionNode = currentNode;
 					return;
-				} else if (currLevel < depthBound){
+				} else {
 					explode(currentNode);
 				}
 			}
@@ -65,11 +57,46 @@ public class GPSEngine {
 
 		failed = true;
 		finished = true;
-		*/
-		// Aca termina el IDDFS
+	}
+
+	private void IDDFS(int maxDepth, GPSNode rootNode) {
+		for (int depthBound = 0; depthBound <= maxDepth; depthBound++) {
+			IDDFSWithDepthBound(depthBound);
+
+			if (finished)
+				return;
+			
+			bestCosts.clear();
+			((LinkedList<GPSNode>)open).push(rootNode);
+		}
 
 		failed = true;
 		finished = true;
+	}
+
+	private void IDDFSWithDepthBound(int depthBound) {
+		while (open.size() > 0 && !finished) {
+			GPSNode currentNode = ((LinkedList<GPSNode>)open).pop();
+			printBoardRepresentation(currentNode, depthBound);
+
+			if (problem.isGoal(currentNode.getState())) {
+				finished = true;
+				solutionNode = currentNode;
+			} else if (currentNode.getLevel() < depthBound) {
+				explode(currentNode);
+			}
+		}
+	}
+
+	private void printBoardRepresentation(GPSNode node, int depthBound) {
+		if (node != null) { //TODO: Limpiar esto
+			if (node.getGenerationRule() == null)
+				System.out.println("ES NULL");
+			else
+				System.out.println(node.getGenerationRule().getName());
+			System.out.println(depthBound);
+			System.out.println(node.getState().getRepresentation());
+		}
 	}
 
 	private void explode(GPSNode node) {
@@ -94,16 +121,10 @@ public class GPSEngine {
 				((LinkedList<GPSNode>)open).push(n);
 			break;
 		case IDDFS:
-			if (bestCosts.containsKey(node.getState()))
-				return;
-
-			newCandidates = new ArrayList<>();
-			addCandidates(node, newCandidates);
-
-			for (GPSNode n : newCandidates)
-				open.offer(n);
-
+			if (!bestCosts.containsKey(node.getState()))
+				addCandidates(node, open);
 			break;
+
 		case GREEDY:
 			greedy(node);
 			break;
@@ -148,7 +169,12 @@ public class GPSEngine {
 			if (newState.isPresent()) {
 				GPSNode newNode = new GPSNode(newState.get(), node.getCost() + rule.getCost(), rule);
 				newNode.setParent(node);
-				candidates.add(newNode);
+				newNode.setLevel(node.getLevel() + 1);
+
+				if (strategy == DFS || strategy == IDDFS)
+					((LinkedList<GPSNode>)candidates).push(newNode);
+				else
+					candidates.add(newNode);
 			}
 		}
 	}
