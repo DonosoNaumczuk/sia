@@ -39,7 +39,7 @@ public class GPSEngine {
 		open.add(rootNode);
 
 		if (strategy == IDDFS) {
-			int maxDepth = 30;
+			int maxDepth = 16;
 			IDDFS(maxDepth, rootNode);
 			return;
 		} else {
@@ -61,11 +61,12 @@ public class GPSEngine {
 
 	private void IDDFS(int maxDepth, GPSNode rootNode) {
 		for (int depthBound = 0; depthBound <= maxDepth; depthBound++) {
-			IDDFSWithDepthBound(depthBound);
+			DFSWithDepthBound(depthBound);
 
-			if (finished)
+			if (finished) {
 				return;
-			
+			}
+
 			bestCosts.clear();
 			((LinkedList<GPSNode>)open).push(rootNode);
 		}
@@ -74,10 +75,9 @@ public class GPSEngine {
 		finished = true;
 	}
 
-	private void IDDFSWithDepthBound(int depthBound) {
-		while (open.size() > 0 && !finished) {
-			GPSNode currentNode = ((LinkedList<GPSNode>)open).pop();
-			printBoardRepresentation(currentNode, depthBound);
+	private void DFSWithDepthBound(int depthBound) {
+		while (!open.isEmpty() && !finished) {
+			GPSNode currentNode = ((LinkedList<GPSNode>) open).pop();
 
 			if (problem.isGoal(currentNode.getState())) {
 				finished = true;
@@ -94,6 +94,8 @@ public class GPSEngine {
 				System.out.println("ES NULL");
 			else
 				System.out.println(node.getGenerationRule().getName());
+			System.out.println("hashCode: " + node.getState().hashCode());
+			System.out.println("parent hashCode: " + node.getParent().hashCode());
             System.out.println("Current depth bound: " + depthBound);
 			System.out.println("Node depth: " + node.getLevel());
 			System.out.println(node.getState().getRepresentation());
@@ -109,7 +111,7 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			for(GPSNode n : newCandidates)
+			for (GPSNode n : newCandidates)
 				open.offer(n);
 			break;
 		case DFS:
@@ -118,7 +120,7 @@ public class GPSEngine {
 			}
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
-			for(GPSNode n : newCandidates)
+			for (GPSNode n : newCandidates)
 				((LinkedList<GPSNode>)open).push(n);
 			break;
 		case IDDFS:
@@ -170,11 +172,7 @@ public class GPSEngine {
 				GPSNode newNode = new GPSNode(newState.get(), node.getCost() + rule.getCost(), rule);
 				newNode.setParent(node);
 				newNode.setLevel(node.getLevel() + 1);
-
-				if (strategy == DFS || strategy == IDDFS)
-					((LinkedList<GPSNode>)candidates).push(newNode);
-				else
-					candidates.add(newNode);
+				candidates.add(newNode);
 			}
 		}
 	}
