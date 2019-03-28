@@ -1,5 +1,9 @@
 # sia-tp1-gridlock
 
+##Run intruction
+*    mvn package
+*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar GridLockSolver BFS 0
+
 ## JSON Boards convention
 ### Element description
 * **rows**: number of board rows
