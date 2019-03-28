@@ -105,8 +105,8 @@ public class GPSEngine {
 			newCandidates = new ArrayList<>();
 			addCandidates(node, newCandidates);
 
-			for (GPSNode node : newCandidates)
-				open.offer(node);
+			for (GPSNode n : newCandidates)
+				open.offer(n);
 
 			break;
 		case GREEDY:
