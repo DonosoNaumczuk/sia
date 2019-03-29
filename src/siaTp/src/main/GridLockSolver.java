@@ -4,10 +4,8 @@ import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
-import gridlock.BoardGridLock;
-import gridlock.HeuristicGridLock1;
-import gridlock.ProblemGridLock;
-import gridlock.RandomHeuristic;
+import gps.api.Problem;
+import gridlock.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -44,15 +42,15 @@ public class GridLockSolver {
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        System.out.println(args.length);
+        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level8.json"));
 
         if (isInformedSearch(args))
-            heuristic = parseHeuristic(args[1]);
+            heuristic = parseHeuristic(args[1], problem);
 
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level1.json")), searchStrategy, heuristic);
+        GPSEngine gpsEngine = new GPSEngine(problem, searchStrategy, heuristic);
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
@@ -118,12 +116,12 @@ public class GridLockSolver {
         return searchStrategy;
     }
 
-    private static Heuristic parseHeuristic(String s) {
+    private static Heuristic parseHeuristic(String s, Problem problem) {
         switch (s) {
             case "0":
                 return new HeuristicGridLock1();
             case "1":
-                return null; // TODO: heuristic 1
+                return new HeuristicGridLockBfs(30, problem, new HeuristicGridLock1());
             case "2":
                 return new RandomHeuristic();
             default:

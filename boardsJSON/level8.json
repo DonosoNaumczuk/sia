@@ -1,7 +1,7 @@
 {
 	"rows": 6,
 	"columns": 6,
-	"exitPoint": {
+	"exit": {
 		"y": 5,
 		"x": 2
 	},
