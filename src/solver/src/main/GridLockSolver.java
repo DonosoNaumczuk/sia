@@ -67,6 +67,7 @@ public class GridLockSolver {
                 path.push(current);
                 current = current.getParent();
             }
+            path.push(current);
 
             // Print the path to solution
             int step = 1;
