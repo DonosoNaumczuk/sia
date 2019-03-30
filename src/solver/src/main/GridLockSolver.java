@@ -42,7 +42,7 @@ public class GridLockSolver {
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level8.json")); //TODO: elija el nivel
+        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level40.json")); //TODO: elija el nivel
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
             int depth = 0;
@@ -89,7 +89,7 @@ public class GridLockSolver {
         System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
         System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());
         if (!gpsEngine.isFailed()) {
-            System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
+            System.out.println(SOLUTION_DEEP_RESULT_TEXT + (path.size()-1));
             System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
         }
         System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
