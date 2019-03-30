@@ -6,8 +6,15 @@ import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gridlock.*;
+import gps.api.State;
+import gridlock.BoardGridLock;
+import gridlock.HeuristicGridLock1;
+import gridlock.ProblemGridLock;
+import gridlock.RandomHeuristic;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -77,6 +84,13 @@ public class GridLockSolver {
                 else
                     System.out.println(STEP_TEXT + step + INITIAL_STATE_TEXT);
                 System.out.println(node.getState().getRepresentation());
+                File f = new File("../../../steps/step" + step);
+                try {
+                    f.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                recordAsJson(node.getState());
                 step++;
             }
         }
@@ -93,6 +107,9 @@ public class GridLockSolver {
             System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
         }
         System.out.println(TIME_RESULT_TEXT + timeOfProcess + TIME_UNIT_RESULT_TEXT);
+    }
+
+    private static void recordAsJson(State state) {
     }
 
     private static SearchStrategy parseSearchStrategy(String s) {
