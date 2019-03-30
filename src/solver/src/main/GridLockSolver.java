@@ -17,8 +17,8 @@ public class GridLockSolver {
     private static String NO_HEURISTIC_RESULT_TEXT    = "\033[0;1mHeuristics was not used \u001B[0m";
     private static String HEURISTIC_RESULT_TEXT       = "\033[0;1mHeuristic description: \u001B[0m";
     private static String SUCCESS_RESULT_TEXT         = "\033[0;1mThe search was a ";
-    private static String SUCCESS_TEXT                = "success\u001B[0m";
-    private static String FAILURE_TEXT                = "failure\u001B[0m";
+    private static String SUCCESS_TEXT                = "\033[1;32msuccess\u001B[0m";
+    private static String FAILURE_TEXT                = "\033[1;31mfailure\u001B[0m";
     private static String NODES_EXPANDED_RESULT_TEXT  = "\033[0;1mExpanded nodes: \u001B[0m";
     private static String STATES_ANALYZED_RESULT_TEXT = "\033[0;1mAnalyzed states: \u001B[0m";
     private static String NODES_FRONTIER_RESULT_TEXT  = "\033[0;1mFrontier nodes: \u001B[0m";
@@ -29,20 +29,20 @@ public class GridLockSolver {
     private static String STEP_TEXT                   = "Step #";
     private static String INITIAL_STATE_TEXT          = ": Initial state";
 
-    private static int MAX_ARGS                      = 3;
+    private static int MAX_ARGS                           = 3;
     private static SearchStrategy DEFAULT_SEARCH_STRATEGY = BFS;
 
     public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
-        Heuristic heuristic = new RandomHeuristic();
+        Heuristic heuristic = null;
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level8.json")); //TODO: elija el nivel
+        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level8.json")); //Set board file
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
             int depth = 0;

@@ -1,6 +1,9 @@
 package gps;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
@@ -50,7 +53,14 @@ public class GPSEngine {
             open.add(rootNode);
 
             while (open.size() > 0) {
-				GPSNode currentNode = open.remove();
+				GPSNode currentNode;
+
+//				TODO: talk about this with the professors
+//				if (strategy == ASTAR)
+//            		currentNode = getNextNodeSolvingTies(open, ((PriorityQueue<GPSNode>) open).comparator());
+//            	else
+					currentNode = open.remove();
+
 				if (problem.isGoal(currentNode.getState())) {
 					finished = true;
 					solutionNode = currentNode;
@@ -122,40 +132,25 @@ public class GPSEngine {
 			greedy(node);
 			break;
 		case ASTAR:
-			aStar(node);
+            if (isBest(node.getState(), node.getCost()))
+                addCandidates(node, open);
             break;
 		}
 	}
 
-    private void aStar(GPSNode nodeToExplode) {
-        if (!isBest(nodeToExplode.getState(), nodeToExplode.getCost()))
-            return;
+	private GPSNode getNextNodeSolvingTies(Queue<GPSNode> nodes, Comparator<? super GPSNode> comparator) {
+        List<GPSNode> tiedNodes = nodes.stream().filter(new Predicate<GPSNode>() {
+            @Override
+            public boolean test(GPSNode node) {
+                return comparator.compare(nodes.peek(), node) == 0;
+            }
+        }).collect(Collectors.toList());
 
-        Comparator<GPSNode> comparator = new CostPlusHeuristicComparator();
-        PriorityQueue<GPSNode> candidates = new PriorityQueue<>(comparator);
-        addCandidates(nodeToExplode, candidates);
+        Collections.shuffle(tiedNodes);
 
-
-		for (GPSNode candidate:candidates) {
-			open.add(candidate);
-		}
-//        while (!open.isEmpty())
-//            candidates.add(open.remove());
-//
-//        while (!candidates.isEmpty()) {
-//            GPSNode node = candidates.poll();
-//            List<GPSNode> tiedNodes = new ArrayList<>();
-//            tiedNodes.add(node);
-//
-//            while (!candidates.isEmpty() && comparator.compare(candidates.peek(), node) == 0)
-//                tiedNodes.add(candidates.poll());
-//
-//            if (tiedNodes.size() > 1)
-//                Collections.shuffle(tiedNodes);
-//
-//            for (GPSNode n : tiedNodes)
-//                open.offer(n);
-//        }
+        GPSNode nextNode = tiedNodes.get(0);
+        nodes.remove(nextNode);
+        return nextNode;
     }
 
 	private void addCandidates(GPSNode node, Collection<GPSNode> candidates) {
