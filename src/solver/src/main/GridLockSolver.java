@@ -4,13 +4,10 @@ import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
-import gridlock.BoardGridLock;
-import gridlock.HeuristicGridLock1;
-import gridlock.ProblemGridLock;
-import gridlock.RandomHeuristic;
+import gps.api.Problem;
+import gridlock.*;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static gps.SearchStrategy.*;
@@ -29,9 +26,10 @@ public class GridLockSolver {
     private static String SOLUTION_COST_RESULT_TEXT   = "\033[0;1mSolution cost: \u001B[0m";
     private static String TIME_RESULT_TEXT            = "\033[0;1mProcess time: \u001B[0m";
     private static String TIME_UNIT_RESULT_TEXT       = " ms" ;
+    private static String STEP_TEXT                   = "Step #";
+    private static String INITIAL_STATE_TEXT          = ": Initial state";
 
-    private static int UNINFORMED_SEARCH_ARGS_LENGTH = 1;
-    private static int INFORMED_SEARCH_ARGS_LENGTH = 2;
+    private static int MAX_ARGS                      = 3;
     private static SearchStrategy DEFAULT_SEARCH_STRATEGY = BFS;
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -39,20 +37,24 @@ public class GridLockSolver {
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = new RandomHeuristic();
 
-        if (!isInformedSearch(args) && !isUninformedSearch(args))
+        if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        System.out.println(args.length);
+        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level8.json")); //TODO: elija el nivel
 
-        if (isInformedSearch(args))
-            heuristic = parseHeuristic(args[1]);
-
+        if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
+            int depth = 0;
+            if(args.length == 3) {
+                depth = Integer.getInteger(args[2]);
+            }
+            heuristic = parseHeuristic(args[1], problem, depth);
+        }
 
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(new BoardGridLock("boardsJSON/level1.json")), searchStrategy, heuristic);
+        GPSEngine gpsEngine = new GPSEngine(problem, searchStrategy, heuristic);
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
@@ -70,11 +72,9 @@ public class GridLockSolver {
             int step = 1;
             for (GPSNode node: path) {
                 if (node.getGenerationRule() != null)
-                    System.out.println("Step #" + step + ": " + node.getGenerationRule().getName());
+                    System.out.println(STEP_TEXT + step + ": " + node.getGenerationRule().getName());
                 else
-                    System.out.println("Step #" + step + ": Initial state");
-                if (heuristic != null)
-                    System.out.println("Heuristic = " + heuristic.getValue(node.getState()));
+                    System.out.println(STEP_TEXT + step + INITIAL_STATE_TEXT);
                 System.out.println(node.getState().getRepresentation());
                 step++;
             }
@@ -86,7 +86,7 @@ public class GridLockSolver {
         System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
         System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
         System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
-        System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size()); //TODO: IDDFS clears open structure, and lose information
+        System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());
         if (!gpsEngine.isFailed()) {
             System.out.println(SOLUTION_DEEP_RESULT_TEXT + path.size());
             System.out.println(SOLUTION_COST_RESULT_TEXT + gpsEngine.getSolutionNode().getCost());
@@ -118,24 +118,16 @@ public class GridLockSolver {
         return searchStrategy;
     }
 
-    private static Heuristic parseHeuristic(String s) {
+    private static Heuristic parseHeuristic(String s, Problem problem, int depth) {
         switch (s) {
             case "0":
                 return new HeuristicGridLock1();
             case "1":
-                return null; // TODO: heuristic 1
+                return new HeuristicGridLockBfs(depth, problem, new HeuristicGridLock1());
             case "2":
                 return new RandomHeuristic();
             default:
                 return null;
         }
-    }
-
-    private static boolean isInformedSearch(String[] args) {
-        return args.length == INFORMED_SEARCH_ARGS_LENGTH;
-    }
-
-    private static boolean isUninformedSearch(String[] args) {
-        return args.length == UNINFORMED_SEARCH_ARGS_LENGTH;
     }
 }
