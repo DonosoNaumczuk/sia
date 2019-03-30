@@ -16,6 +16,95 @@
               "y": 1
           }
         },
-
+        {
+          "firstPoint": {
+            "y": 0,
+            "x": 0
+          },
+          "secondPoint": {
+            "y": 0,
+            "x": 1
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 1,
+            "x": 0
+          },
+          "secondPoint": {
+            "y": 2,
+            "x": 0
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 1,
+            "x": 1
+          },
+          "secondPoint": {
+            "y": 2,
+            "x": 1
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 2,
+            "x": 2
+          },
+          "secondPoint": {
+            "y": 2,
+            "x": 3
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 2,
+            "x": 4
+          },
+          "secondPoint": {
+            "y": 2,
+            "x": 5
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 3,
+            "x": 0
+          },
+          "secondPoint": {
+            "y": 3,
+            "x": 2
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 3,
+            "x": 3
+          },
+          "secondPoint": {
+            "y": 4,
+            "x": 3
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 5,
+            "x": 2
+          },
+          "secondPoint": {
+            "y": 5,
+            "x": 4
+          }
+        },
+        {
+          "firstPoint": {
+            "y": 3,
+            "x": 5
+          },
+          "secondPoint": {
+            "y": 5,
+            "x": 5
+          }
+        }
   ]
 }
