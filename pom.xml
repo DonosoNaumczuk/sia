@@ -12,7 +12,7 @@
   <modules>
     <module>./src/gps</module>
     <module>./src/gridlock</module>
-    <module>./src/siaTp</module>
+    <module>./src/solver</module>
     <module>./src/testGps</module>
   </modules>
 

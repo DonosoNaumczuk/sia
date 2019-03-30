@@ -58,6 +58,6 @@ public class HeuristicGridLock1 implements Heuristic{
 
     @Override
     public String toString() {
-        return "Return the distance from the block to the exit";
+        return "Return the distance from the block to the exit plus the blocks between the block and the exit";
     }
 }

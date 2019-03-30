@@ -102,6 +102,11 @@ public class HeuristicGridLockBfs implements Heuristic {
         return !bestEstimation.containsKey(state) || estimation < bestEstimation.get(state);
     }
 
+    @Override
+    public String toString() {
+        return "Makes a BFS using the state as the root";
+    }
+
     private class Node {
         private State state;
         private Node parent;
