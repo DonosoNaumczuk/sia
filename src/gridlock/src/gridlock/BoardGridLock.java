@@ -3,8 +3,7 @@ package gridlock;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import java.awt.Point;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import static gridlock.Direction.*;
@@ -265,6 +264,20 @@ public class BoardGridLock {
         return newBoard;
     }
 
+    public JSONGridLockBoardParser.JSONBoard asJSONBoard() {
+        JSONGridLockBoardParser.JSONBoard jsonBoard = new JSONGridLockBoardParser.JSONBoard();
+        jsonBoard.exit = this.exit;
+        jsonBoard.rows = this.board.length;
+        jsonBoard.columns = this.board.length;
+        jsonBoard.blocks = new JSONGridLockBoardParser.JSONBlock[blocks.size()];
+        for (int i = 0; i < blocks.size(); i++) {
+            jsonBoard.blocks[i] = new JSONGridLockBoardParser.JSONBlock();
+            jsonBoard.blocks[i].firstPoint = blocks.get(i).begin;
+            jsonBoard.blocks[i].secondPoint = blocks.get(i).end;
+        }
+        return jsonBoard;
+    }
+
     /**
      * Block pieces that fill the gridlock board
      */
@@ -361,15 +374,15 @@ public class BoardGridLock {
     /**
      * A class done just to make the JSON parsing easier
      */
-     private class JSONGridLockBoardParser {
-        class JSONBoard {
+     public static class JSONGridLockBoardParser {
+        public static class JSONBoard {
             int rows;
             int columns;
             Point exit;
             JSONBlock[] blocks;
         }
 
-        class JSONBlock {
+        public static class JSONBlock {
             Point firstPoint;
             Point secondPoint;
         }

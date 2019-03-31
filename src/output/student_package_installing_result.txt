@@ -1,0 +1,22 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mBuilding Maven Stub Project (No POM) 1[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:2.4:install-file[m [1m(default-cli)[m @ [36mstandalone-pom[0;1m ---[m
+[[1;31mERROR[m] The specified file '/home/jtorreguitar/Documents/SIA/sia-tp1-gridlock/src/target/gps-1.0.jar' not exists
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time: 0.337 s
+[[1;34mINFO[m] Finished at: 2019-03-25T17:14:04-03:00
+[[1;34mINFO[m] Final Memory: 7M/150M
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-install-plugin:2.4:install-file[m [1m(default-cli)[m on project [36mstandalone-pom[m: [1;31mThe specified file '/home/jtorreguitar/Documents/SIA/sia-tp1-gridlock/src/target/gps-1.0.jar' not exists[m -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

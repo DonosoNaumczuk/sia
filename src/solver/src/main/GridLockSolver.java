@@ -1,14 +1,21 @@
 package main;
 
+import com.google.gson.Gson;
 import gps.GPSEngine;
 import gps.GPSNode;
 import gps.SearchStrategy;
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gridlock.*;
+import gps.api.State;
+import gridlock.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import static gps.SearchStrategy.*;
 
@@ -36,13 +43,14 @@ public class GridLockSolver {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level40.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level40.json")); //Set board file
+        Problem problem = new ProblemGridLock(startingBoard); //Set board file
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
             int depth = 0;
@@ -62,6 +70,9 @@ public class GridLockSolver {
         LinkedList<GPSNode> path = new LinkedList<>();
 
         if (!gpsEngine.isFailed()) {
+            ProblemDefinitionJson problemDefinitionJson = new ProblemDefinitionJson();
+            problemDefinitionJson.boards = new LinkedList<>();
+            problemDefinitionJson.boards.add(startingBoard.asJSONBoard());
             GPSNode current = gpsEngine.getSolutionNode();
             while (current.getParent() != null) {
                 path.push(current);
@@ -71,20 +82,32 @@ public class GridLockSolver {
 
             // Print the path to solution
             int step = 1;
-            for (GPSNode node: path) {
+            for (GPSNode node : path) {
                 if (node.getGenerationRule() != null)
                     System.out.println(STEP_TEXT + step + ": " + node.getGenerationRule().getName());
                 else
                     System.out.println(STEP_TEXT + step + INITIAL_STATE_TEXT);
                 System.out.println(node.getState().getRepresentation());
                 step++;
+                problemDefinitionJson.boards.add(((StateGridLock) node.getState()).getBoard().asJSONBoard());
+            }
+            File problemFile = new File("JsonProblem/problem.json");
+            problemDefinitionJson.stepCount = step;
+            problemDefinitionJson.sideLength = startingBoard.getBoard().length;
+            try {
+                problemFile.createNewFile();
+                FileWriter writer = new FileWriter(problemFile);
+                writer.write(new Gson().toJson(problemDefinitionJson));
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
         System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
-        System.out.println(heuristic == null? NO_HEURISTIC_RESULT_TEXT :
+        System.out.println(heuristic == null ? NO_HEURISTIC_RESULT_TEXT :
                 HEURISTIC_RESULT_TEXT + heuristic.toString());
-        System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed()?FAILURE_TEXT:SUCCESS_TEXT));
+        System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed() ? FAILURE_TEXT : SUCCESS_TEXT));
         System.out.println(NODES_EXPANDED_RESULT_TEXT + gpsEngine.getExplosionCounter());
         System.out.println(STATES_ANALYZED_RESULT_TEXT + gpsEngine.getBestCosts().size());
         System.out.println(NODES_FRONTIER_RESULT_TEXT + gpsEngine.getOpen().size());
@@ -130,5 +153,11 @@ public class GridLockSolver {
             default:
                 return null;
         }
+    }
+
+    private static class ProblemDefinitionJson {
+        int sideLength;
+        int stepCount;
+        List<BoardGridLock.JSONGridLockBoardParser.JSONBoard> boards;
     }
 }
