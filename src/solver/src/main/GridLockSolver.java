@@ -41,16 +41,16 @@ public class GridLockSolver {
 
     public static void main(String[] args) throws FileNotFoundException {
         // Parse parameters
-<<<<<<< HEAD:src/solver/src/main/GridLockSolver.java
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
         else
             searchStrategy = parseSearchStrategy(args[0]);
 
-        Problem problem = new ProblemGridLock(new BoardGridLock("boardsJSON/level40.json")); //Set board file
+        Problem problem = new ProblemGridLock(startingBoard); //Set board file
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
             int depth = 0;
@@ -63,15 +63,6 @@ public class GridLockSolver {
         // Start run
         long timeOfProcess = System.currentTimeMillis(); //start time
         GPSEngine gpsEngine = new GPSEngine(problem, searchStrategy, heuristic);
-=======
-        SearchStrategy searchStrategy = parseSearchStrategy(args[0]);
-        Heuristic heuristic = parseHeuristic(args[1]);
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level1.json");
-
-        // Start run
-        long timeOfProcess = System.currentTimeMillis(); //start time
-        GPSEngine gpsEngine = new GPSEngine(new ProblemGridLock(startingBoard), searchStrategy, heuristic);
->>>>>>> board parsing complete:src/siaTp/src/main/GridLockSolver.java
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 
@@ -79,12 +70,9 @@ public class GridLockSolver {
         LinkedList<GPSNode> path = new LinkedList<>();
 
         if (!gpsEngine.isFailed()) {
-<<<<<<< HEAD:src/solver/src/main/GridLockSolver.java
-=======
             ProblemDefinitionJson problemDefinitionJson = new ProblemDefinitionJson();
             problemDefinitionJson.boards = new LinkedList<>();
             problemDefinitionJson.boards.add(startingBoard.asJSONBoard());
->>>>>>> board parsing complete:src/siaTp/src/main/GridLockSolver.java
             GPSNode current = gpsEngine.getSolutionNode();
             while (current.getParent() != null) {
                 path.push(current);
@@ -103,12 +91,12 @@ public class GridLockSolver {
                 step++;
                 problemDefinitionJson.boards.add(((StateGridLock) node.getState()).getBoard().asJSONBoard());
             }
-            File problem = new File("JsonProblem/problem.json");
+            File problemFile = new File("JsonProblem/problem.json");
             problemDefinitionJson.stepCount = step;
             problemDefinitionJson.sideLength = startingBoard.getBoard().length;
             try {
-                problem.createNewFile();
-                FileWriter writer = new FileWriter(problem);
+                problemFile.createNewFile();
+                FileWriter writer = new FileWriter(problemFile);
                 writer.write(new Gson().toJson(problemDefinitionJson));
                 writer.close();
             } catch (IOException e) {

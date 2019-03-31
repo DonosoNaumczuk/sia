@@ -49,7 +49,7 @@ function draw() {
         });
         currentBlock = 0;
         currentBoard++;
-        wait(1000);
+        wait(50);
     }
 }
 
