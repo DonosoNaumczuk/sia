@@ -43,7 +43,7 @@ public class GridLockSolver {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level40.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};

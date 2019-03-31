@@ -19,7 +19,7 @@ function draw() {
         rect(0, 0, data['sideLength']*squareSideLength, data['sideLength']*squareSideLength);
         data['boards'][currentBoard]['blocks'].forEach(block => {
             if(currentBlock == 0) fill(66, 69, 244);
-            else fill(214, 8, 8);
+            else fill(66, 244, 191);
             currentBlock++;
             if(block['firstPoint']['x'] == block['secondPoint']['x']) {
                 if(block['firstPoint']['y'] < block['secondPoint']['y']) {
@@ -49,7 +49,7 @@ function draw() {
         });
         currentBlock = 0;
         currentBoard++;
-        wait(50);
+        wait(250);
     }
 }
 
