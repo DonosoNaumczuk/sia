@@ -1,14 +1,12 @@
 package main;
 
+import ar.edu.itba.sia.gps.GPSEngine;
+import ar.edu.itba.sia.gridlock.*;
 import com.google.gson.Gson;
-import gps.GPSEngine;
-import gps.GPSNode;
-import gps.SearchStrategy;
-import gps.api.Heuristic;
-import gps.api.Problem;
-import gridlock.*;
-import gps.api.State;
-import gridlock.*;
+import ar.edu.itba.sia.gps.GPSNode;
+import ar.edu.itba.sia.gps.SearchStrategy;
+import ar.edu.itba.sia.gps.api.Heuristic;
+import ar.edu.itba.sia.gps.api.Problem;
 
 import java.awt.*;
 import java.io.File;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static gps.SearchStrategy.*;
+import static ar.edu.itba.sia.gps.SearchStrategy.*;
 
 public class GridLockSolver {
     private static final int DEFAULT_IDDFS_DEPTH = 50;
@@ -53,7 +51,7 @@ public class GridLockSolver {
 
         if (args.length > MAX_ARGS || args.length < 2)
             args = new String[]{"BFS", "40"};
-        else
+        elsecode
             searchStrategy = parseSearchStrategy(args[0]);
 
         // Parse parameters
