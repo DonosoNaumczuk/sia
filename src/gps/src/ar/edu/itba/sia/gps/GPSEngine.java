@@ -1,16 +1,14 @@
-package gps;
+package ar.edu.itba.sia.gps;
+
+import ar.edu.itba.sia.gps.api.Heuristic;
+import ar.edu.itba.sia.gps.api.Problem;
+import ar.edu.itba.sia.gps.api.Rule;
+import ar.edu.itba.sia.gps.api.State;
 
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import gps.api.Heuristic;
-import gps.api.Problem;
-import gps.api.Rule;
-import gps.api.State;
-import javafx.scene.layout.Priority;
+import static ar.edu.itba.sia.gps.SearchStrategy.*;
 
-import static gps.SearchStrategy.*;
 
 public class GPSEngine {
 
