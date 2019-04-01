@@ -15,7 +15,7 @@ function setup() {
 
 function draw() {
     if(currentBoard < data['stepCount']) {
-        drawBoard();
+        drawGrid();
         data['boards'][currentBoard]['blocks'].forEach(block => {
             if(currentBlock == 0) fill(66, 69, 244);
             else fill(66, 244, 191);
@@ -44,9 +44,13 @@ const wait = ms => {
     while(d2-d < ms);
 }
 
-const drawBoard = () => {
+const drawGrid = () => {
     fill(255, 255, 255);
     rect(0, 0, data['sideLength']*squareSideLength, data['sideLength']*squareSideLength);
+    for(i = 0; i < data['sideLength']; i++) {
+        line(0, squareSideLength*i, squareSideLength*data['sideLength'], squareSideLength*i);
+        line(squareSideLength*i, 0, squareSideLength*i, squareSideLength*data['sideLength']);
+    }
 }
 const drawExit = () => {
     fill(224, 4, 19);
