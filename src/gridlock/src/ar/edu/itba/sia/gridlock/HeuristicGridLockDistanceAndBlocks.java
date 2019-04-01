@@ -3,7 +3,8 @@ package ar.edu.itba.sia.gridlock;
 import ar.edu.itba.sia.gps.api.Heuristic;
 import ar.edu.itba.sia.gps.api.State;
 
-public class HeuristicGridLock1 implements Heuristic{
+public class HeuristicGridLockDistanceAndBlocks implements Heuristic {
+
     @Override
     public Integer getValue(State state) {
         if(!(state instanceof StateGridLock)) {
@@ -58,6 +59,7 @@ public class HeuristicGridLock1 implements Heuristic{
 
     @Override
     public String toString() {
-        return "Return the distance from the block to the exit plus the blocks between the block and the exit";
+        return "Returns the distance from the goal block to the exit plus the number of blocks between the goal " +
+                "block and the exit";
     }
 }
