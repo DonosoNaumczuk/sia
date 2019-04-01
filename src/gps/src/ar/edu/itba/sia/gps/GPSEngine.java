@@ -1,12 +1,16 @@
-package ar.edu.itba.sia.gps;
+package gps;
 
 import java.util.*;
-import ar.edu.itba.sia.gps.api.Heuristic;
-import ar.edu.itba.sia.gps.api.Problem;
-import ar.edu.itba.sia.gps.api.Rule;
-import ar.edu.itba.sia.gps.api.State;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import static ar.edu.itba.sia.gps.SearchStrategy.*;
+import gps.api.Heuristic;
+import gps.api.Problem;
+import gps.api.Rule;
+import gps.api.State;
+import javafx.scene.layout.Priority;
+
+import static gps.SearchStrategy.*;
 
 public class GPSEngine {
 
@@ -23,7 +27,7 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-		if(strategy == ASTAR) {
+		if (strategy == ASTAR) {
 			Comparator<GPSNode> comparator = new CostPlusHeuristicComparator();
 			open = new PriorityQueue<>(comparator);
 		} else {

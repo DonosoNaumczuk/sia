@@ -21,13 +21,21 @@ function draw() {
             else fill(66, 244, 191);
             currentBlock++;
             if(isLong(block)) {
-                stretchesToTheRight(block) 
+                stretchesToTheRight(block)
                 ? drawRectangleStretchingToTheRight(block)
                 : drawRectangleStretchingToTheLeft(block);
             } else {
-                stretchesUpwards(block)
-                ? drawRectangleStretchingUpwards(block)
-                : drawRectangleStretchingDownwards(block);
+                if (block['firstPoint']['x'] < block['secondPoint']['x']) {
+                    rect(block['firstPoint']['y']*squareSideLength,
+                        block['firstPoint']['x']*squareSideLength,
+                        squareSideLength,
+                        (block['secondPoint']['x'] - block['firstPoint']['x'] + 1)*squareSideLength);
+                } else {
+                    rect(block['firstPoint']['y']*squareSideLength,
+                        block['firstPoint']['x']*squareSideLength,
+                        squareSideLength,
+                        (block['firstPoint']['x'] - block['secondPoint']['x'] + 1)*squareSideLength);
+                }
             }
             drawExit(224, 4, 19);
         });
