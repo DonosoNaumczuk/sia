@@ -1,7 +1,7 @@
 package gridlock;
 
-import gps.api.Rule;
-import gps.api.State;
+import ar.edu.itba.sia.gps.api.Rule;
+import ar.edu.itba.sia.gps.api.State;
 import java.util.Optional;
 
 public class RuleGridLock implements Rule {

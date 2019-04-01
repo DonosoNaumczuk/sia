@@ -13,7 +13,6 @@
     <module>./src/gps</module>
     <module>./src/gridlock</module>
     <module>./src/solver</module>
-    <module>./src/testGps</module>
   </modules>
 
   <name>siaTpParent</name>

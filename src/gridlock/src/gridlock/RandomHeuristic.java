@@ -1,7 +1,7 @@
 package gridlock;
 
-import gps.api.Heuristic;
-import gps.api.State;
+import ar.edu.itba.sia.gps.api.Heuristic;
+import ar.edu.itba.sia.gps.api.State;
 
 import java.util.Random;
 
