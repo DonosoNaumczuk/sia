@@ -1,6 +1,6 @@
 package gridlock;
 
-import gps.api.State;
+import ar.edu.itba.sia.gps.api.State;
 
 public class StateGridLock implements State {
 

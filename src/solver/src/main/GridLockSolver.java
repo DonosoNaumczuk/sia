@@ -1,15 +1,14 @@
 package main;
 
+import ar.edu.itba.sia.gps.GPSEngine;
 import com.google.gson.Gson;
-import gps.GPSEngine;
-import gps.GPSNode;
-import gps.SearchStrategy;
-import gps.api.Heuristic;
-import gps.api.Problem;
-import gridlock.*;
-import gps.api.State;
+import ar.edu.itba.sia.gps.GPSNode;
+import ar.edu.itba.sia.gps.SearchStrategy;
+import ar.edu.itba.sia.gps.api.Heuristic;
+import ar.edu.itba.sia.gps.api.Problem;
 import gridlock.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static gps.SearchStrategy.*;
+import static ar.edu.itba.sia.gps.SearchStrategy.*;
 
 public class GridLockSolver {
     private static String ALGORITHM_RESULT_TEXT       = "\033[0;1mSearch strategy: \u001B[0m";
@@ -43,7 +42,7 @@ public class GridLockSolver {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level40.json");
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
@@ -94,6 +93,7 @@ public class GridLockSolver {
             File problemFile = new File("JsonProblem/problem.json");
             problemDefinitionJson.stepCount = step;
             problemDefinitionJson.sideLength = startingBoard.getBoard().length;
+            problemDefinitionJson.exit = startingBoard.getExit();
             try {
                 problemFile.createNewFile();
                 FileWriter writer = new FileWriter(problemFile);
@@ -158,6 +158,7 @@ public class GridLockSolver {
     private static class ProblemDefinitionJson {
         int sideLength;
         int stepCount;
+        Point exit;
         List<BoardGridLock.JSONGridLockBoardParser.JSONBoard> boards;
     }
 }
