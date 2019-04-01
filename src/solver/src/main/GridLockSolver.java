@@ -145,11 +145,11 @@ public class GridLockSolver {
     private static Heuristic parseHeuristic(String s, Problem problem, int depth) {
         switch (s) {
             case "0":
-                return new HeuristicGridLock1();
+                return new HeuristicGridLockDistance();
             case "1":
-                return new HeuristicGridLockBfs(depth, problem, new HeuristicGridLock1());
+                return new HeuristicGridLockDistanceAndBlocks();
             case "2":
-                return new RandomHeuristic();
+            return new HeuristicGridLockBfs(depth, problem, new HeuristicGridLockDistanceAndBlocks());
             default:
                 return null;
         }
