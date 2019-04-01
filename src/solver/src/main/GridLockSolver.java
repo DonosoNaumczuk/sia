@@ -51,7 +51,7 @@ public class GridLockSolver {
 
         if (args.length > MAX_ARGS || args.length < 2)
             args = new String[]{"BFS", "40"};
-        elsecode
+        else
             searchStrategy = parseSearchStrategy(args[0]);
 
         // Parse parameters
