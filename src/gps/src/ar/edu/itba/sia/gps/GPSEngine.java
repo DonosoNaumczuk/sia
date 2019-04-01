@@ -7,10 +7,7 @@ import ar.edu.itba.sia.gps.api.State;
 
 import java.util.*;
 
-import gps.api.Heuristic;
-import gps.api.Problem;
-import gps.api.Rule;
-import gps.api.State;
+import static ar.edu.itba.sia.gps.SearchStrategy.*;
 
 
 public class GPSEngine {
