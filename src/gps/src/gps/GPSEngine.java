@@ -46,7 +46,7 @@ public class GPSEngine {
 		rootNode.setLevel(0);
 
 		if (strategy == IDDFS) {
-			int maxDepth = 50;
+			int maxDepth = 1000;
 			IDDFS(maxDepth, rootNode);
 			return;
 		} else {
