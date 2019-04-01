@@ -21,6 +21,7 @@ import java.util.List;
 import static gps.SearchStrategy.*;
 
 public class GridLockSolver {
+    private static final int DEFAULT_IDDFS_DEPTH = 50;
     private static String ALGORITHM_RESULT_TEXT       = "\033[0;1mSearch strategy: \u001B[0m";
     private static String NO_HEURISTIC_RESULT_TEXT    = "\033[0;1mHeuristics was not used \u001B[0m";
     private static String HEURISTIC_RESULT_TEXT       = "\033[0;1mHeuristic description: \u001B[0m";
@@ -37,33 +38,48 @@ public class GridLockSolver {
     private static String STEP_TEXT                   = "Step #";
     private static String INITIAL_STATE_TEXT          = ": Initial state";
 
-    private static int MAX_ARGS                           = 3;
+    private static int MAX_ARGS                           = 4;
     private static SearchStrategy DEFAULT_SEARCH_STRATEGY = BFS;
 
+    /**
+     * args[0]: searchStrategy
+     * args[1]: level
+     * args[2]: heuristic (for ASTAR or GREEDY)
+     * args[3]: depth (for ASTAR, GREEDY or IDDFS)
+    */
     public static void main(String[] args) throws FileNotFoundException {
-        // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
 
-        if (args.length > MAX_ARGS)
-            args = new String[]{"BFS"};
+        if (args.length > MAX_ARGS || args.length < 2)
+            args = new String[]{"BFS", "40"};
         else
             searchStrategy = parseSearchStrategy(args[0]);
+
+        // Parse parameters
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level" + args[1] + ".json");
+        int depth = 0;
 
         Problem problem = new ProblemGridLock(startingBoard); //Set board file
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
-            int depth = 0;
-            if(args.length == 3) {
-                depth = Integer.getInteger(args[2]);
+            depth = 0;
+            if(args.length > 2) {
+                depth = Integer.valueOf(args[3]);
             }
-            heuristic = parseHeuristic(args[1], problem, depth);
+            heuristic = parseHeuristic(args[2], problem, depth);
+        }
+        else if (searchStrategy == IDDFS) {
+            depth = DEFAULT_IDDFS_DEPTH;
+            if(args.length > 2) {
+                depth = Integer.valueOf(args[3]);
+            }
         }
 
         // Start run
-        long timeOfProcess = System.currentTimeMillis(); //start time
         GPSEngine gpsEngine = new GPSEngine(problem, searchStrategy, heuristic);
+        gpsEngine.setDepth(depth);
+        long timeOfProcess = System.currentTimeMillis(); //start time
         gpsEngine.findSolution();
         timeOfProcess = System.currentTimeMillis() - timeOfProcess; // duration = finish time - start time
 

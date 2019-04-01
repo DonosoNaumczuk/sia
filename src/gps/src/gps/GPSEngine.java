@@ -1,14 +1,11 @@
 package gps;
 
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
-import javafx.scene.layout.Priority;
 
 import static gps.SearchStrategy.*;
 
@@ -20,6 +17,7 @@ public class GPSEngine {
 	long explosionCounter;
 	boolean finished;
 	boolean failed;
+	int depth;
 	GPSNode solutionNode;
 	Optional<Heuristic> heuristic;
 
@@ -47,7 +45,7 @@ public class GPSEngine {
 		rootNode.setLevel(0);
 
 		if (strategy == IDDFS) {
-			int maxDepth = 1000;
+			int maxDepth = getDepth();
 			IDDFS(maxDepth, rootNode);
 			return;
 		} else {
@@ -240,6 +238,10 @@ public class GPSEngine {
 	public long getExplosionCounter() {
 		return explosionCounter;
 	}
+
+	public int getDepth() { return depth; }
+
+	public void setDepth(int depth) { this.depth = depth; }
 
 	public boolean isFinished() {
 		return finished;
