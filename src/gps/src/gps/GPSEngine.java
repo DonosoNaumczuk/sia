@@ -8,6 +8,7 @@ import gps.api.Heuristic;
 import gps.api.Problem;
 import gps.api.Rule;
 import gps.api.State;
+import javafx.scene.layout.Priority;
 
 import static gps.SearchStrategy.*;
 
@@ -55,10 +56,9 @@ public class GPSEngine {
             while (open.size() > 0) {
 				GPSNode currentNode;
 
-//				TODO: talk about this with the professors
-//				if (strategy == ASTAR)
-//            		currentNode = getNextNodeSolvingTies(open, ((PriorityQueue<GPSNode>) open).comparator());
-//            	else
+				if (strategy == ASTAR)
+            		currentNode = getNextNodeFromPQSolvingTies((PriorityQueue<GPSNode>) open);
+            	else
 					currentNode = open.remove();
 
 				if (problem.isGoal(currentNode.getState())) {
@@ -138,17 +138,17 @@ public class GPSEngine {
 		}
 	}
 
-	private GPSNode getNextNodeSolvingTies(Queue<GPSNode> nodes, Comparator<? super GPSNode> comparator) {
-        List<GPSNode> tiedNodes = nodes.stream().filter(new Predicate<GPSNode>() {
-            @Override
-            public boolean test(GPSNode node) {
-                return comparator.compare(nodes.peek(), node) == 0;
-            }
-        }).collect(Collectors.toList());
+	private GPSNode getNextNodeFromPQSolvingTies(PriorityQueue<GPSNode> nodes) {
+        ArrayList<GPSNode> tiedNodes = new ArrayList<>();
+        for (GPSNode node : nodes) {
+            if (nodes.comparator().compare(nodes.peek(), node) == 0)
+                tiedNodes.add(node);
+            else
+                break;
+        }
 
-        Collections.shuffle(tiedNodes);
-
-        GPSNode nextNode = tiedNodes.get(0);
+        int randomIndex     = new Random().nextInt(tiedNodes.size());
+        GPSNode nextNode    = tiedNodes.get(randomIndex);
         nodes.remove(nextNode);
         return nextNode;
     }
@@ -206,9 +206,9 @@ public class GPSEngine {
 
 		GPSNode last = null;
 		LinkedList<GPSNode> aux = new LinkedList<>();
-		for (GPSNode candidate: newCandidates) {
-			if(last != null && comparator.compare(last, candidate) != 0) {
-				Collections.shuffle(aux); //Random equals
+		for (GPSNode candidate : newCandidates) {
+			if (last != null && comparator.compare(last, candidate) != 0) {
+				Collections.shuffle(aux); //Breaking up ties
 				for (GPSNode nodeEquals : aux) {
 					((LinkedList<GPSNode>) open).push(nodeEquals);
 				}
@@ -217,7 +217,7 @@ public class GPSEngine {
 			last = candidate;
 			aux.add(candidate);
 		}
-		Collections.shuffle(aux); //Random equals
+		Collections.shuffle(aux); //Breaking up ties
 		for (GPSNode nodeEquals : aux) {
 			((LinkedList<GPSNode>) open).push(nodeEquals);
 		}
