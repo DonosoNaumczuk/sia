@@ -10,6 +10,7 @@ import gridlock.*;
 import gps.api.State;
 import gridlock.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -43,7 +44,7 @@ public class GridLockSolver {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level40.json");
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};
@@ -94,6 +95,7 @@ public class GridLockSolver {
             File problemFile = new File("JsonProblem/problem.json");
             problemDefinitionJson.stepCount = step;
             problemDefinitionJson.sideLength = startingBoard.getBoard().length;
+            problemDefinitionJson.exit = startingBoard.getExit();
             try {
                 problemFile.createNewFile();
                 FileWriter writer = new FileWriter(problemFile);
@@ -158,6 +160,7 @@ public class GridLockSolver {
     private static class ProblemDefinitionJson {
         int sideLength;
         int stepCount;
+        Point exit;
         List<BoardGridLock.JSONGridLockBoardParser.JSONBoard> boards;
     }
 }
