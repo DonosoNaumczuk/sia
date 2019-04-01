@@ -34,7 +34,7 @@ function draw() {
                     squareSideLength);
                 }
             } else {
-                if(block['firstPoint']['x'] < block['secondPoint']['x']) {
+                if (block['firstPoint']['x'] < block['secondPoint']['x']) {
                     rect(block['firstPoint']['y']*squareSideLength,
                         block['firstPoint']['x']*squareSideLength,
                         squareSideLength,

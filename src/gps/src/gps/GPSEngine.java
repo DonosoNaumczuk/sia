@@ -27,7 +27,7 @@ public class GPSEngine {
 	protected SearchStrategy strategy;
 
 	public GPSEngine(Problem problem, SearchStrategy strategy, Heuristic heuristic) {
-		if(strategy == ASTAR) {
+		if (strategy == ASTAR) {
 			Comparator<GPSNode> comparator = new CostPlusHeuristicComparator();
 			open = new PriorityQueue<>(comparator);
 		} else {
