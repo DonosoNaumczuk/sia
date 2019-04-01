@@ -29,11 +29,13 @@ function draw() {
                 ? drawRectangleStretchingUpwards(block)
                 : drawRectangleStretchingDownwards(block);
             }
-            drawExit();
+            drawExit(224, 4, 19);
         });
         currentBlock = 0;
         currentBoard++;
-        wait(250);
+        wait(50);
+    } else {
+        drawExit(72, 237, 7);
     }
 }
 
@@ -52,8 +54,8 @@ const drawGrid = () => {
         line(squareSideLength*i, 0, squareSideLength*i, squareSideLength*data['sideLength']);
     }
 }
-const drawExit = () => {
-    fill(224, 4, 19);
+const drawExit = (r, g, b) => {
+    fill(r, g, b);
     rect((data['exit']['y']+1)*squareSideLength,
         data['exit']['x']*squareSideLength,
         0.25*squareSideLength,
