@@ -2,9 +2,9 @@
 
 ## Run Intructions
 *    mvn package
-*    java -cp ./src/siaTp/target/siaTp-1.0.jar:./src/gps/target/gps-1.0.jar:./src/gridlock/target/gridlock-1.0.jar:./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar GridLockSolver **search_algorithm** **heuristic**
+*    ./gridlockSolver.sh **path_board_JSON** **search_algorithm** [**heuristic**|**maxDepth**]
 
-where **search_algorithm** can be replaced by any of: "BFS", "DFS", "IDDFS", "ASTAR" or "GREEDY" and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account the distance between the main block and the exit plus the ammount of blocks between the main block and the exit. Heuristic 1 is still under implementation. For algorithms BFS, DFS and IDDFS the **heuristic** field is not required. Leaving this field empty for the other algorithms will throw an index out of bounds exception
+where **search_algorithm** can be replaced by any of: "BFS", "DFS", "IDDFS", "ASTAR" or "GREEDY" and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account the distance between the main block and the exit. Heuristic 1 is the same as heuristic 0, but added the amount of blocks between the main block and the exit. For IDDF the third parameter is the maximum depth that the algorithm will analyze, if not specify it set the value to 50. For algorithms BFS and DFS the **heuristic** field is not required.
 
 ## JSON Boards convention
 ### Element description

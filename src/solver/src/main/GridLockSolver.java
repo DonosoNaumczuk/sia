@@ -49,7 +49,7 @@ public class GridLockSolver {
         Heuristic heuristic = null;
 
         if (args.length > MAX_ARGS || args.length < 2)
-            args = new String[]{"boardsJSON/level1.json", "BFS"};
+            args = new String[]{"./boardsJSON/level1.json", "BFS"};
 
         SearchStrategy searchStrategy = parseSearchStrategy(args[1]);
 
@@ -119,7 +119,7 @@ public class GridLockSolver {
             }
         }
 
-        System.out.println(ALGORITHM_RESULT_TEXT + args[0]);
+        System.out.println(ALGORITHM_RESULT_TEXT + args[1]);
         System.out.println(heuristic == null ? NO_HEURISTIC_RESULT_TEXT :
                 HEURISTIC_RESULT_TEXT + heuristic.toString());
         System.out.println(SUCCESS_RESULT_TEXT + (gpsEngine.isFailed() ? FAILURE_TEXT : SUCCESS_TEXT));
