@@ -1,4 +1,4 @@
-package gridlock;
+package ar.edu.itba.sia.gridlock;
 
 import ar.edu.itba.sia.gps.api.Problem;
 import ar.edu.itba.sia.gps.api.Rule;
@@ -6,7 +6,6 @@ import ar.edu.itba.sia.gps.api.State;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
-import gridlock.BoardGridLock.BlockGridLock;
 
 public class ProblemGridLock implements Problem {
 
@@ -17,7 +16,7 @@ public class ProblemGridLock implements Problem {
         this.initState  = initState;
         this.rules      = new LinkedList<>();
 
-        for (BlockGridLock block : initState.getBoard().getBlocks()) {
+        for (BoardGridLock.BlockGridLock block : initState.getBoard().getBlocks()) {
             rules.add(new RuleGridLock(block.getId(), block.getFirstDirection()));
             rules.add(new RuleGridLock(block.getId(), block.getSecondDirection()));
         }
@@ -61,7 +60,7 @@ public class ProblemGridLock implements Problem {
             throw new IllegalArgumentException("The given state object must be a StateGridLock");
 
         StateGridLock stateGridLock = (StateGridLock) state;
-        BlockGridLock goalBlock     = stateGridLock.getBoard().getGoalBlock();
+        BoardGridLock.BlockGridLock goalBlock     = stateGridLock.getBoard().getGoalBlock();
         Point exit                  = stateGridLock.getBoard().getExit();
 
         return goalBlock.getBegin().equals(exit) || goalBlock.getEnd().equals(exit);

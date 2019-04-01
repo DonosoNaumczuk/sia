@@ -1,4 +1,4 @@
-package gridlock;
+package ar.edu.itba.sia.gridlock;
 
 public enum Direction {
 

@@ -1,12 +1,12 @@
 package main;
 
 import ar.edu.itba.sia.gps.GPSEngine;
+import ar.edu.itba.sia.gridlock.*;
 import com.google.gson.Gson;
 import ar.edu.itba.sia.gps.GPSNode;
 import ar.edu.itba.sia.gps.SearchStrategy;
 import ar.edu.itba.sia.gps.api.Heuristic;
 import ar.edu.itba.sia.gps.api.Problem;
-import gridlock.*;
 
 import java.awt.*;
 import java.io.File;
@@ -42,7 +42,7 @@ public class GridLockSolver {
         // Parse parameters
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level27.json");
+        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level3.json");
 
         if (args.length > MAX_ARGS)
             args = new String[]{"BFS"};

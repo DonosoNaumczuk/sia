@@ -1,4 +1,4 @@
-package gridlock;
+package ar.edu.itba.sia.gridlock;
 
 import ar.edu.itba.sia.gps.api.Rule;
 import ar.edu.itba.sia.gps.api.State;

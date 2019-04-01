@@ -1,4 +1,4 @@
-package gridlock;
+package ar.edu.itba.sia.gridlock;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import static gridlock.Direction.*;
+import static ar.edu.itba.sia.gridlock.Direction.*;
 
 public class BoardGridLock {
 
