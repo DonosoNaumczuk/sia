@@ -40,29 +40,28 @@ public class GridLockSolver {
     private static SearchStrategy DEFAULT_SEARCH_STRATEGY = BFS;
 
     /**
-     * args[0]: searchStrategy
-     * args[1]: level
-     * args[2]: heuristic (for ASTAR or GREEDY)
-     * args[3]: depth (for ASTAR, GREEDY or IDDFS)
+     * args[0]: path to json level
+     * args[1]: strategy
+     * args[2]: heuristic (for ASTAR or GREEDY) | depth (for IDDFS)
+     * args[3]: max depth (for bfs heuristic)
     */
     public static void main(String[] args) throws FileNotFoundException {
-        SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
         Heuristic heuristic = null;
 
         if (args.length > MAX_ARGS || args.length < 2)
-            args = new String[]{"BFS", "40"};
-        else
-            searchStrategy = parseSearchStrategy(args[0]);
+            args = new String[]{"boardsJSON/level1.json", "BFS"};
+
+        SearchStrategy searchStrategy = parseSearchStrategy(args[1]);
 
         // Parse parameters
-        BoardGridLock startingBoard = new BoardGridLock("boardsJSON/level" + args[1] + ".json");
+        BoardGridLock startingBoard = new BoardGridLock(args[0]);
         int depth = 0;
 
         Problem problem = new ProblemGridLock(startingBoard); //Set board file
 
         if (searchStrategy == ASTAR || searchStrategy == GREEDY) {
             depth = 0;
-            if(args.length > 2) {
+            if(args.length > 3) {
                 depth = Integer.valueOf(args[3]);
             }
             heuristic = parseHeuristic(args[2], problem, depth);
@@ -70,7 +69,7 @@ public class GridLockSolver {
         else if (searchStrategy == IDDFS) {
             depth = DEFAULT_IDDFS_DEPTH;
             if(args.length > 2) {
-                depth = Integer.valueOf(args[3]);
+                depth = Integer.valueOf(args[2]);
             }
         }
 
@@ -165,7 +164,7 @@ public class GridLockSolver {
             case "1":
                 return new HeuristicGridLockDistanceAndBlocks();
             case "2":
-            return new HeuristicGridLockBfs(depth, problem, new HeuristicGridLockDistanceAndBlocks());
+                return new HeuristicGridLockBfs(depth, problem, new HeuristicGridLockDistanceAndBlocks());
             default:
                 return null;
         }
