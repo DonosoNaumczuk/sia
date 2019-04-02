@@ -194,7 +194,7 @@ public class GPSEngine {
 					(n1, n2) -> {
 						int aux = heuristic.get().getValue(n2.getState())
 								.compareTo(heuristic.get().getValue(n1.getState())); // bigger heuristic first because
-						return aux;													 // then they are pushed to de stack
+						return aux;													 // then they are pushed onto stack
 					};															     // first
 		}
 		else {
