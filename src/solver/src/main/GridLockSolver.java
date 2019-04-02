@@ -55,11 +55,13 @@ public class GridLockSolver {
     */
     public static void main(String[] args) throws FileNotFoundException {
         SearchStrategy searchStrategy = DEFAULT_SEARCH_STRATEGY;
-        jsonLevelPath          = args[0];
-        strategy               = args[1];
 
         if (args.length > MAX_ARGS || args.length < MIN_ARGS)
             args = setDefaultArgs();
+        else {
+            jsonLevelPath          = args[0];
+            strategy               = args[1];
+        }
 
         searchStrategy = parseSearchStrategy(strategy);
 
