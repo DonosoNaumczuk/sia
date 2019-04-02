@@ -10,6 +10,10 @@ and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account
  For IDDFS the third parameter is the maximum depth that the algorithm will analyze, if not specified it will set the 
  value to 50. For BFS and DFS the **heuristic** field is not required.
  
+####Examples:
+* ./gridlockSolver.sh ./boardsJSON/level1.json IDDFS 50
+* ./gridlockSolver.sh ./boardsJSON/level3.json ASTAR 1
+ 
 
 ## JSON Boards convention
 ### Element description
