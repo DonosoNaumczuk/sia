@@ -39,6 +39,7 @@ public class GPSEngine {
 		explosionCounter = 0;
 		finished = false;
 		failed = false;
+		depth = 50;
 	}
 
 	public void findSolution() {
@@ -192,9 +193,9 @@ public class GPSEngine {
 			comparator =
 					(n1, n2) -> {
 						int aux = heuristic.get().getValue(n2.getState())
-								.compareTo(heuristic.get().getValue(n1.getState()));
-						return aux;
-					};
+								.compareTo(heuristic.get().getValue(n1.getState())); // bigger heuristic first because
+						return aux;													 // then they are pushed to de stack
+					};															     // first
 		}
 		else {
 			throw new RuntimeException("Cannot perform Greedy without heuristic");
