@@ -13,7 +13,20 @@ and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account
 ####Examples:
 * ./gridlockSolver.sh ./boardsJSON/level1.json IDDFS 50
 * ./gridlockSolver.sh ./boardsJSON/level3.json ASTAR 1
+
+## JARS
+ After running:
+ **mvn package**
  
+ The jars will be located:
+ * The code that use the model and GPS: 
+    * ./src/solver/target/solver-1.0.jar 
+ * The GPS:
+    * ./src/gps/target/gps-1.0.jar
+ * The model:
+    * ./src/gridlock/target/gridlock-1.0.jar
+ * The dependencies of the model:
+    * ./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar
 
 ## JSON Boards convention
 ### Element description
