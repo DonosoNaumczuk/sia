@@ -1,8 +1,8 @@
 # sia-tp1-gridlock
 
 ## Run Instructions
-*    mvn package
-*    ./gridlockSolver.sh **path_board_JSON** **search_algorithm** [**heuristic**|**maxDepth**]
+*    ```mvn package```
+*    ```./gridlockSolver.sh path_board_JSON search_algorithm [heuristic|maxDepth]```
 
 Where **search_algorithm** can be replaced by any of the following: "BFS", "DFS", "IDDFS", "ASTAR" or "GREEDY", 
 and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account the distance between the main block and
@@ -10,9 +10,9 @@ and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account
  For IDDFS the third parameter is the maximum depth that the algorithm will analyze, if not specified it will set the 
  value to 50. For BFS and DFS the **heuristic** field is not required.
  
-####Examples:
-* ./gridlockSolver.sh ./boardsJSON/level1.json IDDFS 50
-* ./gridlockSolver.sh ./boardsJSON/level3.json ASTAR 1
+#### Examples:
+* ```./gridlockSolver.sh ./boardsJSON/level1.json IDDFS 50```
+* ```./gridlockSolver.sh ./boardsJSON/level3.json ASTAR 1```
 
 ## JARS
  After running:
@@ -20,13 +20,19 @@ and **heuristic** can be either 0 or 1. Where **heuristic** 0 takes into account
  
  The jars will be located:
  * The code that use the model and GPS: 
-    * ./src/solver/target/solver-1.0.jar 
+    * ```./src/solver/target/solver-1.0.jar```
  * The GPS:
-    * ./src/gps/target/gps-1.0.jar
+    * ```./src/gps/target/gps-1.0.jar```
  * The model:
-    * ./src/gridlock/target/gridlock-1.0.jar
+    * ```./src/gridlock/target/gridlock-1.0.jar```
  * The dependencies of the model:
-    * ./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar
+    * ```./src/gridlock/target/gridlock-1.0-jar-with-dependencies.jar```
+    
+## Documentation
+All documentation files are located in ```sia-tp1-gridlock/docs/```
+* Presentacion ```sia-tp1-gridlock/docs/TPE1 Presentación 2019 1C.pdf``` for .pdf file or ```sia-tp1-gridlock/docs/TPE1 Presentación 2019 1C.pptx```for ppt file
+* Informe ```sia-tp1-gridlock/docs/Informe.pdf```
+
 
 ## JSON Boards convention
 ### Element description
