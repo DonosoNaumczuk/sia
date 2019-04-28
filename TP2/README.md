@@ -17,7 +17,7 @@ dataTest            string
 QNeuronesInLayer1   unsigned int
                             .
                             .
-                            ,
+                            .
 QNeuronesInLayerN   unsigned int
 ````
 The dataLearning and dataTest strings must be a name of file place in the TP2 folder.
