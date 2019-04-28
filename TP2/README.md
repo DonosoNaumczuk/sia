@@ -34,7 +34,7 @@ Q1 ... QN R1 ... RM
 x and y are just the names of the columns.
 E is an entry patter with S being the solution.
 Q is an entry patter with R being the solution.
-###Example
+### Example
 * configuration.data
 ````
 learningFactor      0.01
@@ -69,7 +69,7 @@ x1 x2 x3 x4 y1
  0  0  1  0  1
 ````
 This example configures a 4 entries network, with 4 neurones in the hidden layer and 1 neuron in the output layer. This network problem is the parity function with 4 entries.
-###Considerations
+### Considerations
 
 * The string value must not have the space character.
 * The beta field is use in the activation function:
