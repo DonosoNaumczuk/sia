@@ -7,13 +7,13 @@
 
 There should be a configuration file name "configuration.data" containing this information:
 ````
-learningFactor           double
-epoch                        int
-deltaWCalculation       [incremental|batch]
-beta                          double
-function                     [tanh|exp]
-dataLearning             string
-dataTest                    string
+learningFactor      double
+epoch               int
+deltaWCalculation   [incremental|batch]
+beta                double
+function            [tanh|exp]
+dataLearning        string
+dataTest            string
 QNeuronesInLayer1   unsigned int
                             .
                             .
@@ -37,13 +37,13 @@ Q is an entry patter with R being the solution.
 ###Example
 * configuration.data
 ````
-learningFactor           0.01
-epoch                        1000
-deltaWCalculation      batch
-beta                          1
-function                     tanh
-dataLearning             dataParity.data
-dataTest                    dataParity.data
+learningFactor      0.01
+epoch               1000
+deltaWCalculation   batch
+beta                1
+function            tanh
+dataLearning        dataParity.data
+dataTest            dataParity.data
 QNeuronesInLayer1   4
 QNeuronesInLayer1   4
 QNeuronesInLayer3   1
