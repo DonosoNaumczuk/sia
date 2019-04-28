@@ -1,0 +1,10 @@
+learningFactor      0.01
+epoch               500
+deltaWCalculation   batch
+beta                1
+function            tanh
+dataLearning        dataParity.data
+dataTest            dataParity.data
+QNeuronesInLayer1   4
+QNeuronesInLayer2   4
+QNeuronesInLayer3   1
