@@ -3,6 +3,14 @@ function initConfiguration()
     error = inf;
     global counter;
     counter = 0;
+    global meanErrorEvolutionLearning;
+    meanErrorEvolutionLearning = [0];
+    global maxErrorEvolutionLearning;
+    maxErrorEvolutionLearning  = [0];
+    global meanErrorEvolutionTest;
+    meanErrorEvolutionTest = [0];
+    global maxErrorEvolutionTest;
+    maxErrorEvolutionTest  = [0];
     configuration 	= importdata('configuration.data', ' ');
     auxIndex 		= 0;
     index    		= 1;
@@ -34,7 +42,7 @@ function initConfiguration()
         g  	= @(x) 1 ./ (1 + exp(-2 .* beta .* x));
         gD 	= @(x) (2 * beta) .* (feval(g,x) .* (1 - feval(g,x)));
         a 	= -1 * (1 / beta);
-		b 	= 1 * (1 / beta);
+		    b 	= 1 * (1 / beta);
     elseif (strcmp(functionString, 'lineal'))
         g  	= @(x) beta * x + gamma;
         gD 	= @(x) beta;
@@ -42,7 +50,7 @@ function initConfiguration()
         g  	= @(x) tanh(beta .* x);
         gD 	= @(x) beta .* (1 - feval(g,x) .^ 2);
         a 	= -1 * (1 / beta);
-		b 	= 1 * (1 / beta);
+		    b 	= 1 * (1 / beta);
     endif
 
     global betaLast;

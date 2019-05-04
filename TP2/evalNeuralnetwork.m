@@ -1,4 +1,4 @@
-function retval = testNeuralnetwork(dataTest)
+function retval = evalNeuralnetwork(dataTest)
     global weigths;
     global N;
     global g;
@@ -13,6 +13,6 @@ function retval = testNeuralnetwork(dataTest)
       expectedValue = dataTest(i, N(1) + 1:N(1) + N(k))';
       v{1} = [-1; feval(NF, dataTest(i, 1:N(1)))'];
       [h, v] = calculateHAndV(k, h, v, weigths, g, gLast);
-      retval(i) = 0.5 * sum((expectedValue - v{k}(2:N(k) + 1)) .^ 2);
+      retval(i) = v{k}(2:N(k) + 1);
    endfor
 endfunction

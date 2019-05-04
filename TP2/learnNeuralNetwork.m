@@ -31,25 +31,18 @@ function learnNeuralNetwork()
 
            d = calculateD(k, h, v, d, weigths, gD, gDLast, expectedValue, N);
 
-           for o = 1:k - 1
-             if (isBatch)
-                if (i == 1)
-                    deltaWeight{o} = learningFactor * d{o} * v{o}';
-                else
-                    deltaWeight{o} = deltaWeight{o} + learningFactor * d{o} * v{o}';
-                endif
-             else
-                weigths{o} = weigths{o} + learningFactor * d{o} * v{o}';
-             endif
-           endfor
-           if (!isBatch)
+           if (isBatch)
+              deltaWeight = updateDeltaWeigthsBatch(deltaWeight, learningFactor, d, v, k, i);
+           else
+              weigths     = updateWeightsIncremental(weigths, learningFactor, d, v, k);
               print();
+              if (max(error) <= maxError)
+                  break;
+              endif
            endif
         endfor
         if (isBatch)
-           for o = 1:k - 1
-              weigths{o} = weigths{o} + deltaWeight{o};
-           endfor
+           weigths = updateWeightsBatch(weigths, deltaWeight, k);
            print();
         endif
     endwhile
@@ -81,8 +74,45 @@ endfunction
 function print()
     global counter;
     global error;
+    global dataLearning;
+    global dataTest;
+    global meanErrorEvolutionLearning;
+    global maxErrorEvolutionLearning;
+    global meanErrorEvolutionTest;
+    global maxErrorEvolutionTest;
     counter++;
-    error = testNeuralnetwork();
-    plot(counter, mean(error), "color", 'k');
-    plot(counter, max(error), "color", 'r');
+    
+    error = testNeuralnetwork(dataTest);
+    meanErrorEvolutionTest = [meanErrorEvolutionTest, mean(error)];
+    maxErrorEvolutionTest  = [maxErrorEvolutionTest, max(error)];
+    plot(counter, meanErrorEvolutionTest(counter + 1), "color", 'g');
+    plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'b');
+    
+    error = testNeuralnetwork(dataLearning);
+    meanErrorEvolutionLearning = [meanErrorEvolutionLearning, mean(error)];
+    maxErrorEvolutionLearning  = [maxErrorEvolutionLearning, max(error)];
+    plot(counter, meanErrorEvolutionLearning(counter + 1), "color", 'k');
+    plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
+endfunction
+
+function weigths = updateWeightsIncremental(weigths, learningFactor, d, v, k)
+    for o = 1:k - 1
+        weigths{o} = weigths{o} + learningFactor * d{o} * v{o}';
+    endfor    
+endfunction
+
+function deltaWeight = updateDeltaWeigthsBatch(deltaWeight, learningFactor, d, v, k, i)
+    for o = 1:k - 1
+        if (i == 1)
+            deltaWeight{o} = learningFactor * d{o} * v{o}';
+        else
+            deltaWeight{o} = deltaWeight{o} + learningFactor * d{o} * v{o}';
+        endif
+    endfor
+endfunction
+
+function weigths = updateWeightsBatch(weigths, deltaWeight, k)
+    for o = 1:k - 1
+        weigths{o} = weigths{o} + deltaWeight{o};
+    endfor    
 endfunction

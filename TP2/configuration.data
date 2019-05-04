@@ -1,7 +1,7 @@
-learningFactor      0.005
-maxError            0.2
-epoch               1000
-deltaWCalculation   incremental
+learningFactor      0.00001
+maxError            0.8
+epoch               3000
+deltaWCalculation   batch
 beta                1
 gamma               0
 function            tanh
@@ -11,6 +11,6 @@ functionLast        lineal
 dataLearning        terrain02.data
 dataTest            terrain02.data
 QNeuronesInLayer1   2
-QNeuronesInLayer2   12
-QNeuronesInLayer3   8
+QNeuronesInLayer2   20
+QNeuronesInLayer3   15
 QNeuronesInLayer4   1
