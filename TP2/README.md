@@ -21,10 +21,10 @@ epoch               int
 deltaWCalculation   [incremental|batch]
 beta                double
 gamma               double
-function            [tanh|exp|lineal]
+function            [tanh|exp|linear]
 betaLast            double
 gammaLast           double
-functionLast        [tanh|exp|lineal]
+functionLast        [tanh|exp|linear]
 dataLearning        string
 dataTest            string
 QNeuronesInLayer1   unsigned int

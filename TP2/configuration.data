@@ -7,7 +7,7 @@ gamma               0
 function            tanh
 betaLast            1
 gammaLast           0
-functionLast        lineal
+functionLast        linear
 dataLearning        terrain02.data
 dataTest            terrain02.data
 QNeuronesInLayer1   2

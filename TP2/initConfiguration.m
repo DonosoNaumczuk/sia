@@ -43,7 +43,7 @@ function initConfiguration()
         gD 	= @(x) (2 * beta) .* (feval(g,x) .* (1 - feval(g,x)));
         a 	= -1 * (1 / beta);
 		    b 	= 1 * (1 / beta);
-    elseif (strcmp(functionString, 'lineal'))
+    elseif (strcmp(functionString, 'linear'))
         g  	= @(x) beta * x + gamma;
         gD 	= @(x) beta;
     else
@@ -65,7 +65,7 @@ function initConfiguration()
     if (strcmp(functionString, 'exp'))
         gLast  	= @(x) 1 ./ (1 + exp(-2 .* betaLast .* x));
         gDLast 	= @(x) (2 * betaLast) .* (feval(gLast,x) .* (1 - feval(g,x)));
-    elseif (strcmp(functionString, 'lineal'))
+    elseif (strcmp(functionString, 'linear'))
         gLast  	= @(x) betaLast * x + gammaLast;
         gDLast 	= @(x) betaLast;
     else
@@ -87,7 +87,7 @@ function initConfiguration()
     B 			= max(dataTest(1:size(dataTest)(1), N(1) + 1));
 
     global NF;
-    if(strcmp(functionString, 'lineal'))
+    if(strcmp(functionString, 'linear'))
       NF = @(x) x;
     else
       NF = @(x) a + ((x - A) .* (b - a) ./ (B - A));
