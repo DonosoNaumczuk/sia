@@ -1,5 +1,5 @@
 global counter;			           # Index for graphics, independendent variable
-global learningFactor;	           # Learning factor
+global learningRate;	           # Learning Rate
 global maxError;		           # Epsilon, target error to reach. All errors have to be below this value
 global epoch;			           # Epoch quantity
 global isBatch;			           # 1 for batch, 0 for incremental

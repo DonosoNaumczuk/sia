@@ -15,7 +15,7 @@ The only thing that you need is to have octave installed in your computer.
 
 There should be a configuration file name "configuration.data" containing this information:
 ```
-learningFactor      double
+learningRate      double
 maxError            double
 epoch               int
 deltaWCalculation   [incremental|batch]
@@ -50,7 +50,7 @@ Q is an entry patter with R being the solution.
 ### Example
 * configuration.data
 ```
-learningFactor      0.01
+learningRate      0.01
 maxError            0.2
 epoch               1000
 deltaWCalculation   batch

@@ -14,8 +14,8 @@ function initConfiguration()
     configuration 	= importdata('configuration.data', ' ');
     auxIndex 		= 0;
     index    		= 1;
-    global learningFactor;
-    learningFactor 	= configuration.data(index++);
+    global learningRate;
+    learningRate 	= configuration.data(index++);
     global maxError;
     maxError        = configuration.data(index++);
     global epoch;
