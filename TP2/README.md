@@ -27,11 +27,11 @@ gammaLast           double
 functionLast        [tanh|exp|linear]
 dataLearning        string
 dataTest            string
-QNeuronesInLayer1   unsigned int
+qtyNeuronsInLayer1   unsigned int
                 .
                 .
                 .
-QNeuronesInLayerN   unsigned int
+qtyNeuronsInLayerN   unsigned int
 ```
 The dataLearning and dataTest strings must be a name of file place in the TP2 folder.
 Such file must respect the following structure:
@@ -62,9 +62,9 @@ gammaLast           0
 functionLast        tanh
 dataLearning        dataParity.data
 dataTest            dataParity.data
-QNeuronesInLayer1   4
-QNeuronesInLayer1   4
-QNeuronesInLayer3   1
+qtyNeuronsInLayer1   4
+qtyNeuronsInLayer1   4
+qtyNeuronsInLayer3   1
 ```
 * dataParity.data
 ```
@@ -94,5 +94,5 @@ This example configures a 4 entries network, with 4 neurones in the hidden layer
     * tanh(beta * X)
     * 1 / (1 + exp(-2 * beta * X))
     * beta * x + gamma
-* QNeuronesInLayer1 number must be the same as the N in the dataLearning and dataTest.
-* QNeuronesInLayerN number must be the same as the M in the dataLearning and dataTest.
+* qtyNeuronsInLayer1 number must be the same as the N in the dataLearning and dataTest.
+* qtyNeuronsInLayerN number must be the same as the M in the dataLearning and dataTest.

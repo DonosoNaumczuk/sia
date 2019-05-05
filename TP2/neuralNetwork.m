@@ -1,27 +1,37 @@
-global counter;			           # Index for graphics, independendent variable
-global learningRate;	           # Learning Rate
-global maxError;		           # Epsilon, target error to reach. All errors have to be below this value
-global epoch;			           # Epoch quantity
-global isBatch;			           # 1 for batch, 0 for incremental
-global beta;			           #
-global gamma;			           #
-global g;				           # Activation function for hidden layers
-global gD;				           # Activation function Derivative for hidden layers
-global betaLast;		           #
-global gammaLast;		           #
-global gLast;			           # Activation function for last layer
-global gDLast;			           # Activation function Derivative for last layer
-global dataLearning;	           # Matrix with learning data for training the neural network
-global dataTest;		           # Matrix with test data for calculating neural network output errors
-global N;				           # Array with quantity of neurons per layer
-global NF;				           # Normalizer function to avoid saturation
-global weigths;			           # Array with weights
-global weigthsStart;	           # Array with initial weights, in case we need to reproduce the last execution
-global error;			           # TODO: we must have testErrors and learningErrors
-global meanErrorEvolutionLearning; # Array containing evolution of the mean of the error of the learning data
-global maxErrorEvolutionLearning;  # Array containing evolution of the max of the error of the learning data
-global meanErrorEvolutionTest;     # Array containing evolution of the mean of the error of the test data
-global maxErrorEvolutionTest;      # Array containing evolution of the max of the error of the test data
+global counter;			           	# Index for graphics, independendent variable
+global learningRate;	           	# Learning Rate
+global adaptiveLearningRate;	   	# 1 for enabled, 0 for disabled
+global timesLR;					   	# learningRate will be incremented if error is decremented timesLR times consecutively
+global incLR;					   	# learningRate increment constant (+ incLR) for adaptiveLearningRate
+global decLR;					   	# learningRate decrement rate (- learningRate * decLR) for adaptiveLearningRate
+global times;						# numbers of times that error is decremented consecutively, for adaptive learning rate
+global momentum;					# 1 for enabled, 0 for disabled
+global momentumRate;				#
+global maxError;		          	# Epsilon, target error to reach. All errors have to be below this value
+global epoch;			          	# Epoch quantity
+global isBatch;			          	# 1 for batch, 0 for incremental
+global beta;			          	#
+global gamma;			          	#
+global g;				          	# Activation function for hidden layers
+global gD;				          	# Activation function Derivative for hidden layers
+global betaLast;		          	#
+global gammaLast;		          	#
+global gLast;			          	# Activation function for last layer
+global gDLast;			          	# Activation function Derivative for last layer
+global dataLearning;	          	# Matrix with learning data for training the neural network
+global dataTest;		          	# Matrix with test data for calculating neural network output errors
+global N;				          	# Array with quantity of neurons per layer
+global NF;				          	# Normalizer function to avoid saturation
+global weights;			          	# Array with weights
+global lastWeights;					# Backup of previous weights
+global lastDeltaWeights;			# Previous deltaWeights for momentum
+global weightsStart;	          	# Array with initial weights, in case we need to reproduce the last execution
+global error;			          	# Array with cuadratic error of learning data
+global lastError;					# To calculate change in error
+global meanErrorEvolutionLearning;	# Array containing evolution of the mean of the error of the learning data
+global maxErrorEvolutionLearning; 	# Array containing evolution of the max of the error of the learning data
+global meanErrorEvolutionTest;    	# Array containing evolution of the mean of the error of the test data
+global maxErrorEvolutionTest;     	# Array containing evolution of the max of the error of the test data
 
 initConfiguration();
 learnNeuralNetwork();

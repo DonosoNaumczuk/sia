@@ -1,6 +1,4 @@
 function initConfiguration()
-    global error;
-    error = inf;
     global counter;
     counter = 0;
     global meanErrorEvolutionLearning;
@@ -15,9 +13,29 @@ function initConfiguration()
     auxIndex 		= 0;
     index    		= 1;
     global learningRate;
-    learningRate 	= configuration.data(index++);
+    learningRate = configuration.data(index++);
+
+	global adaptiveLearningRate;
+	adaptiveLearningRate = configuration.data(index++);
+
+	global timesLR;
+	timesLR = configuration.data(index++);
+
+	global incLR;
+	incLR = configuration.data(index++);
+
+	global decLR;
+	decLR = configuration.data(index++);
+
+	global momentum;
+	momentum = configuration.data(index++);
+
+	global momentumRate;
+	momentumRate = configuration.data(index++);
+
     global maxError;
-    maxError        = configuration.data(index++);
+    maxError = configuration.data(index++);
+
     global epoch;
     epoch          	= configuration.data(index++);
 
@@ -42,7 +60,7 @@ function initConfiguration()
         g  	= @(x) 1 ./ (1 + exp(-2 .* beta .* x));
         gD 	= @(x) (2 * beta) .* (feval(g,x) .* (1 - feval(g,x)));
         a 	= -1 * (1 / beta);
-		    b 	= 1 * (1 / beta);
+		b 	= 1 * (1 / beta);
     elseif (strcmp(functionString, 'linear'))
         g  	= @(x) beta * x + gamma;
         gD 	= @(x) beta;
@@ -50,7 +68,7 @@ function initConfiguration()
         g  	= @(x) tanh(beta .* x);
         gD 	= @(x) beta .* (1 - feval(g,x) .^ 2);
         a 	= -1 * (1 / beta);
-		    b 	= 1 * (1 / beta);
+		b 	= 1 * (1 / beta);
     endif
 
     global betaLast;
@@ -88,8 +106,11 @@ function initConfiguration()
 
     global NF;
     if(strcmp(functionString, 'linear'))
-      NF = @(x) x;
+    	NF = @(x) x;
     else
-      NF = @(x) a + ((x - A) .* (b - a) ./ (B - A));
+    	NF = @(x) a + ((x - A) .* (b - a) ./ (B - A));
     endif
+
+	global error;
+	error = ones(size(dataLearning)(1), 1) .* inf;
 endfunction
