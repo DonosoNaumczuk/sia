@@ -65,7 +65,7 @@ function learnNeuralNetwork()
 		   # updateLearningRateBatch();
         endif
     endwhile
-    hold off;
+    endPlot();
 endfunction
 
 function learningRateDecremented = updateLearningRateIncremental(index)
@@ -133,10 +133,40 @@ function d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N)
 endfunction
 
 function initPlot()
+	  figure(1);
     clf;
+    title("Learing Rate");
+    xlabel("time")
+    ylabel("Learning Rate");
+    hold on;
+    figure(2);
+    clf;
+	  title("Test Error");
+    xlabel("time")
+    ylabel("Cuadratic error");
+    hold on;
+    plot(0, 0, "color", 'k');
+    plot(0, 0, "color", 'r');
+    legend("mean","max");
+    figure(3);
+    clf;
+	  title("Learning Error");
     hold on;
     xlabel("time")
-    ylabel("cuadratic error");
+    ylabel("Cuadratic error");
+    hold on;
+    plot(0, 0, "color", 'k');
+    plot(0, 0, "color", 'r');
+    legend("mean","max");
+endfunction
+
+function endPlot()
+	  figure(1);
+    hold off;
+    figure(2);
+	  hold off;
+    figure(3);
+	  hold off;
 endfunction
 
 function calculateErrors()
@@ -170,17 +200,14 @@ function print()
 	global counter;
 	counter++;
 
-	title("Learing Rate");
 	figure(1);
 	plot(counter, learningRate, "color", 'r');
+  axis ("tight");
 	figure(2);
-	title("Test Error");
-	hold on;
+  
 	plot(counter, meanErrorEvolutionTest(counter + 1), "color", 'k');
     plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'r');
 	figure(3);
-	title("Learning Error");
-	hold on;
 	plot(counter, meanErrorEvolutionLearning(counter + 1), "color", 'k');
     plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
 endfunction
