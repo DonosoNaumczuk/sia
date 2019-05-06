@@ -35,7 +35,6 @@ global maxErrorEvolutionTest;     	# Array containing evolution of the max of th
 
 initConfiguration();
 learnNeuralNetwork();
-error = testNeuralnetwork(dataTest)
 
 x  = dataTest(1:size(dataTest),1);
 y  = dataTest(1:size(dataTest),2);
@@ -49,3 +48,5 @@ scatter3(x,y,z1, 'r',"filled");
 scatter3(x,y,z2, 'b',"filled");
 legend("real","aproximation");
 hold off;
+
+error = testNeuralnetwork(dataTest)

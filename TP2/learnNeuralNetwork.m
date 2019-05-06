@@ -133,13 +133,13 @@ function d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N)
 endfunction
 
 function initPlot()
-	  figure(1);
+	  figure(1, 'position', [900,0,450,400]);
     clf;
     title("Learing Rate");
     xlabel("time")
     ylabel("Learning Rate");
     hold on;
-    figure(2);
+    figure(2, 'position', [0,0,450,400]);
     clf;
 	  title("Test Error");
     xlabel("time")
@@ -148,7 +148,7 @@ function initPlot()
     plot(0, 0, "color", 'k');
     plot(0, 0, "color", 'r');
     legend("mean","max");
-    figure(3);
+    figure(3, 'position', [450,0,450,400]);
     clf;
 	  title("Learning Error");
     hold on;
