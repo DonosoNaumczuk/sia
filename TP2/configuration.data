@@ -7,7 +7,7 @@ momentum				1
 momentumRate			0.9
 maxError            	0.000000005
 epoch               	100
-debugTimes				inf
+debugTimes				Inf
 deltaWCalculation       batch
 beta                	1
 gamma               	0

@@ -20,7 +20,7 @@ global gammaLast;		          	#
 global gLast;			          	# Activation function for last layer
 global gDLast;			          	# Activation function Derivative for last layer
 global learningSample;	          	# Matrix with learning data for training the neural network
-global testingSample;		          	# Matrix with test data for calculating neural network output errors
+global testingSample;		        # Matrix with test data for calculating neural network output errors
 global N;				          	# Array with quantity of neurons per layer
 global NF;				          	# Normalizer function to avoid saturation
 global weights;			          	# Array with weights
@@ -38,8 +38,8 @@ global debugTimes;					# Set breakpoint enabled when mod(counter, debugTimes) eq
 
 initConfiguration();
 
-#dbstop in learnNeuralNetwork at 24 if (isBatch && mod(counter, debugTimes) == 0);
-#dbstop in learnNeuralNetwork at 39 if (!isBatch && mod(counter, debugTimes) == 0);
+dbstop in learnNeuralNetwork at 24 if (isBatch && mod(counter, debugTimes) == 0);
+dbstop in learnNeuralNetwork at 39 if (!isBatch && mod(counter, debugTimes) == 0);
 
 x  = testingSample(1:size(testingSample),1);
 y  = testingSample(1:size(testingSample),2);
