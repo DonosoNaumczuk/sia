@@ -33,7 +33,7 @@ qtyNeuronsInLayer1   unsigned int
                 .
 qtyNeuronsInLayerN   unsigned int
 ```
-The learningSample and testSample strings must be a name of file place in the TP2 folder.
+The learningSample and testingSample strings must be a name of file place in the TP2 folder.
 Such file must respect the following structure:
 
 ```

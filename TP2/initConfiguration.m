@@ -103,14 +103,14 @@ function initConfiguration()
     data = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
     learningSample = getLearningSample(data);
 
-    global testSample
+    global testingSample
     auxIndex++;
-    testSample 	= importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+    testingSample 	= importdata(configuration.textdata{auxIndex + index++}, ' ').data;
 
     global N;
     N 			= configuration.data(index:size(configuration.data));
-    A 			= min(testSample(1:size(testSample)(1), N(1) + 1));
-    B 			= max(testSample(1:size(testSample)(1), N(1) + 1));
+    A 			= min(testingSample(1:size(testingSample)(1), N(1) + 1));
+    B 			= max(testingSample(1:size(testingSample)(1), N(1) + 1));
 
     global NF;
     if(strcmp(functionString, 'linear'))

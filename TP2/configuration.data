@@ -7,7 +7,7 @@ momentum				1
 momentumRate			0.9
 maxError            	0.8
 epoch               	1000
-debugTimes				inf
+debugTimes				10
 deltaWCalculation       incremental
 beta                	1
 gamma               	0

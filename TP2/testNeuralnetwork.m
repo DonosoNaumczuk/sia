@@ -6,7 +6,7 @@ function retval = testNeuralnetwork(testingSample)
     global NF;
     
     k 		= size(N)(1);
-    retval 	= zeros(size(testSample), 1);
+    retval 	= zeros(size(testingSample), 1);
     h = cell(k - 1, 1);
     v = cell(k, 1);
     for i = 1:size(testingSample)
