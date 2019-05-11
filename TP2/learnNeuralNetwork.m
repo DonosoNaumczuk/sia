@@ -136,7 +136,7 @@ function d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N)
 endfunction
 
 function initPlot()
-	  figure(1, 'position', [900,0,400,400]);
+	  figure(1, 'position', [900,0,450,400]);
     clf;
     #hold on;  #destroy plot
     title("Learing Rate");
