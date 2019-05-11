@@ -66,26 +66,7 @@ qtyNeuronsInLayer1   4
 qtyNeuronsInLayer1   4
 qtyNeuronsInLayer3   1
 ```
-* dataParity.data
-```
-x1 x2 x3 x4 y1
- 1  0  1  1  1
- 1  1  0  0  0
- 0  1  1  1  1
- 0  0  0  0  0
- 1  0  0  0  1
- 1  1  1  1  0
- 0  1  0  0  1
- 0  0  1  1  0
- 1  0  1  0  0
- 1  1  0  1  1
- 0  1  1  0  0
- 0  0  0  1  1
- 1  0  0  1  0
- 1  1  1  0  1
- 0  1  0  1  0
- 0  0  1  0  1
-```
+
 This example configures a 4 entries network, with 4 neurones in the hidden layer and 1 neuron in the output layer. This network problem is the parity function with 4 entries. The learning stage will end after 1000 epoch or that the maximum quadratic error of all the learning entries is below 0.2. In this case the activation function is the same for all the layers. Also it set to use the batch method of corrections.
 ### Considerations
 
