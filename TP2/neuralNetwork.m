@@ -7,6 +7,7 @@ global decLR;					   	# learningRate decrement rate (- learningRate * decLR) for
 global times;						# numbers of times that error is decremented consecutively, for adaptive learning rate
 global momentum;					# 1 for enabled, 0 for disabled
 global momentumRate;				#
+global momentumRateBackUp;				#
 global maxError;		          	# Epsilon, target error to reach. All errors have to be below this value
 global epoch;			          	# Epoch quantity
 global isBatch;			          	# 1 for batch, 0 for incremental
@@ -32,6 +33,7 @@ global meanErrorEvolutionLearning;	# Array containing evolution of the mean of t
 global maxErrorEvolutionLearning; 	# Array containing evolution of the max of the error of the learning data
 global meanErrorEvolutionTest;    	# Array containing evolution of the mean of the error of the test data
 global maxErrorEvolutionTest;     	# Array containing evolution of the max of the error of the test data
+global learningRateEvolution;
 
 initConfiguration();
 

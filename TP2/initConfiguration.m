@@ -1,4 +1,6 @@
 function initConfiguration()
+    global learningRateEvolution;
+    learningRateEvolution = 0;
     global counter;
     counter = 0;
     global meanErrorEvolutionLearning;
@@ -32,6 +34,8 @@ function initConfiguration()
 
 	global momentumRate;
 	momentumRate = configuration.data(index++);
+  global momentumRateBackUp;
+  momentumRateBackUp = momentumRate;
 
     global maxError;
     maxError = configuration.data(index++);
@@ -108,7 +112,7 @@ function initConfiguration()
     if(strcmp(functionString, 'linear'))
     	NF = @(x) x;
     else
-    	NF = @(x) a + ((x - A) .* (b - a) ./ (B - A));
+    	NF = @(x) a + ((x - A) .* (b - a) ./ (B - A)); #TODO: check divide by the norm
     endif
 
 	global error;

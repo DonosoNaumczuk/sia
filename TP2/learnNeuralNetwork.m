@@ -47,7 +47,7 @@ function learnNeuralNetwork()
 	              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
 	              calculateErrors();
 				  if (adaptiveLearningRate)
-					  incrementalLRDecremented = updateLearningRateIncremental(i);
+					  incrementalLRDecremented = updateLearningRateIncremental();
 				  endif
 	              if (mean(error) <= maxError)
 	                  break;
@@ -68,7 +68,7 @@ function learnNeuralNetwork()
     endPlot();
 endfunction
 
-function learningRateDecremented = updateLearningRateIncremental(index)
+function learningRateDecremented = updateLearningRateIncremental()
 	global times;
 	global timesLR;
 	global incLR;
@@ -79,33 +79,33 @@ function learningRateDecremented = updateLearningRateIncremental(index)
 	global weights;
 	global lastWeights;
 	global lastLastError;
+  global momentumRate;
+  global momentumRateBackUp;
 
+  momentumRate = momentumRateBackUp; #reset momentum rate
 	learningRateDecremented = false;
 
-	if (error(index) == inf || lastError(index) == inf)
+  times++;
+	if (mean(error) == inf || mean(lastError) == inf)
 		return;
 	endif
 
-	deltaError = error(index) - lastError(index);
+	deltaError = mean(error) - mean(lastError);
 
-	if (deltaError < 0) # error decremented
-		times++;
-		if (times == timesLR)
-			learningRate	= learningRate + incLR;
-			times 		  	= 0;
-		endif
-	elseif (deltaError > 0)
-		times		= 0;
-		weights 	= lastWeights;
-		error 		= lastError;
-		lastError 	= lastLastError;
+  if (times == timesLR)
+    if (deltaError < 0) # error decremented
+        learningRate	= learningRate + incLR;        
+    elseif (deltaError > 0)
+      momentumRate = 0;
+      weights 	= lastWeights;
+      error 		= lastError;
+      lastError 	= lastLastError;
 
-		learningRate = learningRate - learningRate * decLR;
+      learningRate = learningRate - learningRate * decLR;
 
-		learningRateDecremented = true;
-	else # error did not change
-		times = 0;
-	endif
+      learningRateDecremented = true;
+    endif    
+  endif
 
 endfunction
 
@@ -163,9 +163,11 @@ function endPlot()
 endfunction
 
 function calculateErrors()
+    global times;
+    global timesLR;
     global error;
-	global lastError;
-	global lastLastError;
+	  global lastError;
+	  global lastLastError;
     global dataLearning;
     global dataTest;
     global meanErrorEvolutionLearning;
@@ -173,8 +175,11 @@ function calculateErrors()
     global meanErrorEvolutionTest;
     global maxErrorEvolutionTest;
 
-	lastLastError			= lastError;
-	lastError				= error;
+    if (times == timesLR)
+      lastLastError		= lastError;
+      lastError				= error;
+      times = 0;
+    endif
     error 					= testNeuralnetwork(dataTest);
     meanErrorEvolutionTest 	= [meanErrorEvolutionTest, mean(error)];
     maxErrorEvolutionTest  	= [maxErrorEvolutionTest, max(error)];
@@ -189,13 +194,20 @@ function print()
 	global maxErrorEvolutionLearning;
 	global meanErrorEvolutionTest;
 	global maxErrorEvolutionTest;
+  global learningRateEvolution;
 	global learningRate;
 	global counter;
 	counter++;
 
 	figure(1);
-	plot(counter, learningRate, "color", 'r');
-  axis ("tight");
+  if(learningRateEvolution == 0)
+     learningRateEvolution = [learningRate];
+  else
+     learningRateEvolution = [learningRateEvolution, learningRate];
+  endif
+	plot(counter, learningRate, '*r');
+  line(1:size(learningRateEvolution)(2), learningRateEvolution);
+  #axis ("tight");
 	figure(2);
   
 	plot(counter, meanErrorEvolutionTest(counter + 1), "color", 'k');
