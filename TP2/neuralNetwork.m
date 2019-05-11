@@ -19,8 +19,8 @@ global betaLast;		          	#
 global gammaLast;		          	#
 global gLast;			          	# Activation function for last layer
 global gDLast;			          	# Activation function Derivative for last layer
-global dataLearning;	          	# Matrix with learning data for training the neural network
-global dataTest;		          	# Matrix with test data for calculating neural network output errors
+global learningSample;	          	# Matrix with learning data for training the neural network
+global testingSample;		          	# Matrix with test data for calculating neural network output errors
 global N;				          	# Array with quantity of neurons per layer
 global NF;				          	# Normalizer function to avoid saturation
 global weights;			          	# Array with weights
@@ -38,11 +38,12 @@ global debugTimes;					# Set breakpoint enabled when mod(counter, debugTimes) eq
 
 initConfiguration();
 
-dbstop in learnNeuralNetwork at 39 if (mod(counter, debugTimes) == 0)
+#dbstop in learnNeuralNetwork at 24 if (isBatch && mod(counter, debugTimes) == 0);
+#dbstop in learnNeuralNetwork at 39 if (!isBatch && mod(counter, debugTimes) == 0);
 
-x  = dataTest(1:size(dataTest),1);
-y  = dataTest(1:size(dataTest),2);
-z1 = dataTest(1:size(dataTest),3);
+x  = testingSample(1:size(testingSample),1);
+y  = testingSample(1:size(testingSample),2);
+z1 = testingSample(1:size(testingSample),3);
 
 figure(4, 'position', [0,400,450,400]);
 title("Surface real");
@@ -54,7 +55,7 @@ hold off;
 
 learnNeuralNetwork();
 
-z2 = evalNeuralnetwork(dataTest);
+z2 = evalNeuralnetwork(testingSample);
 figure(5, 'position', [450,400,450,400]);
 title("Surface aproximation");
 clf;
@@ -72,4 +73,4 @@ scatter3(x,y,z2, 'b',"filled");
 legend("real","aproximation");
 hold off;
 
-error = testNeuralnetwork(dataTest);
+error = testNeuralnetwork(testingSample);

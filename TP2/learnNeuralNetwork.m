@@ -1,11 +1,11 @@
 function learnNeuralNetwork()
     global counter; global learningRate; global maxError; global epoch; global isBatch;
     global beta; global gamma; global g; global gD; global betaLast; global gammaLast;
-    global gLast; global gDLast; global dataLearning; global dataTest; global N;
+    global gLast; global gDLast; global learningSample; global testingSample; global N;
     global NF; global weights; global weightsStart; global error; global lastError;
 	global lastLastError; global lastWeights; global times; global adaptiveLearningRate;
 	global lastDeltaWeights; global debugTimes;
-				
+
     initPlot();
     k 			 	 = size(N)(1);
     deltaWeights 	 = cell(k - 1, 1);
@@ -17,13 +17,13 @@ function learnNeuralNetwork()
 	times		 	 = 0;
 	lastWeights	 	 = weights;
 
-    dataLearningNormalize = feval(NF, dataLearning(1:size(dataLearning),1:N(1)));
+    learningSampleNormalize = feval(NF, learningSample(1:size(learningSample),1:N(1)));
     p = 0;
     while (p < epoch && mean(error) > maxError)
         do
             p++;
 
-            order = 1:size(dataLearning);
+            order = 1:size(learningSample);
             if (!isBatch)
                 order = randperm(numel(order));
             endif
@@ -33,11 +33,11 @@ function learnNeuralNetwork()
             d 							= cell(k - 1, 1);
     		incrementalLRDecremented 	= false;
             batchLRDecremented          = false;
-						
+
             for i = order
     			do
-    	           expectedValue = dataLearning(i, N(1)+1:size(dataLearning)(2))';
-    	           v{1} = [-1; dataLearningNormalize(i, 1:N(1))'];
+    	           expectedValue = learningSample(i, N(1)+1:size(learningSample)(2))';
+    	           v{1} = [-1; learningSampleNormalize(i, 1:N(1))'];
 
     	           [h, v] = calculateHAndV(k, h, v, weights, g, gLast);
 
@@ -70,7 +70,7 @@ function learnNeuralNetwork()
         until (!batchLRDecremented)
     if (isBatch)
         print();
-    endif	
+    endif
     endwhile
     endPlot()
 endfunction
@@ -171,8 +171,8 @@ function calculateErrors()
     global error;
 	  global lastError;
 	  global lastLastError;
-    global dataLearning;
-    global dataTest;
+    global learningSample;
+    global testingSample;
     global meanErrorEvolutionLearning;
     global maxErrorEvolutionLearning;
     global meanErrorEvolutionTest;
@@ -183,11 +183,11 @@ function calculateErrors()
       lastError				= error;
       times = 0;
     endif
-    error 					= testNeuralnetwork(dataTest);
+    error 					= testNeuralnetwork(testingSample);
     meanErrorEvolutionTest 	= [meanErrorEvolutionTest, mean(error)];
     maxErrorEvolutionTest  	= [maxErrorEvolutionTest, max(error)];
 
-    error 						= testNeuralnetwork(dataLearning);
+    error 						= testNeuralnetwork(learningSample);
     meanErrorEvolutionLearning 	= [meanErrorEvolutionLearning, mean(error)];
     maxErrorEvolutionLearning  	= [maxErrorEvolutionLearning, max(error)];
 endfunction
@@ -207,11 +207,11 @@ function print()
   else
      learningRateEvolution = [learningRateEvolution, learningRate];
   endif
-  
+
   figure(1);
 	plot(1:size(learningRateEvolution)(2), learningRateEvolution)
-  title("Learing Rate");                # 'hold on' 
-  xlabel("time")                        # destroy 
+  title("Learing Rate");                # 'hold on'
+  xlabel("time")                        # destroy
   ylabel("Learning Rate");              # the
   figure(2, 'position', [0,0,450,400]); # graph
 
