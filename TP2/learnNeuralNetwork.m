@@ -17,7 +17,7 @@ function learnNeuralNetwork()
 	times		 	 = 0;
 	lastWeights	 	 = weights;
 
-    dataLearningNormalize = feval(NF, dataLearning);
+    dataLearningNormalize = feval(NF, dataLearning(1:size(dataLearning),1:N(1)));
     p = 0;
     while (p < epoch && mean(error) > maxError)
         do
