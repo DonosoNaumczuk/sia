@@ -36,7 +36,7 @@ function learnNeuralNetwork()
 						
             for i = order
     			do
-    	           expectedValue = dataLearningNormalize(i, N(1) + 1)';
+    	           expectedValue = dataLearning(i, N(1)+1:size(dataLearning)(2))';
     	           v{1} = [-1; dataLearningNormalize(i, 1:N(1))'];
 
     	           [h, v] = calculateHAndV(k, h, v, weights, g, gLast);

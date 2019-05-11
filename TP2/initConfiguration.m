@@ -62,20 +62,20 @@ function initConfiguration()
     global g;
     global gD;
     auxIndex++;
-    functionString = configuration.textdata{auxIndex + index++};
-    if (strcmp(functionString, 'exp'))
+    functionString1 = configuration.textdata{auxIndex + index++};
+    if (strcmp(functionString1, 'exp'))
         g  	= @(x) 1 ./ (1 + exp(-2 .* beta .* x));
         gD 	= @(x) (2 * beta) .* (feval(g,x) .* (1 - feval(g,x)));
-        a 	= -1 * (1 / beta);
-		b 	= 1 * (1 / beta);
-    elseif (strcmp(functionString, 'linear'))
+        a 	= -6 * (1 / beta);
+		b 	= 6 * (1 / beta);
+    elseif (strcmp(functionString1, 'linear'))
         g  	= @(x) beta * x + gamma;
         gD 	= @(x) beta;
     else
         g  	= @(x) tanh(beta .* x);
         gD 	= @(x) beta .* (1 - feval(g,x) .^ 2);
-        a 	= -1 * (1 / beta);
-		b 	= 1 * (1 / beta);
+        a 	= -6 * (1 / beta);
+		b 	= 6 * (1 / beta);
     endif
 
     global betaLast;
@@ -112,9 +112,10 @@ function initConfiguration()
     B 			= max(dataTest(1:size(dataTest)(1), N(1) + 1));
 
     global NF;
-    if(strcmp(functionString, 'linear'))
+    if(strcmp(functionString1, 'linear'))
     	NF = @(x) x;
     else
+      #NF = @(x) x;
     	NF = @(x) a + ((x - A) .* (b - a) ./ (B - A)); #TODO: check divide by the norm
     endif
 
