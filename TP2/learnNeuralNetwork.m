@@ -4,8 +4,8 @@ function learnNeuralNetwork()
     global gLast; global gDLast; global dataLearning; global dataTest; global N;
     global NF; global weights; global weightsStart; global error; global lastError;
 	global lastLastError; global lastWeights; global times; global adaptiveLearningRate;
-	global lastDeltaWeights;
-
+	global lastDeltaWeights; global debugTimes;
+				
     initPlot();
     k 			 	 = size(N)(1);
     deltaWeights 	 = cell(k - 1, 1);
@@ -33,7 +33,7 @@ function learnNeuralNetwork()
             d 							= cell(k - 1, 1);
     		incrementalLRDecremented 	= false;
             batchLRDecremented          = false;
-
+						
             for i = order
     			do
     	           expectedValue = dataLearningNormalize(i, N(1) + 1)';
@@ -70,7 +70,7 @@ function learnNeuralNetwork()
         until (!batchLRDecremented)
     if (isBatch)
         print();
-    endif
+    endif	
     endwhile
     endPlot()
 endfunction

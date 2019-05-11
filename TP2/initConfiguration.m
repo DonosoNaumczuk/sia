@@ -34,14 +34,17 @@ function initConfiguration()
 
 	global momentumRate;
 	momentumRate = configuration.data(index++);
-  global momentumRateBackUp;
-  momentumRateBackUp = momentumRate;
+	global momentumRateBackUp;
+	momentumRateBackUp = momentumRate;
 
     global maxError;
     maxError = configuration.data(index++);
 
     global epoch;
-    epoch          	= configuration.data(index++);
+    epoch = configuration.data(index++);
+
+	global debugTimes;
+	debugTimes = configuration.data(index++);
 
     global isBatch;
     auxIndex++;

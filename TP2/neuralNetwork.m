@@ -7,7 +7,7 @@ global decLR;					   	# learningRate decrement rate (- learningRate * decLR) for
 global times;						# numbers of times that error is decremented consecutively, for adaptive learning rate
 global momentum;					# 1 for enabled, 0 for disabled
 global momentumRate;				#
-global momentumRateBackUp;				#
+global momentumRateBackUp;			#
 global maxError;		          	# Epsilon, target error to reach. All errors have to be below this value
 global epoch;			          	# Epoch quantity
 global isBatch;			          	# 1 for batch, 0 for incremental
@@ -34,8 +34,11 @@ global maxErrorEvolutionLearning; 	# Array containing evolution of the max of th
 global meanErrorEvolutionTest;    	# Array containing evolution of the mean of the error of the test data
 global maxErrorEvolutionTest;     	# Array containing evolution of the max of the error of the test data
 global learningRateEvolution;
+global debugTimes;					# Set breakpoint enabled when mod(counter, debugTimes) equals zero
 
 initConfiguration();
+
+dbstop in learnNeuralNetwork at 39 if (mod(counter, debugTimes) == 0)
 
 x  = dataTest(1:size(dataTest),1);
 y  = dataTest(1:size(dataTest),2);
