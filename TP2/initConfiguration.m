@@ -98,18 +98,19 @@ function initConfiguration()
         gDLast 	= @(x) betaLast .* (1 - feval(gLast,x) .^ 2);
     endif
 
-    global dataLearning;
+    global learningSample;
     auxIndex++;
-    dataLearning = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+    data = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+    learningSample = getLearningSample(data);
 
-    global dataTest
+    global testSample
     auxIndex++;
-    dataTest 	= importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+    testSample 	= importdata(configuration.textdata{auxIndex + index++}, ' ').data;
 
     global N;
     N 			= configuration.data(index:size(configuration.data));
-    A 			= min(dataTest(1:size(dataTest)(1), N(1) + 1));
-    B 			= max(dataTest(1:size(dataTest)(1), N(1) + 1));
+    A 			= min(testSample(1:size(testSample)(1), N(1) + 1));
+    B 			= max(testSample(1:size(testSample)(1), N(1) + 1));
 
     global NF;
     if(strcmp(functionString, 'linear'))
@@ -119,5 +120,5 @@ function initConfiguration()
     endif
 
 	global error;
-	error = ones(size(dataLearning)(1), 1) .* inf;
+	error = ones(size(learningSample)(1), 1) .* inf;
 endfunction

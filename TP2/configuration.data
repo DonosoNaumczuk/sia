@@ -15,8 +15,8 @@ function                tanh
 betaLast            	1
 gammaLast           	0
 functionLast            linear
-dataLearning            terrain02.data
-dataTest                terrain02.data
+learningSample            terrain02.data
+testingSample                terrain02.data
 qtyNeuronsInLayer1   	2
 qtyNeuronsInLayer2   	20
 qtyNeuronsInLayer3   	15
