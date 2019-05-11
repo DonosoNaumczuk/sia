@@ -17,7 +17,7 @@ function sampleFromColumnI = getSampleFromColumn(matrix)
     limit                    = (int32)(learningSamplePercentage * matrixRows);
 
     topValues    = getTopRows(matrix, matrixRows);
-    midValues    = getMidRows(matrix, matrixRows, learningSamplePercentage)
+    midValues    = getMidRows(matrix, matrixRows, learningSamplePercentage);
     bottomValues = getBottomRows(matrix, matrixRows);
 
     sampleFromColumnI = joinSamples(topValues, midValues, bottomValues);
