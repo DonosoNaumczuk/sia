@@ -20,96 +20,99 @@ function learnNeuralNetwork()
     dataLearningNormalize = feval(NF, dataLearning);
     p = 0;
     while (p < epoch && mean(error) > maxError)
-        p++;
+        do
+            p++;
 
-        order = 1:size(dataLearning);
-        if (!isBatch)
-            order = randperm(numel(order));
-        endif
+            order = 1:size(dataLearning);
+            if (!isBatch)
+                order = randperm(numel(order));
+            endif
 
-        h 							= cell(k - 1, 1);
-        v 							= cell(k, 1);
-        d 							= cell(k - 1, 1);
-		incrementalLRDecremented 	= false;
+            h 							= cell(k - 1, 1);
+            v 							= cell(k, 1);
+            d 							= cell(k - 1, 1);
+    		incrementalLRDecremented 	= false;
+            batchLRDecremented          = false;
 
-        for i = order
-			do
-	           expectedValue = dataLearningNormalize(i, N(1) + 1)';
-	           v{1} = [-1; dataLearningNormalize(i, 1:N(1))'];
+            for i = order
+    			do
+    	           expectedValue = dataLearningNormalize(i, N(1) + 1)';
+    	           v{1} = [-1; dataLearningNormalize(i, 1:N(1))'];
 
-	           [h, v] = calculateHAndV(k, h, v, weights, g, gLast);
+    	           [h, v] = calculateHAndV(k, h, v, weights, g, gLast);
 
-	           d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N);
+    	           d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N);
 
-	           if (isBatch)
-	              deltaWeights = updateDeltaWeightsBatch(deltaWeights, learningRate, d, v, k, i);
-	           else
-	              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
-	              calculateErrors();
-				  if (adaptiveLearningRate)
-					  incrementalLRDecremented = updateLearningRateIncremental();
-				  endif
-	              if (mean(error) <= maxError)
-	                  break;
-	              endif
-	           endif
-		   until (!incrementalLRDecremented)
-		   if (!isBatch)
-			   print();
-		   endif
-        endfor
-        if (isBatch)
-           weights = updateWeightsBatch(weights, deltaWeights, k);
-           calculateErrors();
-		   print();
-		   # updateLearningRateBatch();
-        endif
+    	           if (isBatch)
+    	              deltaWeights = updateDeltaWeightsBatch(deltaWeights, learningRate, d, v, k, i);
+    	           else
+    	              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
+    	              calculateErrors();
+    				  if (adaptiveLearningRate)
+    					  incrementalLRDecremented = updateLearningRate();
+    				  endif
+    	              if (mean(error) <= maxError)
+    	                  break;
+    	              endif
+    	           endif
+    		   until (!incrementalLRDecremented)
+    		   if (!isBatch)
+    			   print();
+    		   endif
+            endfor
+            if (isBatch)
+               weights = updateWeightsBatch(weights, deltaWeights, k);
+               calculateErrors();
+               if (adaptiveLearningRate)
+                   batchLRDecremented = updateLearningRate();
+               endif
+            endif
+        until (!batchLRDecremented)
+    if (isBatch)
+        print();
+    endif
     endwhile
-    endPlot();
+    endPlot()
 endfunction
 
-function learningRateDecremented = updateLearningRateIncremental()
-	global times;
-	global timesLR;
-	global incLR;
-	global decLR;
-	global error;
-	global lastError;
-	global learningRate;
-	global weights;
-	global lastWeights;
-	global lastLastError;
-  global momentumRate;
-  global momentumRateBackUp;
+function learningRateDecremented = updateLearningRate()
+    global times;
+    global timesLR;
+    global incLR;
+    global decLR;
+    global error;
+    global lastError;
+    global learningRate;
+    global weights;
+    global lastWeights;
+    global lastLastError;
+    global momentumRate;
+    global momentumRateBackUp;
 
-  momentumRate = momentumRateBackUp; #reset momentum rate
-	learningRateDecremented = false;
+    momentumRate = momentumRateBackUp; #reset momentum rate
+    learningRateDecremented = false;
 
-  times++;
-	if (mean(error) == inf || mean(lastError) == inf)
-		return;
-	endif
+    times++;
+    if (mean(error) == inf || mean(lastError) == inf)
+        return;
+    endif
 
-	deltaError = mean(error) - mean(lastError);
+    deltaError = mean(error) - mean(lastError);
 
-  if (times == timesLR)
-    if (deltaError < 0) # error decremented
-        learningRate	= learningRate + incLR;        
-    elseif (deltaError > 0)
-      momentumRate = 0;
-      weights 	= lastWeights;
-      error 		= lastError;
-      lastError 	= lastLastError;
+    if (times == timesLR)
+        if (deltaError < 0) # error decremented
+            learningRate = learningRate + incLR;
+        elseif (deltaError > 0)
+            momentumRate = 0;
+            weights 	 = lastWeights;
+            error 		 = lastError;
+            lastError 	 = lastLastError;
 
-      learningRate = learningRate - learningRate * decLR;
+            learningRate = learningRate - learningRate * decLR;
 
-      learningRateDecremented = true;
-    endif    
-  endif
-
-endfunction
-
-function updateLearningRateBatch()
+            learningRateDecremented = true;
+        endif
+    endif
 endfunction
 
 function weights = initWeights(N)
@@ -133,22 +136,22 @@ function d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N)
 endfunction
 
 function initPlot()
-	  figure(1, 'position', [900,0,450,400]);
+	  figure(1, 'position', [900,0,400,400]);
     clf;
+    #hold on;  #destroy plot
     title("Learing Rate");
     xlabel("time")
     ylabel("Learning Rate");
-    hold on;
     figure(2, 'position', [0,0,450,400]);
     clf;
+    hold on;
 	  title("Test Error");
     xlabel("time")
     ylabel("Cuadratic error mean");
-    hold on;
     figure(3, 'position', [450,0,450,400]);
     clf;
-	  title("Learning Error");
     hold on;
+	  title("Learning Error");
     xlabel("time")
     ylabel("Cuadratic error mean");
 endfunction
@@ -199,21 +202,24 @@ function print()
 	global counter;
 	counter++;
 
-	figure(1);
   if(learningRateEvolution == 0)
      learningRateEvolution = [learningRate];
   else
      learningRateEvolution = [learningRateEvolution, learningRate];
   endif
-	plot(counter, learningRate, '*r');
-  line(1:size(learningRateEvolution)(2), learningRateEvolution);
-  #axis ("tight");
-	figure(2);
   
-	plot(counter, meanErrorEvolutionTest(counter + 1), "color", 'k');
+  figure(1);
+	plot(1:size(learningRateEvolution)(2), learningRateEvolution)
+  title("Learing Rate");                # 'hold on' 
+  xlabel("time")                        # destroy 
+  ylabel("Learning Rate");              # the
+  figure(2, 'position', [0,0,450,400]); # graph
+
+	figure(2);
+	plot(1:size(meanErrorEvolutionTest)(2)-1, meanErrorEvolutionTest(1,2:size(meanErrorEvolutionTest)(2)), '-k');
    # plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'r');
 	figure(3);
-	plot(counter, meanErrorEvolutionLearning(counter + 1), "color", 'k');
+	plot(1:size(meanErrorEvolutionLearning)(2)-1, meanErrorEvolutionLearning(1,2:size(meanErrorEvolutionLearning)(2)), '-k');
    # plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
 endfunction
 
