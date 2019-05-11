@@ -34,13 +34,31 @@ global meanErrorEvolutionTest;    	# Array containing evolution of the mean of t
 global maxErrorEvolutionTest;     	# Array containing evolution of the max of the error of the test data
 
 initConfiguration();
-learnNeuralNetwork();
 
 x  = dataTest(1:size(dataTest),1);
 y  = dataTest(1:size(dataTest),2);
 z1 = dataTest(1:size(dataTest),3);
+
+figure(4, 'position', [0,400,450,400]);
+title("Surface real");
+clf;
+hold on;
+scatter3(x,y,z1, 'r',"filled");
+legend("real");
+hold off;
+
+learnNeuralNetwork();
+
 z2 = evalNeuralnetwork(dataTest);
-figure(4);
+figure(5, 'position', [450,400,450,400]);
+title("Surface aproximation");
+clf;
+hold on;
+scatter3(x,y,z2, 'b',"filled");
+legend("aproximation");
+hold off;
+
+figure(6, 'position', [900,400,450,400]);
 title("Surfaces");
 clf;
 hold on;
@@ -49,4 +67,4 @@ scatter3(x,y,z2, 'b',"filled");
 legend("real","aproximation");
 hold off;
 
-error = testNeuralnetwork(dataTest)
+error = testNeuralnetwork(dataTest);

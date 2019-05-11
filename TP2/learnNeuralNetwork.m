@@ -19,7 +19,7 @@ function learnNeuralNetwork()
 
     dataLearningNormalize = feval(NF, dataLearning);
     p = 0;
-    while (p < epoch && max(error) > maxError)
+    while (p < epoch && mean(error) > maxError)
         p++;
 
         order = 1:size(dataLearning);
@@ -49,7 +49,7 @@ function learnNeuralNetwork()
 				  if (adaptiveLearningRate)
 					  incrementalLRDecremented = updateLearningRateIncremental(i);
 				  endif
-	              if (max(error) <= maxError)
+	              if (mean(error) <= maxError)
 	                  break;
 	              endif
 	           endif
@@ -143,21 +143,14 @@ function initPlot()
     clf;
 	  title("Test Error");
     xlabel("time")
-    ylabel("Cuadratic error");
+    ylabel("Cuadratic error mean");
     hold on;
-    plot(0, 0, "color", 'k');
-    plot(0, 0, "color", 'r');
-    legend("mean","max");
     figure(3, 'position', [450,0,450,400]);
     clf;
 	  title("Learning Error");
     hold on;
     xlabel("time")
-    ylabel("Cuadratic error");
-    hold on;
-    plot(0, 0, "color", 'k');
-    plot(0, 0, "color", 'r');
-    legend("mean","max");
+    ylabel("Cuadratic error mean");
 endfunction
 
 function endPlot()
@@ -206,10 +199,10 @@ function print()
 	figure(2);
   
 	plot(counter, meanErrorEvolutionTest(counter + 1), "color", 'k');
-    plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'r');
+   # plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'r');
 	figure(3);
 	plot(counter, meanErrorEvolutionLearning(counter + 1), "color", 'k');
-    plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
+   # plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
 endfunction
 
 function weights = updateWeightsIncremental(weights, learningRate, d, v, k)
