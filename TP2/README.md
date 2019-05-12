@@ -1,15 +1,17 @@
 # sia-tp2-neuralNetwork
 
-## Prerequisite
-The only thing that you need is to have octave installed in your computer.
+## Prerequisites
+The only thing you need is to have ```octave v4.4.2``` installed in your computer.
 
-### Instructions to install octave for Linux
+### How install octave v4.4.2 in Linux 18.04 LTS
 ```sudo apt-get install octave```
 
-## Run instruction
-* Set the 'TP2' folder as your working directory in octave.
-* Use this in the octave terminal to run the neural network:
-    * ```neuralNetwork```
+### Why octave v4.2.2?
+Because we use the instruction `dbstop` to add conditionals breakpoints, and this is supported since version 4.2.2 onwards.
+
+## Run instructions
+* Open a terminal, move to ```sia/TP2/``` and type `octave`. Or open octave and set ```sia/TP2/``` as your working directory.
+* Use the octave command window to run the neural network by running the command ```neuralNetwork```.
 
 ## Configuration
 
