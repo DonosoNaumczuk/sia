@@ -17,8 +17,8 @@ gammaLast                 0
 functionLast              linear
 learningSamplePercentage  0.5
 testingSample             terrain02.data
-qtyNeuronsInLayer1   	  2
+qtyNeuronsInLayer1        2
 qtyNeuronsInLayer2        30
-qtyNeuronsInLayer3   	  20
+qtyNeuronsInLayer3        20
 qtyNeuronsInLayer4        15
-qtyNeuronsInLayer4        1
+qtyNeuronsInLayer5        1
