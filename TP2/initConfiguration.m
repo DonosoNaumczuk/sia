@@ -109,8 +109,8 @@ function initConfiguration()
 
     global N;
     N 			= configuration.data(index:size(configuration.data));
-    A 			= min(testingSample(1:size(testingSample)(1), N(1) + 1));
-    B 			= max(testingSample(1:size(testingSample)(1), N(1) + 1));
+    A 			= max(max(learningSample )(1:N(1)));
+    B 			= min(min(learningSample )(1:N(1)));
 
     global NF;
     if(strcmp(functionString1, 'linear'))
