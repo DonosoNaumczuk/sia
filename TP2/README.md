@@ -67,5 +67,5 @@ Where `x` and `y` are just the names of the columns, it does not matter what you
     * tanh(beta * X)
     * 1 / (1 + exp(-2 * beta * X))
     * beta * x + gamma
-* qtyNeuronsInLayer1 number must be the same as the N in the learningSample and testingSample.
-* qtyNeuronsInLayerN number must be the same as the M in the learningSample and testingSample.
+* `qtyNeuronsInLayer1` value must be equals to the size of an entry.
+* `qtyNeuronsInLayerN` value must be equals to the size of a solution.
