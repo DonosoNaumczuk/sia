@@ -99,19 +99,18 @@ function initConfiguration()
     endif
 
     global learningSample;
-    auxIndex++;
-    data = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
     configPercentage = configuration.data(index++);
-    learningSample = getLearningSample(data, configPercentage);
 
-    global testingSample
+    global testingSample;
     auxIndex++;
-    testingSample 	= importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+    testingSample  = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
+
+    learningSample = getLearningSample(testingSample, configPercentage);
 
     global N;
     N 			= configuration.data(index:size(configuration.data));
-    A 			= max(max(learningSample )(1:N(1)));
-    B 			= min(min(learningSample )(1:N(1)));
+    A 			= max(max(testingSample)(1:N(1)));
+    B 			= min(min(testingSample)(1:N(1)));
 
     global NF;
     if(strcmp(functionString1, 'linear'))
