@@ -99,7 +99,7 @@ function initConfiguration()
     endif
 
     global learningSample;
-    configPercentage = configuration.data(index++);
+    configPercentage = configuration.data(index++)/3;
 
     global testingSample;
     auxIndex++;
