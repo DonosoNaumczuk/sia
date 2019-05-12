@@ -48,16 +48,17 @@ The learningSample and testingSample strings must be a name of file place in the
 Such file must respect the following structure:
 
 ```
-x1   x2  ... xN  y1  ... yM
-E11  E12 ... E1N S11 ... S1M
-E21  E22 ... E2N S21 ... S2M
-.     .       .   .       .
-.     .       .   .       .
-.     .       .   .       .
-ER1  ER2 ... ERN SR1 ... SRM
+x1   x2  ... xN  y1  y2  ... yM
+E11  E12 ... E1N S11 S12 ... S1M
+E21  E22 ... E2N S21 S22 ... S2M
+.     .       .   .   .       .
+.     .       .   .   .       .
+.     .       .   .   .       .
+ER1  ER2 ... ERN SR1 SR2 ... SRM
 ```
-Where `x` and `y` are just the names of the columns, it does not matter what you put in there but is important to have it.
-`N`,`M` and `R` integers. `E` is an entry pattern (or input pattern) with `S` being the solution.
+Where `x` and `y` are just the names of the columns, it does not matter what you put in there, is important to respect this column names.
+`E` is an entry pattern (or input pattern) with `S` being the solution (or correct output). 
+`N`,`M` and `R` integers. `N` is the size of an entry `E`. `M` is the size of a solution `S`. `R` is the length of the sample i.e. the number of rows it has, each row beign an entry-solution pair.
 
 ### Example
 * configuration.data
