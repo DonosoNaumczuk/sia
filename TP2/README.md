@@ -37,10 +37,10 @@ functionLast          [tanh|exp|linear]
 learningSample        string
 testingSample         string
 qtyNeuronsInLayer1    unsigned int
-                .
-                .
-                .
-qtyNeuronsInLayerN  unsigned int
+        .                 .     .
+        .                 .     .
+        .                 .     .
+qtyNeuronsInLayerN    unsigned int
 ```
 
 The learningSample and testingSample strings must be a name of file place in the TP2 folder.
@@ -49,9 +49,9 @@ Such file must respect the following structure:
 ```
 x1 ... xN y1 ... yM
 E1 ... EN S1 ... SM
-        .
-        .
-        .
+.        .       .
+.        .       .
+.        .       .
 Q1 ... QN R1 ... RM
 ```
 x and y are just the names of the columns, it does not matter what you put in there but is important to have it.
