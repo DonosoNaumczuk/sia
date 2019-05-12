@@ -101,7 +101,8 @@ function initConfiguration()
     global learningSample;
     auxIndex++;
     data = importdata(configuration.textdata{auxIndex + index++}, ' ').data;
-    learningSample = getLearningSample(data);
+    configPercentage = configuration.data(index++);
+    learningSample = getLearningSample(data, configPercentage);
 
     global testingSample
     auxIndex++;

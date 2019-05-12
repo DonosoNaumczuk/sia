@@ -16,6 +16,7 @@ betaLast            	1
 gammaLast           	0
 functionLast            linear
 learningSample          terrain02.data
+learningSamplePercentage 0.2
 testingSample           terrain02.data
 qtyNeuronsInLayer1   	2
 qtyNeuronsInLayer2   	30
