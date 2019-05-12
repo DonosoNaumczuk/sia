@@ -1,19 +1,19 @@
-function learningSample = getLearningSample(data)
+function learningSample = getLearningSample(data, configPercentage)
     dataColumns    = size(data, 2);
     learningSample = [];
 
     #for i=1:dataColumns
         sortedMatrix      = sortrows(data, 3);
-        sampleFromColumnI = getSampleFromColumn(sortedMatrix);
+        sampleFromColumnI = getSampleFromColumn(sortedMatrix, configPercentage);
         learningSample    = sampleFromColumnI;
     #end
 
     learningSample = unique(learningSample, 'rows');
 endfunction
 
-function sampleFromColumnI = getSampleFromColumn(matrix)
+function sampleFromColumnI = getSampleFromColumn(matrix, configPercentage)
     matrixRows               = size(matrix, 1);
-    learningSamplePercentage = 0.2;
+    learningSamplePercentage = configPercentage;
     limit                    = (int32)(learningSamplePercentage * matrixRows);
 
     topValues    = getTopRows(matrix, matrixRows);
