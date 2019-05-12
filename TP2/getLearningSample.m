@@ -2,23 +2,22 @@ function learningSample = getLearningSample(data, configPercentage)
     dataColumns    = size(data, 2);
     learningSample = [];
 
-    #for i=1:dataColumns
-        sortedMatrix      = sortrows(data, 3);
-        sampleFromColumnI = getSampleFromColumn(sortedMatrix, configPercentage);
-        learningSample    = sampleFromColumnI;
-    #end
+    sortedMatrix      = sortrows(data, 3);
+    sampleFromColumnI = getSampleFromColumn(sortedMatrix, configPercentage);
+    learningSample    = sampleFromColumnI;
 
     learningSample = unique(learningSample, 'rows');
 endfunction
 
 function sampleFromColumnI = getSampleFromColumn(matrix, configPercentage)
-    matrixRows               = size(matrix, 1);
-    learningSamplePercentage = configPercentage;
-    limit                    = (int32)(learningSamplePercentage * matrixRows);
+    matrixRows                  = size(matrix, 1);
+    learningSamplePercentage    = configPercentage;
+    topLimit                    = (int32)(learningSamplePercentage * matrixRows);
+    bottomLimit                 = (int32)((1 - learningSamplePercentage) * matrixRows);
 
-    topValues    = getTopRows(matrix, matrixRows);
+    topValues    = getTopRows(matrix, topLimit);
     midValues    = getMidRows(matrix, matrixRows, learningSamplePercentage);
-    bottomValues = getBottomRows(matrix, matrixRows);
+    bottomValues = getBottomRows(matrix, bottomLimit);
 
     sampleFromColumnI = joinSamples(topValues, midValues, bottomValues);
 endfunction
