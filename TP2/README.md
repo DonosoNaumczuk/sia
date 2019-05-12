@@ -1,9 +1,9 @@
 # sia-tp2-neuralNetwork
 
 ## Prerequisites
-The only thing you need is to have ```octave v4.4.2``` installed in your computer.
+The only thing you need is to have ```octave v4.2.2``` installed in your computer.
 
-### How install octave v4.4.2 in Linux 18.04 LTS
+### How install octave v4.2.2 in Linux 18.04 LTS
 ```sudo apt-get install octave```
 
 ### Why octave v4.2.2?
