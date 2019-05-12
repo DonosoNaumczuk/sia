@@ -17,31 +17,31 @@ Because we use the instruction `dbstop` to add conditionals breakpoints, and thi
 
 There should be a configuration file named **configuration.data** containing this information in this particular order:
 ```
-learningRate          double
-adaptiveLearningRate  [0|1]
-timesLR               int
-incLR                 double
-decLR                 double
-momentum              [0|1]
-momentumRate          double
-maxError              double
-epoch                 int
-debugTimes            int
-deltaWCalculation     [incremental|batch]
-beta                  double
-gamma                 double
-function              [tanh|exp|linear]
-betaLast              double
-gammaLast             double
-functionLast          [tanh|exp|linear]
-learningSample        string
-testingSample         string
-qtyNeuronsInLayer1    unsigned int
-qtyNeuronsInLayer2    unsigned int
-        .                 .     .
-        .                 .     .
-        .                 .     .
-qtyNeuronsInLayerN    unsigned int
+learningRate              double
+adaptiveLearningRate      [0|1]
+timesLR                   unsigned int
+incLR                     double
+decLR                     double
+momentum                  [0|1]
+momentumRate              double
+maxError                  double
+epoch                     unsigned int
+debugTimes                unsigned int
+deltaWCalculation         [incremental|batch]
+beta                      double
+gamma                     double
+function                  [tanh|exp|linear]
+betaLast                  double
+gammaLast                 double
+functionLast              [tanh|exp|linear]
+learningSamplePercentage  double
+testingSample             string
+qtyNeuronsInLayer1        unsigned int
+qtyNeuronsInLayer2        unsigned int
+        .                     .     .
+        .                     .     .
+        .                     .     .
+qtyNeuronsInLayerN        unsigned int
 ```
 
 The learningSample and testingSample strings must be a name of file place in the TP2 folder.
@@ -60,27 +60,6 @@ Where `x` and `y` are just the names of the columns, it does not matter what you
 `E` is an entry pattern (or input pattern) with `S` being the solution (or correct output). 
 `N`,`M` and `R` integers. `N` is the size of an entry `E`. `M` is the size of a solution `S`. `R` is the length of the sample i.e. the number of rows it has, each row beign an entry-solution pair.
 
-### Example
-* configuration.data
-```
-learningRate      0.01
-maxError            0.2
-epoch               1000
-deltaWCalculation   batch
-beta                1
-gamma               0
-function            tanh
-betaLast            1
-gammaLast           0
-functionLast        tanh
-learningSample        dataParity.data
-testingSample            dataParity.data
-qtyNeuronsInLayer1   4
-qtyNeuronsInLayer1   4
-qtyNeuronsInLayer3   1
-```
-
-This example configures a 4 entries network, with 4 neurones in the hidden layer and 1 neuron in the output layer. This network problem is the parity function with 4 entries. The learning stage will end after 1000 epoch or that the maximum quadratic error of all the learning entries is below 0.2. In this case the activation function is the same for all the layers. Also it set to use the batch method of corrections.
 ### Considerations
 
 * The string value must not have the space character.
