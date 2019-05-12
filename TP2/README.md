@@ -37,6 +37,7 @@ functionLast          [tanh|exp|linear]
 learningSample        string
 testingSample         string
 qtyNeuronsInLayer1    unsigned int
+qtyNeuronsInLayer2    unsigned int
         .                 .     .
         .                 .     .
         .                 .     .
@@ -47,16 +48,17 @@ The learningSample and testingSample strings must be a name of file place in the
 Such file must respect the following structure:
 
 ```
-x1 ... xN y1 ... yM
-E1 ... EN S1 ... SM
-.        .       .
-.        .       .
-.        .       .
-Q1 ... QN R1 ... RM
+x1   x2  ... xN  y1  ... yM
+E11  E12 ... E1N S11 ... S1M
+E21  E22 ... E2N S21 ... S2M
+.     .       .   .       .
+.     .       .   .       .
+.     .       .   .       .
+ER1  ER2 ... ERN SR1 ... SRM
 ```
-x and y are just the names of the columns, it does not matter what you put in there but is important to have it.
-E is an entry patter with S being the solution.
-Q is an entry patter with R being the solution.
+Where `x` and `y` are just the names of the columns, it does not matter what you put in there but is important to have it.
+`N`,`M` and `R` integers. `E` is an entry pattern (or input pattern) with `S` being the solution.
+
 ### Example
 * configuration.data
 ```
