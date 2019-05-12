@@ -15,26 +15,34 @@ Because we use the instruction `dbstop` to add conditionals breakpoints, and thi
 
 ## Configuration
 
-There should be a configuration file name "configuration.data" containing this information:
+There should be a configuration file named **configuration.data** containing this information in this particular order:
 ```
-learningRate      double
-maxError            double
-epoch               int
-deltaWCalculation   [incremental|batch]
-beta                double
-gamma               double
-function            [tanh|exp|linear]
-betaLast            double
-gammaLast           double
-functionLast        [tanh|exp|linear]
+learningRate          double
+adaptiveLearningRate  [0|1]
+timesLR               int
+incLR                 double
+decLR                 double
+momentum              [0|1]
+momentumRate          double
+maxError              double
+epoch                 int
+debugTimes            int
+deltaWCalculation     [incremental|batch]
+beta                  double
+gamma                 double
+function              [tanh|exp|linear]
+betaLast              double
+gammaLast             double
+functionLast          [tanh|exp|linear]
 learningSample        string
-testingSample            string
-qtyNeuronsInLayer1   unsigned int
+testingSample         string
+qtyNeuronsInLayer1    unsigned int
                 .
                 .
                 .
-qtyNeuronsInLayerN   unsigned int
+qtyNeuronsInLayerN  unsigned int
 ```
+
 The learningSample and testingSample strings must be a name of file place in the TP2 folder.
 Such file must respect the following structure:
 
