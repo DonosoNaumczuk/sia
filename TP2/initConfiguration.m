@@ -66,16 +66,16 @@ function initConfiguration()
     if (strcmp(functionString1, 'exp'))
         g  	= @(x) 1 ./ (1 + exp(-2 .* beta .* x));
         gD 	= @(x) (2 * beta) .* (feval(g,x) .* (1 - feval(g,x)));
-        a 	= -6 * (1 / beta);
-		b 	= 6 * (1 / beta);
+        a 	= -3.5 * (1 / beta);
+		b 	= 3.5 * (1 / beta);
     elseif (strcmp(functionString1, 'linear'))
         g  	= @(x) beta * x + gamma;
         gD 	= @(x) beta;
     else
         g  	= @(x) tanh(beta .* x);
         gD 	= @(x) beta .* (1 - feval(g,x) .^ 2);
-        a 	= -6 * (1 / beta);
-		b 	= 6 * (1 / beta);
+        a 	= -3.5 * (1 / beta);
+		b 	= 3.5 * (1 / beta);
     endif
 
     global betaLast;
