@@ -67,5 +67,9 @@ Where `x` and `y` are just the names of the columns, it does not matter what you
     * tanh(beta * X)
     * 1 / (1 + exp(-2 * beta * X))
     * beta * x + gamma
-* qtyNeuronsInLayer1 number must be the same as the N in the learningSample and testingSample.
-* qtyNeuronsInLayerN number must be the same as the M in the learningSample and testingSample.
+* `qtyNeuronsInLayer1` value must be equals to the size of an entry.
+* `qtyNeuronsInLayerN` value must be equals to the size of a solution.
+* The values `[0|1]` means `0` for `disabled` and `1` for `enabled`.
+* `timesLR` is `k`, `incLR` is `alfa` and `decLR` is `beta` in SIA Subject eta adaptive notation.
+* `momentumRate` is `alfa` in SIA Subject momentum notation.
+* `debugTimes` are epochs in batch learning and patterns in incremental learning.
