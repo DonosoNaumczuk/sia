@@ -47,7 +47,6 @@ function learnNeuralNetwork()
     	              deltaWeights = updateDeltaWeightsBatch(deltaWeights, learningRate, d, v, k, i);
     	           else
     	              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
-    	              calculateErrors();
     				  if (adaptiveLearningRate)
     					  incrementalLRDecremented = updateLearningRate();
     				  endif
@@ -56,9 +55,6 @@ function learnNeuralNetwork()
     	              endif
     	           endif
     		   until (!incrementalLRDecremented)
-    		   if (!isBatch)
-    			   print();
-    		   endif
             endfor
             if (isBatch)
                weights = updateWeightsBatch(weights, deltaWeights, k);
@@ -66,11 +62,11 @@ function learnNeuralNetwork()
                if (adaptiveLearningRate)
                    batchLRDecremented = updateLearningRate();
                endif
+            else
+                calculateErrors();
             endif
         until (!batchLRDecremented)
-    if (isBatch)
-        print();
-    endif
+    print();
     endwhile
     endPlot()
 endfunction
@@ -88,6 +84,14 @@ function learningRateDecremented = updateLearningRate()
     global lastLastError;
     global momentumRate;
     global momentumRateBackUp;
+    global learningSample;
+
+    if (times == timesLR)
+      lastLastError = lastError;
+      lastError		= error;
+      times = 0;
+      error = testNeuralnetwork(learningSample);
+    endif
 
     momentumRate = momentumRateBackUp; #reset momentum rate
     learningRateDecremented = false;
@@ -169,8 +173,8 @@ function calculateErrors()
     global times;
     global timesLR;
     global error;
-	  global lastError;
-	  global lastLastError;
+	global lastError;
+	global lastLastError;
     global learningSample;
     global testingSample;
     global meanErrorEvolutionLearning;
