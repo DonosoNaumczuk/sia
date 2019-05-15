@@ -38,8 +38,7 @@ global debugTimes;					# Set breakpoint enabled when mod(counter, debugTimes) eq
 
 initConfiguration();
 
-dbstop in learnNeuralNetwork at 24 if (isBatch && mod(counter, debugTimes) == 0);
-dbstop in learnNeuralNetwork at 39 if (!isBatch && mod(counter, debugTimes) == 0);
+dbstop in learnNeuralNetwork at 24 if (mod(counter, debugTimes) == 0);
 
 x  = testingSample(1:size(testingSample),1);
 y  = testingSample(1:size(testingSample),2);
