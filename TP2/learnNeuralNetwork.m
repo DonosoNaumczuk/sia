@@ -27,7 +27,7 @@ function learnNeuralNetwork()
 
     learningSampleNormalize = feval(NF, learningSample(1:size(learningSample),1:N(1)));
     p = 0;
-    while (p < epoch && mean(error) > maxError && nextLearningRate > 10^-5)
+    while (p < epoch && mean(error) > maxError)
         p++;
 
         order = 1:size(learningSample);
@@ -47,8 +47,8 @@ function learnNeuralNetwork()
         batchLRDecremented          = false;
 
         index = 0;
-        while(index < size(order)(2) && nextLearningRate > 10^-5)
-            index++;
+        while(index < size(order)(2))
+            index++
             expectedValue = learningSample(order(index), N(1)+1:size(learningSample)(2))';
             v{1} = [-1; learningSampleNormalize(order(index), 1:N(1))'];
 
@@ -70,6 +70,7 @@ function learnNeuralNetwork()
                             meanErrorEvolutionLearning(end) = [];
                             learningRateEvolution(end)      = [];
                             p--;
+                            order = orderBefore;
                         endif
                   endif
               endif
