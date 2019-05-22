@@ -48,7 +48,7 @@ function learnNeuralNetwork()
 
         index = 0;
         while(index < size(order)(2))
-            index++
+            index++;
             expectedValue = learningSample(order(index), N(1)+1:size(learningSample)(2))';
             v{1} = [-1; learningSampleNormalize(order(index), 1:N(1))'];
 
