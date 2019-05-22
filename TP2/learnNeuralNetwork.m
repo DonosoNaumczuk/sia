@@ -4,7 +4,8 @@ function learnNeuralNetwork()
     global gLast; global gDLast; global learningSample; global testingSample; global N;
     global NF; global weights; global weightsStart; global error; global lastError;
 	global lastLastError; global lastWeights; global times; global adaptiveLearningRate;
-	global lastDeltaWeights; global debugTimes;
+	global lastDeltaWeights; global debugTimes; global timesLR; global meanErrorEvolutionLearning;
+    global meanErrorEvolutionTest; global learningRateEvolution; global nextLearningRate;
 
     initPlot();
     k 			 	 = size(N)(1);
@@ -12,62 +13,93 @@ function learnNeuralNetwork()
 	lastDeltaWeights = cell(k - 1, 1);
     weights      	 = initWeights(N);
     weightsStart 	 = weights;
+    calculateErrors();
 	lastError 	 	 = error;
 	lastLastError	 = error;
-	times		 	 = 0;
+    learningRateEvolution = [learningRate];
+	times		 	 = 1;
 	lastWeights	 	 = weights;
+    nextLearningRate = learningRate;
+    orderBefore      = 1:size(learningSample);
+    orderBefore      = randperm(numel(orderBefore));
+    incrementalLRDecremented 	= false;
+    batchLRDecremented          = false;
 
     learningSampleNormalize = feval(NF, learningSample(1:size(learningSample),1:N(1)));
     p = 0;
     while (p < epoch && mean(error) > maxError)
-        do
-            p++;
+        p++;
 
-            order = 1:size(learningSample);
-            if (!isBatch)
+        order = 1:size(learningSample);
+        if (!isBatch)
+            if(incrementalLRDecremented)
+                order = orderBefore;
+            else
+                orderBefore = order;
                 order = randperm(numel(order));
             endif
+        endif
 
-            h 							= cell(k - 1, 1);
-            v 							= cell(k, 1);
-            d 							= cell(k - 1, 1);
-    		incrementalLRDecremented 	= false;
-            batchLRDecremented          = false;
+        h 							= cell(k - 1, 1);
+        v 							= cell(k, 1);
+        d 							= cell(k - 1, 1);
+    	incrementalLRDecremented 	= false;
+        batchLRDecremented          = false;
 
-            for i = order
-    			do
-    	           expectedValue = learningSample(i, N(1)+1:size(learningSample)(2))';
-    	           v{1} = [-1; learningSampleNormalize(i, 1:N(1))'];
+        index = 0;
+        while(index < size(order)(2))
+            index++;
+            expectedValue = learningSample(order(index), N(1)+1:size(learningSample)(2))';
+            v{1} = [-1; learningSampleNormalize(order(index), 1:N(1))'];
 
-    	           [h, v] = calculateHAndV(k, h, v, weights, g, gLast);
+            [h, v] = calculateHAndV(k, h, v, weights, g, gLast);
 
-    	           d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N);
+            d = calculateD(k, h, v, d, weights, gD, gDLast, expectedValue, N);
 
-    	           if (isBatch)
-    	              deltaWeights = updateDeltaWeightsBatch(deltaWeights, learningRate, d, v, k, i);
-    	           else
-    	              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
-    				  if (adaptiveLearningRate)
-    					  incrementalLRDecremented = updateLearningRate();
-    				  endif
-    	              if (mean(error) <= maxError)
-    	                  break;
-    	              endif
-    	           endif
-    		   until (!incrementalLRDecremented)
-            endfor
             if (isBatch)
-               weights = updateWeightsBatch(weights, deltaWeights, k);
-               calculateErrors();
-               if (adaptiveLearningRate)
-                   batchLRDecremented = updateLearningRate();
-               endif
+              deltaWeights = updateDeltaWeightsBatch(deltaWeights, learningRate, d, v, k, order(index));
             else
-                calculateErrors();
+              weights     = updateWeightsIncremental(weights, learningRate, d, v, k);
+              if (adaptiveLearningRate)
+                  incrementalLRDecremented = updateLearningRate();
+                  if(incrementalLRDecremented)
+                        index = index - timesLR;
+                        if(index < 0)
+                            index = size(order)(2) + index;
+                            meanErrorEvolutionTest(end)     = [];
+                            meanErrorEvolutionLearning(end) = [];
+                            learningRateEvolution(end)      = [];
+                            p--;
+                            order = orderBefore;
+                        endif
+                  endif
+              endif
+              if (mean(error) <= maxError)
+                  break;
+              endif
+              if(index < size(order)(2))
+                  learningRate = nextLearningRate;
+              endif
             endif
-        until (!batchLRDecremented)
-    print();
+        endwhile
+        if (isBatch)
+           weights = updateWeightsBatch(weights, deltaWeights, k);
+           if (adaptiveLearningRate)
+               batchLRDecremented = updateLearningRate();
+           endif
+        endif
+        if (!batchLRDecremented)
+            calculateErrors();
+            print(true);
+        else
+            p = p - timesLR;
+            meanErrorEvolutionTest     = meanErrorEvolutionTest(:,1:end - (timesLR-1));
+            meanErrorEvolutionLearning = meanErrorEvolutionLearning(:,1:end - (timesLR-1));
+            learningRateEvolution      = learningRateEvolution(:,1:end - (timesLR-1));
+        endif
+        learningRate = nextLearningRate;
     endwhile
+    print(false);
     endPlot()
 endfunction
 
@@ -79,6 +111,7 @@ function learningRateDecremented = updateLearningRate()
     global error;
     global lastError;
     global learningRate;
+    global nextLearningRate;
     global weights;
     global lastWeights;
     global lastLastError;
@@ -93,7 +126,6 @@ function learningRateDecremented = updateLearningRate()
       error = testNeuralnetwork(learningSample);
     endif
 
-    momentumRate = momentumRateBackUp; #reset momentum rate
     learningRateDecremented = false;
 
     times++;
@@ -101,18 +133,18 @@ function learningRateDecremented = updateLearningRate()
         return;
     endif
 
-    deltaError = mean(error) - mean(lastError);
-
     if (times == timesLR)
+        deltaError = mean(error) - mean(lastError);
         if (deltaError < 0) # error decremented
-            learningRate = learningRate + incLR;
+            nextLearningRate = learningRate + incLR;
+            momentumRate = momentumRateBackUp; #reset momentum rate
         elseif (deltaError > 0)
             momentumRate = 0;
             weights 	 = lastWeights;
-            error 		 = lastError;
-            lastError 	 = lastLastError;
+            error     = lastError;
+            lastError = lastLastError;
 
-            learningRate = learningRate - learningRate * decLR;
+            nextLearningRate = learningRate - learningRate * decLR;
 
             learningRateDecremented = true;
         endif
@@ -181,50 +213,51 @@ function calculateErrors()
     global maxErrorEvolutionLearning;
     global meanErrorEvolutionTest;
     global maxErrorEvolutionTest;
+    global learningRateEvolution;
+    global learningRate;
 
-    if (times == timesLR)
-      lastLastError		= lastError;
-      lastError				= error;
-      times = 0;
-    endif
-    error 					= testNeuralnetwork(testingSample);
-    meanErrorEvolutionTest 	= [meanErrorEvolutionTest, mean(error)];
-    maxErrorEvolutionTest  	= [maxErrorEvolutionTest, max(error)];
 
-    error 						= testNeuralnetwork(learningSample);
-    meanErrorEvolutionLearning 	= [meanErrorEvolutionLearning, mean(error)];
-    maxErrorEvolutionLearning  	= [maxErrorEvolutionLearning, max(error)];
+    learningRateEvolution = [learningRateEvolution, learningRate];
+
+
+    error2 					= testNeuralnetwork(testingSample);
+    meanErrorEvolutionTest 	= [meanErrorEvolutionTest, mean(error2)];
+    maxErrorEvolutionTest  	= [maxErrorEvolutionTest, max(error2)];
+
+    error2 						= testNeuralnetwork(learningSample);
+    meanErrorEvolutionLearning 	= [meanErrorEvolutionLearning, mean(error2)];
+    maxErrorEvolutionLearning  	= [maxErrorEvolutionLearning, max(error2)];
 endfunction
 
-function print()
+function print(flag)
 	global meanErrorEvolutionLearning;
 	global maxErrorEvolutionLearning;
 	global meanErrorEvolutionTest;
 	global maxErrorEvolutionTest;
   global learningRateEvolution;
 	global learningRate;
-	global counter;
-	counter++;
+    global isBatch;
+    global timesLR;
 
-  if(learningRateEvolution == 0)
-     learningRateEvolution = [learningRate];
-  else
-     learningRateEvolution = [learningRateEvolution, learningRate];
-  endif
-
+    delay = 0;
+    if(flag)
+        if(isBatch)
+            delay = timesLR;
+        else
+            delay = 1;
+        endif
+    endif
   figure(1);
-	plot(1:size(learningRateEvolution)(2), learningRateEvolution)
+	plot(0:size(learningRateEvolution)(2)-delay-1, learningRateEvolution(:,1:size(learningRateEvolution)(2)-delay))
   title("Learing Rate");                # 'hold on'
   xlabel("time")                        # destroy
   ylabel("Learning Rate");              # the
   figure(2, 'position', [0,0,450,400]); # graph
 
 	figure(2);
-	plot(1:size(meanErrorEvolutionTest)(2)-1, meanErrorEvolutionTest(1,2:size(meanErrorEvolutionTest)(2)), '-k');
-   # plot(counter, maxErrorEvolutionTest(counter + 1), "color", 'r');
+	plot(0:size(meanErrorEvolutionTest)(2)-2-delay, meanErrorEvolutionTest(1,2:size(meanErrorEvolutionTest)(2)-delay), '-k');
 	figure(3);
-	plot(1:size(meanErrorEvolutionLearning)(2)-1, meanErrorEvolutionLearning(1,2:size(meanErrorEvolutionLearning)(2)), '-k');
-   # plot(counter, maxErrorEvolutionLearning(counter + 1), "color", 'r');
+	plot(0:size(meanErrorEvolutionLearning)(2)-2-delay, meanErrorEvolutionLearning(1,2:size(meanErrorEvolutionLearning)(2)-delay), '-k');
 endfunction
 
 function weights = updateWeightsIncremental(weights, learningRate, d, v, k)
@@ -232,7 +265,12 @@ function weights = updateWeightsIncremental(weights, learningRate, d, v, k)
 	global lastDeltaWeights;
 	global momentum;
 	global momentumRate;
-	lastWeights = weights;
+    global times;
+    global timesLR;
+
+    if(times == timesLR)
+       lastWeights = weights;
+    endif
 
     for o = 1:k - 1
 		if (momentum)
@@ -263,7 +301,12 @@ function weights = updateWeightsBatch(weights, deltaWeights, k)
 	global lastDeltaWeights;
 	global momentum;
 	global momentumRate;
-	lastWeights = weights;
+    global times;
+    global timesLR;
+
+    if(times == timesLR)
+	   lastWeights = weights;
+    endif
 
     for o = 1:k - 1
 		if (momentum)
