@@ -13,6 +13,7 @@ public class DeterministicTournamentSelection extends TournamentSelection {
     public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
         ArrayList<Individual> selectedList = new ArrayList<>();
         Individual fittestInRandomSet;
+        this.individuals                   = individuals;
 
         for (int i = 0; i < k; i++) {
             fittestInRandomSet = getFittestIndividualFromRandomSubset();

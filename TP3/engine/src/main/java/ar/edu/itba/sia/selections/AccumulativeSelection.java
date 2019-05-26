@@ -8,8 +8,15 @@ abstract class AccumulativeSelection extends SelectionMethod {
     int k; // Amount of random r values
     int size; // Amount of individuals
     double[] randoms                     = new double[k];
-    double[] relativeFitness             = calculateRelativeFitness();
+    double[] relativeFitness             = new double[size];
     private double[] accumulativeFitness = calculateAccumulativeFitness();
+
+    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
+        setRandomRs();
+        setParametersForSelection(individuals, k);
+        relativeFitness = calculateRelativeFitness();
+        return doAccumulativeSelection();
+    }
 
     private void setParametersForSelection(final ArrayList<Individual> individuals, final int k) {
         this.individuals = individuals;
@@ -25,7 +32,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         accumulativeFitness[0] = q0;
 
         for (int i = 0; i < size; i++) {
-            accumulatedFitness = accumulativeFitness[i];
+            accumulatedFitness     = accumulativeFitness[i];
             accumulativeFitness[i] = relativeFitness[i] + accumulatedFitness;
         }
 
@@ -34,7 +41,6 @@ abstract class AccumulativeSelection extends SelectionMethod {
 
     double[] calculateRelativeFitness() {
         int fitnessSum = calculateFitnessSum();
-        relativeFitness = new double[size];
 
         for (int i = 0; i < size; i++)
             relativeFitness[i] = individuals.get(i).getFitness() / fitnessSum;
