@@ -7,14 +7,9 @@ import java.util.Collections;
 
 public class RankSelection extends AccumulativeSelection {
 
-    public RankSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals = individuals;
-        this.k           = k;
-    }
-
-    public ArrayList<Individual> select() {
-        double[] randoms = getRandomRs();
-        return doAccumulativeSelection(randoms);
+    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
+        setRandomRs();
+        return doAccumulativeSelection();
     }
 
     @Override

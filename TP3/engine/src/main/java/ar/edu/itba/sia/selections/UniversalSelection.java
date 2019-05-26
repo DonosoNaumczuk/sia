@@ -6,19 +6,13 @@ import java.util.ArrayList;
 
 public class UniversalSelection extends AccumulativeSelection {
 
-    public UniversalSelection(final int k) {
-        size   = individuals.size();
-        this.k = k;
-    }
-
-    public ArrayList<Individual> select() {
-        double[] randoms = getRandomRs();
-        return doAccumulativeSelection(randoms);
+    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
+        setRandomRs();
+        return doAccumulativeSelection();
     }
 
     @Override
-    double[] getRandomRs() {
-        double[] randoms = new double[k];
+    void setRandomRs() {
         double r = Math.random();
         double rSubJ;
 
@@ -26,7 +20,5 @@ public class UniversalSelection extends AccumulativeSelection {
             rSubJ = (r + j - 1) / k;
             randoms[j] = rSubJ;
         }
-
-        return randoms;
     }
 }

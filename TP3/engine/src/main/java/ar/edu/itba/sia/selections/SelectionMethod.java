@@ -5,6 +5,6 @@ import ar.edu.itba.sia.interfaces.Selectable;
 
 import java.util.ArrayList;
 
-public abstract class SelectionMethod implements Selectable<Individual> {
+abstract class SelectionMethod implements Selectable<Individual> {
     ArrayList<Individual> individuals;
 }
