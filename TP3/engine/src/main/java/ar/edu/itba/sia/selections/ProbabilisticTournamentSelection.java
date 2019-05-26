@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 public class ProbabilisticTournamentSelection extends TournamentSelection {
 
-    public ProbabilisticTournamentSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals = individuals;
-        m                = 2; // Specified in the genetic algorithms class .pdf
-        this.k           = k;
+    public ProbabilisticTournamentSelection() {
+        m = 2; // Specified in the genetic algorithms class .pdf
     }
 
-    public ArrayList<Individual> select() {
+    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
         ArrayList<Individual> selectedList = new ArrayList<>();
         Individual selectedIndividual;
 

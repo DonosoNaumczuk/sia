@@ -6,13 +6,11 @@ import java.util.*;
 
 public class DeterministicTournamentSelection extends TournamentSelection {
     
-    public DeterministicTournamentSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals = individuals;
-        m                = calculateM();
-        this.k           = k;
+    public DeterministicTournamentSelection() {
+        m = calculateM();
     }
 
-    public ArrayList<Individual> select() {
+    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
         ArrayList<Individual> selectedList = new ArrayList<>();
         Individual fittestInRandomSet;
 
