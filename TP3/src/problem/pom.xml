@@ -15,7 +15,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>gridlock</name>
+    <name>problem</name>
     <url>https://github.com/DonosoNaumczuk/sia-tp1-gridlock</url>
 
     <properties>
