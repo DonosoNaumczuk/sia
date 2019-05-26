@@ -1,4 +1,6 @@
-package ar.edu.itba.sia;
+package ar.edu.itba.sia.selections;
+
+import ar.edu.itba.sia.Individual;
 
 import java.util.Random;
 import java.util.SortedSet;

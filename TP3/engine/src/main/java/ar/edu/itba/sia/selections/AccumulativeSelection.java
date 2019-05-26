@@ -1,4 +1,6 @@
-package ar.edu.itba.sia;
+package ar.edu.itba.sia.selections;
+
+import ar.edu.itba.sia.Individual;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         relativeFitness = new double[size];
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = individuals.get(i).fitness / aptitudeSum;
+            relativeFitness[i] = individuals.get(i).getFitness() / aptitudeSum;
 
         return relativeFitness;
     }
@@ -37,7 +39,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         int sum = 0;
 
         for (Individual x : individuals)
-            sum += x.fitness;
+            sum += x.getFitness();
 
         return sum;
     }
