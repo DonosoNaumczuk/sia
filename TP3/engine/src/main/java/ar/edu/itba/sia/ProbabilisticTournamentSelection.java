@@ -10,7 +10,7 @@ public class ProbabilisticTournamentSelection extends TournamentSelection {
         this.k           = k;
     }
 
-    public ArrayList<Individual> getSelection() {
+    public ArrayList<Individual> select() {
         ArrayList<Individual> selectedList = new ArrayList<>();
         Individual selectedIndividual;
 

@@ -2,27 +2,21 @@ package ar.edu.itba.sia;
 
 import java.util.ArrayList;
 
-public class UniversalSelection extends SelectionMethod {
-    private ArrayList<Individual> individuals;
-    private int k; // Amount of random r values
-    private double[] accumulativeFitness;
+public class UniversalSelection extends AccumulativeSelection {
 
-    public UniversalSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals         = individuals;
-        this.k                   = k;
-        double[] relativeFitness = calculateRelativeFitness(individuals);
-        accumulativeFitness      = calculateAccumulativeFitness(relativeFitness, individuals.size());
+    public UniversalSelection(final int k) {
+        size   = individuals.size();
+        this.k = k;
     }
 
-    public ArrayList<Individual> getSelection() {
-        double r = Math.random();
-        double[] randoms = getRandomRs(r, k);
-
-        return doAccumulativeSelection(individuals, accumulativeFitness, randoms);
+    public ArrayList<Individual> select() {
+        double[] randoms = getRandomRs();
+        return doAccumulativeSelection(randoms);
     }
 
-    private double[] getRandomRs(double r, int k) {
+    private double[] getRandomRs() {
         double[] randoms = new double[k];
+        double r = Math.random();
         double rSubJ;
 
         for (int j = 1; j <= k; j++) {

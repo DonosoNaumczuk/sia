@@ -2,24 +2,19 @@ package ar.edu.itba.sia;
 
 import java.util.ArrayList;
 
-public class RouletteSelection extends SelectionMethod {
-    private ArrayList<Individual> individuals;
-    private int k; // Amount of random r values
-    private double[] accumulativeFitness;
+public class RouletteSelection extends AccumulativeSelection {
 
-    public RouletteSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals         = individuals;
-        this.k                   = k;
-        double[] relativeFitness = calculateRelativeFitness(individuals);
-        accumulativeFitness      = calculateAccumulativeFitness(relativeFitness, individuals.size());
+    public RouletteSelection(final int k) {
+        size   = individuals.size();
+        this.k = k;
     }
 
-    public ArrayList<Individual> getSelection() {
-        double[] randoms = getRandomRs(k);
-        return doAccumulativeSelection(individuals, accumulativeFitness, randoms);
+    public ArrayList<Individual> select() {
+        double[] randoms = getRandomRs();
+        return doAccumulativeSelection(randoms);
     }
 
-    private double[] getRandomRs(int k) {
+    private double[] getRandomRs() {
         double[] randoms = new double[k];
 
         for (int j = 1; j <= k; j++)

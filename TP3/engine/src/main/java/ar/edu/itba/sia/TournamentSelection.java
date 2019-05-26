@@ -1,12 +1,10 @@
 package ar.edu.itba.sia;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 abstract class TournamentSelection extends SelectionMethod {
-    ArrayList<Individual> individuals;
     int m; // Amount of randomly chosen individuals
     int k; // Iterations
     Random rnd = new Random(); // Random instance helper
