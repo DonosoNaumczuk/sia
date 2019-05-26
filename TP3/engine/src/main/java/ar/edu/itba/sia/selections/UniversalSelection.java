@@ -16,7 +16,8 @@ public class UniversalSelection extends AccumulativeSelection {
         return doAccumulativeSelection(randoms);
     }
 
-    private double[] getRandomRs() {
+    @Override
+    double[] getRandomRs() {
         double[] randoms = new double[k];
         double r = Math.random();
         double rSubJ;

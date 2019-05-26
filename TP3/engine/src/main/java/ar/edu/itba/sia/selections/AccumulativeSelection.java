@@ -7,7 +7,7 @@ import java.util.ArrayList;
 abstract class AccumulativeSelection extends SelectionMethod {
     int k; // Amount of random r values
     int size; // Amount of individuals
-    private double[] relativeFitness     = calculateRelativeFitness();
+    double[] relativeFitness     = calculateRelativeFitness();
     private double[] accumulativeFitness = calculateAccumulativeFitness();
 
     private double[] calculateAccumulativeFitness() {
@@ -25,12 +25,12 @@ abstract class AccumulativeSelection extends SelectionMethod {
         return accumulativeFitness;
     }
 
-    private double[] calculateRelativeFitness() {
-        int aptitudeSum = calculateFitnessSum();
+    double[] calculateRelativeFitness() {
+        int fitnessSum = calculateFitnessSum();
         relativeFitness = new double[size];
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = individuals.get(i).getFitness() / aptitudeSum;
+            relativeFitness[i] = individuals.get(i).getFitness() / fitnessSum;
 
         return relativeFitness;
     }
@@ -62,5 +62,14 @@ abstract class AccumulativeSelection extends SelectionMethod {
         }
 
         return selectedList;
+    }
+
+    double[] getRandomRs() {
+        double[] randoms = new double[k];
+
+        for (int j = 1; j <= k; j++)
+            randoms[j] = Math.random();
+
+        return randoms;
     }
 }

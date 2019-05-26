@@ -15,13 +15,4 @@ public class RouletteSelection extends AccumulativeSelection {
         double[] randoms = getRandomRs();
         return doAccumulativeSelection(randoms);
     }
-
-    private double[] getRandomRs() {
-        double[] randoms = new double[k];
-
-        for (int j = 1; j <= k; j++)
-            randoms[j] = Math.random();
-
-        return randoms;
-    }
 }
