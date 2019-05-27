@@ -10,7 +10,7 @@ public class RankSelection extends AccumulativeSelection {
         Collections.sort(individuals);
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = (i + 1) / fitnessSum;
+            relativeFitness[i] = ((double)(i + 1)) / fitnessSum;
 
         return relativeFitness;
     }

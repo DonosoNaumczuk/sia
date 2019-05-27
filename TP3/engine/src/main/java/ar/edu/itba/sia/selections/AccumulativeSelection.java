@@ -43,7 +43,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         int fitnessSum = calculateFitnessSum();
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = individuals.get(i).getFitness() / fitnessSum;
+            relativeFitness[i] = ((double)individuals.get(i).getFitness()) / fitnessSum;
 
         return relativeFitness;
     }
