@@ -1,6 +1,6 @@
 package ar.edu.itba.sia.selections;
 
-import ar.edu.itba.sia.Individual;
+import ar.edu.itba.sia.Chromosome;
 
 import java.util.Random;
 import java.util.SortedSet;
@@ -10,24 +10,24 @@ abstract class TournamentSelection extends SelectionMethod {
     int m; // Amount of randomly chosen individuals
     Random rnd = new Random(); // Random instance helper
 
-    Individual getFittestIndividualFromRandomSubset() {
-        SortedSet<Individual> randoms = createRandomSubset();
+    Chromosome getFittestChromosomeFromRandomSubset() {
+        SortedSet<Chromosome> randoms = createRandomSubset();
         return randoms.last();
     }
 
-    Individual getLeastFitIndividualFromRandomSubset() {
-        SortedSet<Individual> randoms = createRandomSubset();
+    Chromosome getLeastFitChromosomeFromRandomSubset() {
+        SortedSet<Chromosome> randoms = createRandomSubset();
         return randoms.first();
     }
 
-    private SortedSet<Individual> createRandomSubset() {
-        Individual randomIndividual;
-        SortedSet<Individual> randoms = new TreeSet<>();
+    private SortedSet<Chromosome> createRandomSubset() {
+        Chromosome randomChromosome;
+        SortedSet<Chromosome> randoms = new TreeSet<>();
         Random rnd                    = new Random();
 
         for (int j = 0; j < m; j++) {
-            randomIndividual = individuals.get(rnd.nextInt(individuals.size()));
-            while (randoms.add(randomIndividual));
+            randomChromosome = chromosomes.get(rnd.nextInt(chromosomes.size()));
+            while (randoms.add(randomChromosome));
         }
 
         return randoms;

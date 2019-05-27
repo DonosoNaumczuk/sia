@@ -1,6 +1,6 @@
 package ar.edu.itba.sia.selections;
 
-import ar.edu.itba.sia.Individual;
+import ar.edu.itba.sia.Chromosome;
 
 import java.util.*;
 
@@ -10,13 +10,13 @@ public class DeterministicTournamentSelection extends TournamentSelection {
         m = calculateM();
     }
 
-    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
-        ArrayList<Individual> selectedList = new ArrayList<>();
-        Individual fittestInRandomSet;
-        this.individuals                   = individuals;
+    public ArrayList<Chromosome> select(final ArrayList<Chromosome> chromosomes, final int k) {
+        ArrayList<Chromosome> selectedList = new ArrayList<>();
+        Chromosome fittestInRandomSet;
+        this.chromosomes                   = chromosomes;
 
         for (int i = 0; i < k; i++) {
-            fittestInRandomSet = getFittestIndividualFromRandomSubset();
+            fittestInRandomSet = getFittestChromosomeFromRandomSubset();
             selectedList.add(fittestInRandomSet);
         }
 

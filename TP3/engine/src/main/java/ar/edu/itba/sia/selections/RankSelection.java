@@ -7,7 +7,7 @@ public class RankSelection extends AccumulativeSelection {
     @Override
     double[] calculateRelativeFitness() {
         int fitnessSum = gaussSum(size);
-        Collections.sort(individuals);
+        Collections.sort(chromosomes);
 
         for (int i = 0; i < size; i++)
             relativeFitness[i] = ((double)(i + 1)) / fitnessSum;

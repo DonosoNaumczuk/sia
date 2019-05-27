@@ -1,15 +1,6 @@
 package ar.edu.itba.sia.selections;
 
-import ar.edu.itba.sia.Individual;
-
-import java.util.ArrayList;
-
 public class BoltzmannSelection extends AccumulativeSelection {
-    @Override
-    public ArrayList<Individual> select(ArrayList<Individual> individuals, int k) {
-
-        return super.select(individuals, k);
-    }
 
     @Override
     double[] calculateRelativeFitness() {
@@ -29,7 +20,7 @@ public class BoltzmannSelection extends AccumulativeSelection {
         double f;
 
         for (int i = 0; i < size; i++) {
-            f = individuals.get(i).getFitness();
+            f = chromosomes.get(i).getFitness();
             boltzmannFitness[i] = Math.exp(f / T);
         }
 

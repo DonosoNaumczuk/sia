@@ -1,26 +1,26 @@
 package ar.edu.itba.sia.selections;
 
-import ar.edu.itba.sia.Individual;
+import ar.edu.itba.sia.Chromosome;
 
 import java.util.ArrayList;
 
 abstract class AccumulativeSelection extends SelectionMethod {
     int k; // Amount of random r values
-    int size; // Amount of individuals
+    int size; // Amount of chromosomes
     double[] randoms                     = new double[k];
     double[] relativeFitness             = new double[size];
     private double[] accumulativeFitness = calculateAccumulativeFitness();
 
-    public ArrayList<Individual> select(final ArrayList<Individual> individuals, final int k) {
+    public ArrayList<Chromosome> select(final ArrayList<Chromosome> chromosomes, final int k) {
         setRandomRs();
-        setParametersForSelection(individuals, k);
+        setParametersForSelection(chromosomes, k);
         relativeFitness = calculateRelativeFitness();
         return doAccumulativeSelection();
     }
 
-    private void setParametersForSelection(final ArrayList<Individual> individuals, final int k) {
-        this.individuals = individuals;
-        size             = individuals.size();
+    private void setParametersForSelection(final ArrayList<Chromosome> chromosomes, final int k) {
+        this.chromosomes = chromosomes;
+        size             = chromosomes.size();
         this.k           = k;
     }
 
@@ -43,7 +43,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         int fitnessSum = calculateFitnessSum();
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = ((double)individuals.get(i).getFitness()) / fitnessSum;
+            relativeFitness[i] = ((double)chromosomes.get(i).getFitness()) / fitnessSum;
 
         return relativeFitness;
     }
@@ -51,23 +51,23 @@ abstract class AccumulativeSelection extends SelectionMethod {
     private int calculateFitnessSum() {
         int sum = 0;
 
-        for (Individual x : individuals)
+        for (Chromosome x : chromosomes)
             sum += x.getFitness();
 
         return sum;
     }
 
-    ArrayList<Individual> doAccumulativeSelection() {
-        ArrayList<Individual> selectedList = new ArrayList<>();
+    private ArrayList<Chromosome> doAccumulativeSelection() {
+        ArrayList<Chromosome> selectedList = new ArrayList<>();
         boolean selected;
 
-        for (int i = 1; i <= individuals.size(); i++) {
+        for (int i = 1; i <= chromosomes.size(); i++) {
             selected = false;
 
             for (int j = 0; j < k && !selected; j++) {
                 if (accumulativeFitness[i - 1] < randoms[j] && randoms[j] < accumulativeFitness[i]) {
-                    selectedList.add(individuals.get(i - 1)); // Actually adding the i-th individual to the selected list
-                    // Subtracting 1 because the accumulative fitness have one more row than the individual fitness
+                    selectedList.add(chromosomes.get(i - 1)); // Actually adding the i-th chromosome to the selected list
+                    // Subtracting 1 because the accumulative fitness have one more row than the chromosome fitness
                     selected = true;
                 }
             }
