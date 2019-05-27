@@ -1,7 +1,5 @@
 package ar.edu.itba.sia.interfaces;
 
-import ar.edu.itba.sia.Chromosome;
-
-public interface Crossable<C extends Chromosome<C>> {
-    C crossover(C chromosome);
+public interface Crossable<T> {
+    T crossover(T t1, T t2);
 }
