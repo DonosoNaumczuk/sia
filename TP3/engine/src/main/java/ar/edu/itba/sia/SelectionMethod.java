@@ -4,9 +4,9 @@ import ar.edu.itba.sia.interfaces.Selectable;
 
 import java.util.ArrayList;
 
-abstract class SelectionMethod implements Selectable<Chromosome> {
+abstract class SelectionMethod<T extends Chromosome> implements Selectable<T> {
     private double proportion;
-    ArrayList<Chromosome> chromosomes;
+    ArrayList<T> chromosomes;
 
     public double getProportion() {
         return proportion;

@@ -4,9 +4,9 @@ import java.util.*;
 
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
 
-public class GeneticAlgorithmEngine {
+public class GeneticAlgorithmEngine<T extends Chromosome<T>> {
     private int numberOfGenerationsToMakeChecks;
-    private PriorityQueue<Chromosome> currentPopulation;
+    private PriorityQueue<T> currentPopulation;
     private int generationNumber;
     private int maxGenerationNumber;
     private int goalFitness;
@@ -14,7 +14,7 @@ public class GeneticAlgorithmEngine {
     private List<List<SelectionMethod>> selectionMethods;
     private int quantityOfFathersToSelect;
 
-    public GeneticAlgorithmEngine(PriorityQueue<Chromosome> initialPopulation,
+    public GeneticAlgorithmEngine(PriorityQueue<T> initialPopulation,
                                   int numberOfGenerationsToMakeChecks,
                                   int maxGenerationNumber, int goalFitness,
                                   ReplaceMethod replaceMethod,
@@ -30,7 +30,7 @@ public class GeneticAlgorithmEngine {
         this.quantityOfFathersToSelect       = quantityOfFathersToSelect;
     }
 
-    public GeneticAlgorithmEngine(PriorityQueue<Chromosome> initialPopulation,
+    public GeneticAlgorithmEngine(PriorityQueue<T> initialPopulation,
                                   int numberOfGenerationsToMakeChecks,
                                   int maxGenerationNumber, int goalFitness,
                                   List<List<SelectionMethod>> selectionMethods) {
@@ -38,14 +38,14 @@ public class GeneticAlgorithmEngine {
                 FIRST, selectionMethods, initialPopulation.size());
     }
 
-    public PriorityQueue<Chromosome> process() {
+    public PriorityQueue<T> process() {
         boolean flag = true;
-        PriorityQueue<Chromosome> previousPopulation = currentPopulation;//TODO:order inverted
-        Chromosome currentBest = currentPopulation.peek();
-        Chromosome previousBest = currentBest;
+        PriorityQueue<T> previousPopulation = currentPopulation;//TODO:order inverted
+        T currentBest = currentPopulation.peek();
+        T previousBest = currentBest;
         while(currentBest.getFitness() < goalFitness &&
                 generationNumber < maxGenerationNumber && flag) {
-            PriorityQueue<Chromosome> newGeneration;
+            PriorityQueue<T> newGeneration;
 
             switch (replaceMethod) {
                 case THIRD:
@@ -73,18 +73,18 @@ public class GeneticAlgorithmEngine {
         return currentPopulation;
     }
 
-    private PriorityQueue<Chromosome> handleSecond() {
-        PriorityQueue<Chromosome> newGeneration = new PriorityQueue<>();
-        ArrayList<Chromosome> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
+    private PriorityQueue<T> handleSecond() {
+        PriorityQueue<T> newGeneration = new PriorityQueue<>();
+        ArrayList<T> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
-        ArrayList<Chromosome> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<T> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
 
         //breed
-        ArrayList<Chromosome> sons = breed(fathers);
+        ArrayList<T> sons = breed(fathers);
 
         //mutate
-        for (Chromosome son:sons) {
+        for (T son:sons) {
             newGeneration.add(son.mutate());
         }
 
@@ -97,33 +97,33 @@ public class GeneticAlgorithmEngine {
         return newGeneration;
     }
 
-    private PriorityQueue<Chromosome> handleThird() {
-        PriorityQueue<Chromosome> newGeneration = new PriorityQueue<>();
-        ArrayList<Chromosome> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
+    private PriorityQueue<T> handleThird() {
+        PriorityQueue<T> newGeneration = new PriorityQueue<>();
+        ArrayList<T> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
-        ArrayList<Chromosome> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<T> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
 
         //breed
-        ArrayList<Chromosome> sons = breed(fathers);
+        ArrayList<T> sons = breed(fathers);
 
 
         //select N-k from N
-        ArrayList<Chromosome> newGenerationArrayPart1 = selectK(currentPopulationArray.size() -
+        ArrayList<T> newGenerationArrayPart1 = selectK(currentPopulationArray.size() -
                 quantityOfFathersToSelect, currentPopulationArray);
 
         //mutate
-        for (Chromosome son:sons) {
+        for (T son:sons) {
             currentPopulationArray.add(son.mutate());
         }
 
         //select k from N+K
-        ArrayList<Chromosome> newGenerationArrayPart2 = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<T> newGenerationArrayPart2 = selectK(quantityOfFathersToSelect, currentPopulationArray);
 
         newGeneration.addAll(newGenerationArrayPart1);
         newGeneration.addAll(newGenerationArrayPart2);
 
-        return newGeneration
+        return newGeneration;
     }
 
 //    private Chromosome getBest(PriorityQueue<Chromosome> population) {//TODO:maybe order by fitness
@@ -136,8 +136,8 @@ public class GeneticAlgorithmEngine {
 //        return best;
 //    }
 
-    private ArrayList<Chromosome> selectK(int quantity, ArrayList<Chromosome> population) {
-        ArrayList<Chromosome> fathers = new ArrayList<>();
+    private ArrayList<T> selectK(int quantity, ArrayList<T> population) {
+        ArrayList<T> fathers = new ArrayList<>();
         int remaining = quantity;
         Iterator<SelectionMethod> iterator = selectionMethods.get(0).iterator();
         SelectionMethod s = iterator.next();
@@ -152,11 +152,11 @@ public class GeneticAlgorithmEngine {
         return fathers;
     }
 
-    private ArrayList<Chromosome> breed(ArrayList<Chromosome> fathers) {
-        ArrayList<Chromosome> sons = new ArrayList<>();
-        Iterator<Chromosome> iteratorFathers = fathers.iterator();
-        Chromosome c1 = iteratorFathers.next();
-        Chromosome c2 = c1;
+    private ArrayList<T> breed(ArrayList<T> fathers) {
+        ArrayList<T> sons = new ArrayList<>();
+        Iterator<T> iteratorFathers = fathers.iterator();
+        T c1 = iteratorFathers.next();
+        T c2 = c1;
         while (iteratorFathers.hasNext()) {
             c2 = iteratorFathers.next();
             sons.add(c2.crossover(c1));
@@ -171,11 +171,11 @@ public class GeneticAlgorithmEngine {
         return sons;
     }
 
-    private boolean structuralCheck(PriorityQueue<Chromosome> currentPopulation,
-                                    PriorityQueue<Chromosome> previousPopulation) {
+    private boolean structuralCheck(PriorityQueue<T> currentPopulation,
+                                    PriorityQueue<T> previousPopulation) {
         boolean flag = true;
         int i = 0;
-        for (Chromosome c:currentPopulation) {
+        for (T c:currentPopulation) {
             if(previousPopulation.contains(c)) {
                 i++;
             }
