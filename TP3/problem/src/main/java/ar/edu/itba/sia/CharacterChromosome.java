@@ -15,7 +15,12 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     }
 
     @Override
-    public CharacterChromosome crossover(CharacterChromosome other) {
-        return super.getCrossoverMethod().crossover(this, other);
+    public CharacterChromosome crossover(CharacterChromosome chromosome) {
+        return super.getCrossoverMethod().crossover(this, chromosome);
+    }
+
+    @Override
+    double calculateFitness() {
+        return 0; //TODO: implement fitness calculation
     }
 }

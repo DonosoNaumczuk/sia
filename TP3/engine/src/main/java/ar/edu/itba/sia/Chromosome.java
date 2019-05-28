@@ -5,30 +5,33 @@ import ar.edu.itba.sia.interfaces.CrossoverMethod;
 import ar.edu.itba.sia.interfaces.Mutable;
 import ar.edu.itba.sia.interfaces.MutationMethod;
 
-public abstract class Chromosome<T extends Chromosome> implements Comparable<Chromosome>, Crossable<T>, Mutable<T> {
+public abstract class Chromosome<C extends Chromosome<C>> implements Comparable<Chromosome>, Crossable<C>, Mutable<C> {
     private double fitness;
-    private CrossoverMethod<T> crossoverMethod;
-    private MutationMethod<T> mutationMethod;
+    private CrossoverMethod<C> crossoverMethod;
+    private MutationMethod<C> mutationMethod;
 
-    public Chromosome(CrossoverMethod<T> crossoverMethod, MutationMethod<T> mutationMethod) {
+    public Chromosome(CrossoverMethod<C> crossoverMethod, MutationMethod<C> mutationMethod) {
         this.crossoverMethod    = crossoverMethod;
         this.mutationMethod     = mutationMethod;
+        this.fitness            = calculateFitness();
     }
 
     public double getFitness() {
         return fitness;
     }
 
-    public MutationMethod<T> getMutationMethod() {
+    abstract double calculateFitness();
+
+    public MutationMethod<C> getMutationMethod() {
         return mutationMethod;
     }
 
-    public CrossoverMethod<T> getCrossoverMethod() {
+    public CrossoverMethod<C> getCrossoverMethod() {
         return crossoverMethod;
     }
 
-    public int compareTo(Chromosome other) {
-        double difference = this.fitness - other.fitness;
+    public int compareTo(Chromosome otherChromosome) {
+        double difference = this.fitness - otherChromosome.fitness;
 
         if (difference < 0) {
             return -1;
