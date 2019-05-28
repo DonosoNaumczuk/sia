@@ -1,6 +1,4 @@
-package ar.edu.itba.sia.selections;
-
-import ar.edu.itba.sia.Chromosome;
+package ar.edu.itba.sia;
 
 import java.util.*;
 

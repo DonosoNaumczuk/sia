@@ -1,6 +1,7 @@
-package ar.edu.itba.sia.selections;
+package ar.edu.itba.sia;
 
 import ar.edu.itba.sia.Chromosome;
+import ar.edu.itba.sia.SelectionMethod;
 
 import java.util.ArrayList;
 

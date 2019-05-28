@@ -1,4 +1,4 @@
-package ar.edu.itba.sia.selections;
+package ar.edu.itba.sia;
 
 public class BoltzmannSelection extends AccumulativeSelection {
 

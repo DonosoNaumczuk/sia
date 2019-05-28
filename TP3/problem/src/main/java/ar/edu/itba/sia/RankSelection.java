@@ -1,4 +1,4 @@
-package ar.edu.itba.sia.selections;
+package ar.edu.itba.sia;
 
 import java.util.Collections;
 
