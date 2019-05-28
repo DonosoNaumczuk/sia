@@ -5,19 +5,8 @@ import java.util.LinkedList;
 public class GeneticAlgorithmSolver {
 
     public static void main(String args[]) {
-        LinkedList<Integer> list1 = new LinkedList<>();
-        list1.add(2); list1.add(3); list1.add(4);
-        LinkedList<Integer> list2 = new LinkedList<>(list1);
-        list1.remove();
-
-        LinkedList<Integer> list = list1;
-        for (int p = 0; p < 2; p++) {
-            for (Integer i : list) {
-                System.out.println(i);
-                System.out.println("-------------");
-            }
-            list = list2;
-        }
+        //TODO: remove, just testing if can see engine module from solver module
+        GeneticAlgorithmEngine engine = new GeneticAlgorithmEngine();
     }
 
     //mutacion no uniforme->como cambia la probabilidad//la decidimos nosotros
