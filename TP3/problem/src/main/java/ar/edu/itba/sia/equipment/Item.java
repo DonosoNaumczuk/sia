@@ -2,6 +2,7 @@ package ar.edu.itba.sia.equipment;
 
 public abstract class Item {
 
+    private int id;
     private double strength;
     private double agility;
     private double expertise;
@@ -9,6 +10,7 @@ public abstract class Item {
     private double vitality;
 
     /* package */ Item(int id, double strength, double agility, double expertise, double resilience, double vitality) {
+        this.id = id;
         this.strength = strength;
         this.agility = agility;
         this.expertise = expertise;
@@ -34,6 +36,10 @@ public abstract class Item {
 
     public static Weapon newWeapon(int id, double strength, double agility, double expertise, double resilience, double vitality) {
         return new Weapon(id, strength, agility, expertise, resilience, vitality);
+    }
+
+    public int getId(){
+        return id;
     }
 
     public double getStrength() {
