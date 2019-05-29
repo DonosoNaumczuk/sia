@@ -99,11 +99,11 @@ public class ItemCreator {
     }
 
     private static List<Item> createItemsFromTSVFile(String file, Function<String[] , ? extends Item> itemCreator) {
-        try (BufferedReader csvReader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader tsvReader = new BufferedReader(new FileReader(file))) {
             String row;
             LinkedList<Item> items = new LinkedList<>();
-            csvReader.readLine(); // ignore first line which just has column headers.
-            while ((row = csvReader.readLine()) != null) {
+            tsvReader.readLine(); // ignore first line which just has column headers.
+            while ((row = tsvReader.readLine()) != null) {
                 String[] attributes = row.split("\t");
                 items.add(itemCreator.apply(attributes));
             }
