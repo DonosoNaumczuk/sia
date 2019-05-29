@@ -1,19 +1,17 @@
-package ar.edu.itba.sia.selections;
-
-import ar.edu.itba.sia.Chromosome;
+package ar.edu.itba.sia;
 
 import java.util.*;
 
-public class DeterministicTournamentSelection extends TournamentSelection {
+public class DeterministicTournamentSelection<C extends Chromosome<C>> extends TournamentSelection<C> {
     
     public DeterministicTournamentSelection() {
         m = calculateM();
     }
 
-    public ArrayList<Chromosome> select(final ArrayList<Chromosome> chromosomes, final int k) {
-        ArrayList<Chromosome> selectedList = new ArrayList<>();
-        Chromosome fittestInRandomSet;
-        this.chromosomes                   = chromosomes;
+    public ArrayList<C> select(final ArrayList<C> chromosomes, final int k) {
+        ArrayList<C> selectedList   = new ArrayList<>();
+        this.chromosomes            = chromosomes;
+        C fittestInRandomSet;
 
         for (int i = 0; i < k; i++) {
             fittestInRandomSet = getFittestChromosomeFromRandomSubset();

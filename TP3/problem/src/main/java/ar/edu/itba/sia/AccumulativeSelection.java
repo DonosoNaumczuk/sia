@@ -1,24 +1,22 @@
-package ar.edu.itba.sia.selections;
-
-import ar.edu.itba.sia.Chromosome;
+package ar.edu.itba.sia;
 
 import java.util.ArrayList;
 
-abstract class AccumulativeSelection extends SelectionMethod {
+abstract class AccumulativeSelection<C extends Chromosome<C>> extends SelectionMethod<C> {
     int k; // Amount of random r values
     int size; // Amount of chromosomes
     double[] randoms                     = new double[k];
     double[] relativeFitness             = new double[size];
     private double[] accumulativeFitness = calculateAccumulativeFitness();
 
-    public ArrayList<Chromosome> select(final ArrayList<Chromosome> chromosomes, final int k) {
+    public ArrayList<C> select(final ArrayList<C> chromosomes, final int k) {
         setRandomRs();
         setParametersForSelection(chromosomes, k);
         relativeFitness = calculateRelativeFitness();
         return doAccumulativeSelection();
     }
 
-    private void setParametersForSelection(final ArrayList<Chromosome> chromosomes, final int k) {
+    private void setParametersForSelection(final ArrayList<C> chromosomes, final int k) {
         this.chromosomes = chromosomes;
         size             = chromosomes.size();
         this.k           = k;
@@ -43,7 +41,7 @@ abstract class AccumulativeSelection extends SelectionMethod {
         int fitnessSum = calculateFitnessSum();
 
         for (int i = 0; i < size; i++)
-            relativeFitness[i] = ((double)chromosomes.get(i).getFitness()) / fitnessSum;
+            relativeFitness[i] = (chromosomes.get(i).getFitness()) / fitnessSum;
 
         return relativeFitness;
     }
@@ -51,14 +49,14 @@ abstract class AccumulativeSelection extends SelectionMethod {
     private int calculateFitnessSum() {
         int sum = 0;
 
-        for (Chromosome x : chromosomes)
+        for (C x : chromosomes)
             sum += x.getFitness();
 
         return sum;
     }
 
-    private ArrayList<Chromosome> doAccumulativeSelection() {
-        ArrayList<Chromosome> selectedList = new ArrayList<>();
+    private ArrayList<C> doAccumulativeSelection() {
+        ArrayList<C> selectedList = new ArrayList<>();
         boolean selected;
 
         for (int i = 1; i <= chromosomes.size(); i++) {

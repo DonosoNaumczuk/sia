@@ -1,8 +1,8 @@
-package ar.edu.itba.sia.selections;
+package ar.edu.itba.sia;
 
 import java.util.Collections;
 
-public class RankSelection extends AccumulativeSelection {
+public class RankSelection<C extends Chromosome<C>> extends AccumulativeSelection<C> {
 
     @Override
     double[] calculateRelativeFitness() {

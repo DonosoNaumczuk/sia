@@ -1,6 +1,6 @@
-package ar.edu.itba.sia.selections;
+package ar.edu.itba.sia;
 
-public class UniversalSelection extends AccumulativeSelection {
+public class UniversalSelection<C extends Chromosome<C>> extends AccumulativeSelection<C> {
 
     @Override
     void setRandomRs() {
