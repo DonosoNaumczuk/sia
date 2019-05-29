@@ -110,6 +110,7 @@ public class ItemCreator {
             return items;
         }
         catch (IOException e) {
+            e.printStackTrace();
             return new LinkedList<>();
         }
     }
