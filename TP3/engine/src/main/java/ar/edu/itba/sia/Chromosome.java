@@ -1,9 +1,6 @@
 package ar.edu.itba.sia;
 
-import ar.edu.itba.sia.interfaces.Crossable;
-import ar.edu.itba.sia.interfaces.CrossoverMethod;
-import ar.edu.itba.sia.interfaces.Mutable;
-import ar.edu.itba.sia.interfaces.MutationMethod;
+import ar.edu.itba.sia.interfaces.*;
 
 public abstract class Chromosome<C extends Chromosome<C>> implements Comparable<Chromosome>, Crossable<C>, Mutable<C> {
     private double fitness;
@@ -13,11 +10,15 @@ public abstract class Chromosome<C extends Chromosome<C>> implements Comparable<
     public Chromosome(CrossoverMethod<C> crossoverMethod, MutationMethod<C> mutationMethod) {
         this.crossoverMethod    = crossoverMethod;
         this.mutationMethod     = mutationMethod;
-        this.fitness            = calculateFitness();
+        this.fitness            = 0;
     }
 
     public double getFitness() {
         return fitness;
+    }
+
+    public void setFitness() {
+        fitness = calculateFitness();
     }
 
     abstract double calculateFitness();

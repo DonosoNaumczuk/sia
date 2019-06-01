@@ -1,0 +1,51 @@
+{
+  "classType": "warrior",
+  "multipliers":
+      {
+        "strength": 0.8,
+        "agility": 0.9,
+        "expertise": 0.9,
+        "resistance": 1.2,
+        "life": 1.1
+      },
+  "populationQuantity": 100,
+  "cutCriteria":
+      {
+        "maxGeneration": 1000,
+        "quantityOfGenerationToPerformChecks" : 5,
+        "fitness": 10000
+      },
+  "crossover": "anular",
+  "mutation":
+      {
+        "isMultiGen": true,
+        "isUniform": true
+      },
+  "replaceMethod":
+      {
+        "type": "first",
+        "k": 50
+      },
+  "firstSelectionMethod":
+      [
+          {
+            "selectionType": "elite",
+            "proportion": 0.5
+          },
+          {
+            "selectionType": "tornament",
+            "proportion": 0.5
+          }
+      ],
+  "secondSelectionMethod":
+      [
+          {
+            "selectionType": "rullete",
+            "proportion": 0.25
+          },
+          {
+            "selectionType": "elite",
+            "proportion": 0.75
+          }
+      ]
+}

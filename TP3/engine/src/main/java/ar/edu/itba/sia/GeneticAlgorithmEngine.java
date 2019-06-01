@@ -74,7 +74,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         ArrayList<C> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
-        ArrayList<C> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<C> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray, 0);
 
         //breed
         ArrayList<C> sons = breed(fathers);
@@ -87,7 +87,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         if(currentPopulation.size() != quantityOfFathersToSelect) {
             //select N-k form population
             newGeneration.addAll(selectK(currentPopulation.size() - quantityOfFathersToSelect,
-                    currentPopulationArray));
+                    currentPopulationArray, 1));
         }
 
         return newGeneration;
@@ -98,7 +98,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         ArrayList<C> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
-        ArrayList<C> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<C> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray, 0);
 
         //breed
         ArrayList<C> sons = breed(fathers);
@@ -106,7 +106,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
 
         //select N-k from N
         ArrayList<C> newGenerationArrayPart1 = selectK(currentPopulationArray.size() -
-                quantityOfFathersToSelect, currentPopulationArray);
+                quantityOfFathersToSelect, currentPopulationArray, 1);
 
         //mutate
         for (C son:sons) {
@@ -114,7 +114,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         }
 
         //select k from N+K
-        ArrayList<C> newGenerationArrayPart2 = selectK(quantityOfFathersToSelect, currentPopulationArray);
+        ArrayList<C> newGenerationArrayPart2 = selectK(quantityOfFathersToSelect, currentPopulationArray, 1);
 
         newGeneration.addAll(newGenerationArrayPart1);
         newGeneration.addAll(newGenerationArrayPart2);
@@ -132,10 +132,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
 //        return best;
 //    }
 
-    private ArrayList<C> selectK(int quantity, ArrayList<C> population) {
+    private ArrayList<C> selectK(int quantity, ArrayList<C> population, int type) {
         ArrayList<C> fathers = new ArrayList<>();
         int remaining = quantity;
-        Iterator<SelectionMethod<C>> iterator = selectionMethods.get(0).iterator();
+        Iterator<SelectionMethod<C>> iterator = selectionMethods.get(type).iterator();
         SelectionMethod<C> s = iterator.next();
         int k;
         while(iterator.hasNext()) {
