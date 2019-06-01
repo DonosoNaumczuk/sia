@@ -2,6 +2,10 @@ package ar.edu.itba.sia;
 
 import ar.edu.itba.sia.interfaces.CrossoverMethod;
 import ar.edu.itba.sia.interfaces.MutationMethod;
+import ar.edu.itba.sia.mutations.MutationMethodNoUniformMultGen;
+import ar.edu.itba.sia.mutations.MutationMethodNoUniformOneGen;
+import ar.edu.itba.sia.mutations.MutationMethodUniformMultGen;
+import ar.edu.itba.sia.mutations.MutationMethodUniformOneGen;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
@@ -102,16 +106,16 @@ public class Configuration {
     private static MutationMethod<CharacterChromosome> parserMutationMethod(JSONConfigurationParser.JSONMutation mutation) {
         MutationMethod<CharacterChromosome> ans;
         if(mutation.isMultiGen && mutation.isUniform){
-            //TODO
+            ans = new MutationMethodUniformMultGen(mutation.initProb);
         }
         else if(mutation.isUniform) {
-            //TODO
+            ans = new MutationMethodUniformOneGen(mutation.initProb);
         }
         else if(mutation.isMultiGen) {
-            //TODO
+            ans = new MutationMethodNoUniformMultGen(mutation.initProb);
         }
         else {
-            //TODO
+            ans = new MutationMethodNoUniformOneGen(mutation.initProb);
         }
         return ans;
     }
@@ -267,6 +271,7 @@ public class Configuration {
         public static class JSONMutation {
             boolean isMultiGen;
             boolean isUniform;
+            double initProb;
         }
 
         public static class JSONReplaceMethod {

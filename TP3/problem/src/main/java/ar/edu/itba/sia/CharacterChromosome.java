@@ -51,9 +51,31 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         calculateFitness();
     }
 
+    public CharacterChromosome(CharacterChromosome other, ArrayList<Object> alleles) {
+        super(other);
+
+        this.strength   = other.strength;
+        this.agility    = other.agility;
+        this.expertise  = other.expertise;
+        this.resistance = other.resistance;
+        this.life       = other.life;
+
+        this.atkMult    = other.atkMult;
+        this.defMult    = other.defMult;
+
+        this.alleles = alleles;
+
+        calculateFitness();
+    }
+
     @Override
     public CharacterChromosome mutate() {
         return super.getMutationMethod().mutate(this);
+    }
+
+    @Override
+    public void updateMutation() {
+        super.getMutationMethod().update();
     }
 
     @Override
@@ -108,5 +130,9 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         this.expertiseP     = Math.tanh(0.01 * expertise * expertiseP);
         this.resistanceP    = Math.tanh(0.01 * resistance* resistanceP);
         this.lifeP          = Math.tanh(0.01 * life * lifeP);
+    }
+
+    public ArrayList<Object> getAlleles() {
+        return new ArrayList<>(alleles);
     }
 }

@@ -90,6 +90,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                     currentPopulationArray, 1));
         }
 
+        for (C newChromosome: newGeneration) {
+            newChromosome.updateMutation();
+        }
+
         return newGeneration;
     }
 
@@ -119,18 +123,12 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         newGeneration.addAll(newGenerationArrayPart1);
         newGeneration.addAll(newGenerationArrayPart2);
 
+        for (C newChromosome: newGeneration) {
+            newChromosome.updateMutation();
+        }
+
         return newGeneration;
     }
-
-//    private C getBest(PriorityQueue<C> population) {//TODO:maybe order by fitness
-//        C best = population.peek();
-//        for (C current: population) {
-//            if(best.compareTo(current) > 0) {//check is is < or >
-//                best = current;
-//            }
-//        }
-//        return best;
-//    }
 
     private ArrayList<C> selectK(int quantity, ArrayList<C> population, int type) {
         ArrayList<C> fathers = new ArrayList<>();

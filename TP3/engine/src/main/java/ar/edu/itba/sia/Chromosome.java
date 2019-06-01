@@ -13,6 +13,12 @@ public abstract class Chromosome<C extends Chromosome<C>> implements Comparable<
         this.fitness            = 0;
     }
 
+    public Chromosome(Chromosome<C> other) {
+        this.crossoverMethod    = other.crossoverMethod;
+        this.mutationMethod     = other.mutationMethod;
+        this.fitness            = 0;
+    }
+
     public double getFitness() {
         return fitness;
     }

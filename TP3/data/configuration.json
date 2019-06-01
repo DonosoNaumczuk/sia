@@ -19,7 +19,8 @@
   "mutation":
       {
         "isMultiGen": true,
-        "isUniform": true
+        "isUniform": true,
+        "initProb": 0.5
       },
   "replaceMethod":
       {

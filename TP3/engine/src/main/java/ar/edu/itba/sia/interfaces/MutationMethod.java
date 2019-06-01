@@ -4,4 +4,5 @@ import ar.edu.itba.sia.Chromosome;
 
 public interface MutationMethod<C extends Chromosome<C>> {
     C mutate(C thisChromosome);
+    void update();
 }
