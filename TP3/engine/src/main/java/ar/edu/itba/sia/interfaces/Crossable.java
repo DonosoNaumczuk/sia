@@ -1,5 +1,9 @@
 package ar.edu.itba.sia.interfaces;
 
-public interface Crossable<T> {
-    T crossover(T t1, T t2);
+import ar.edu.itba.sia.Chromosome;
+
+import java.util.ArrayList;
+
+public interface Crossable<C extends Chromosome<C>> {
+    ArrayList<C> crossover(C chromosome);
 }

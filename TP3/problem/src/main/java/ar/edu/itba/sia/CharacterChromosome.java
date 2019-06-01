@@ -22,9 +22,28 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     private double     resistanceP;
     private double     lifeP;
 
-    /*Height, Boots, BreastPlate, Gloves, Helmet, Weapon*/
-    private ArrayList<Object> alleles;//For easier crossover
+    /* Strength, Agility, Expertise, Resistance, Life */
+    private ArrayList<Double> traits = new ArrayList<>();
 
+    /* Attack Multiplier, Defense Multiplier */
+    private ArrayList<Double> multipliers = new ArrayList<>();
+
+    /* Height, Boots, BreastPlate, Gloves, Helmet, Weapon */
+    private ArrayList<Object> alleles = new ArrayList<>();
+
+    public CharacterChromosome(CrossoverMethod<CharacterChromosome> crossoverMethod,
+                               MutationMethod<CharacterChromosome> mutationMethod, ArrayList<Double> traits,
+                               ArrayList<Double> multipliers, ArrayList<Object> alleles) {
+        super(crossoverMethod, mutationMethod);
+
+        this.traits.addAll(traits);
+        this.multipliers.addAll(multipliers);
+        this.alleles.addAll(alleles);
+
+        calculateFitness();
+    }
+
+    /*
     public CharacterChromosome(CrossoverMethod<CharacterChromosome> crossoverMethod, MutationMethod<CharacterChromosome> mutationMethod,
                                double strength, double agility, double expertise, double resistance, double life, double atkMult,
                                double defMult, double height, Boots boots, BreastPlate breastPlate, Gloves gloves, Helmet helmet,
@@ -50,7 +69,9 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
         calculateFitness();
     }
+     */
 
+    /*
     public CharacterChromosome(CharacterChromosome other, ArrayList<Object> alleles) {
         super(other);
 
@@ -67,6 +88,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
         calculateFitness();
     }
+     */
 
     @Override
     public CharacterChromosome mutate() {
@@ -79,7 +101,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     }
 
     @Override
-    public CharacterChromosome crossover(CharacterChromosome chromosome) {
+    public ArrayList<CharacterChromosome> crossover(CharacterChromosome chromosome) {
         return super.getCrossoverMethod().crossover(this, chromosome);
     }
 
@@ -132,7 +154,11 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         this.lifeP          = Math.tanh(0.01 * life * lifeP);
     }
 
+    public ArrayList<Double> getTraits() { return traits; }
+
+    public ArrayList<Double> getMultipliers() { return multipliers; }
+
     public ArrayList<Object> getAlleles() {
-        return new ArrayList<>(alleles);
+        return alleles;
     }
 }
