@@ -21,11 +21,11 @@ abstract class TournamentSelection<C extends Chromosome<C>> extends SelectionMet
     private SortedSet<C> createRandomSubset() {
         C randomChromosome;
         SortedSet<C> randoms = new TreeSet<>();
-        Random rnd                    = new Random();
 
         for (int j = 0; j < m; j++) {
-            randomChromosome = chromosomes.get(rnd.nextInt(chromosomes.size()));
-            while (randoms.add(randomChromosome)); //TODO: Plz, explain this later
+            do
+                randomChromosome = chromosomes.get(rnd.nextInt(chromosomes.size()));
+            while (!randoms.add(randomChromosome)); //TODO: Plz, explain this later
         }
 
         return randoms;

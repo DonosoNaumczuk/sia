@@ -10,33 +10,39 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
 
     @Override
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
-        ArrayList<Object> momAlleles = mom.getAlleles();
-        ArrayList<Object> dadAlleles = dad.getAlleles();
-        ArrayList<CharacterChromosome> children = new ArrayList<>();
-        CharacterChromosome child1, child2;
-        int size = momAlleles.size();
+        ArrayList<Object> alleles1 = mom.getAlleles();
+        ArrayList<Object> alleles2 = dad.getAlleles();
+        int size = alleles1.size();
         double p = 0.5; // As specified on the class pdf
         Random rnd = new Random();
 
         for (int i = 0; i < size; i++) {
-            if (!momAlleles.get(i).equals(dadAlleles.get(i)) && rnd.nextDouble() < p)
-                exchangeAlleles(momAlleles, dadAlleles, i);
+            if (!alleles1.get(i).equals(alleles2.get(i)) && rnd.nextDouble() < p)
+                exchangeAlleles(alleles1, alleles2, i);
         }
 
-        child1 = new CharacterChromosome(this, dad.getMutationMethod(), dad.getTraits(),
-                dad.getMultipliers(), momAlleles);
-        child2 = new CharacterChromosome(this, dad.getMutationMethod(), dad.getTraits(),
-                dad.getMultipliers(), dadAlleles);
+        return createChildren(alleles1, alleles2, dad);
+    }
+
+    void exchangeAlleles(ArrayList<Object> alleles1, ArrayList<Object> alleles2, int index) {
+        Object aux = alleles1.get(index);
+        alleles1.set(index, alleles2.get(index));
+        alleles2.set(index, aux);
+    }
+    
+    ArrayList<CharacterChromosome> createChildren(ArrayList<Object> alleles1, ArrayList<Object> alleles2,
+                                                          CharacterChromosome other) {
+        ArrayList<CharacterChromosome> children = new ArrayList<>();
+        CharacterChromosome child1, child2;
+        
+        child1 = new CharacterChromosome(this, other.getMutationMethod(), other.getTraits(),
+                other.getMultipliers(), alleles1);
+        child2 = new CharacterChromosome(this, other.getMutationMethod(), other.getTraits(),
+                other.getMultipliers(), alleles2);
 
         children.add(child1);
         children.add(child2);
-
+        
         return children;
-    }
-
-    private void exchangeAlleles(ArrayList<Object> momAlleles, ArrayList<Object> dadAlleles, int index) {
-        Object aux = momAlleles.get(index);
-        momAlleles.set(index, dadAlleles.get(index));
-        dadAlleles.set(index, aux);
     }
 }

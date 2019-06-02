@@ -8,34 +8,34 @@
         "resistance": 1.2,
         "life": 1.1
       },
-  "populationQuantity": 100,
+  "populationQuantity": 1000,
   "cutCriteria":
       {
-        "maxGeneration": 10000,
+        "maxGeneration": 1000,
         "quantityOfGenerationToPerformChecks" : 10000000,
         "fitness": 100000
       },
-  "crossover": "twoPoint",
+  "crossover": "uniform",
   "mutation":
       {
-        "isMultiGen": false,
-        "isUniform": false,
-        "initProb": 0.5
+        "isMultiGen": true,
+        "isUniform": true,
+        "initProb": 0.1
       },
   "replaceMethod":
       {
         "type": "second",
-        "k": 50
+        "k": 750
       },
   "firstSelectionMethod":
       [
           {
-            "selectionType": "roulette",
-            "proportion": 0.3
+            "selectionType": "boltzmann",
+            "proportion": 0.5
           },
           {
-            "selectionType": "universal",
-            "proportion": 0.7
+            "selectionType": "tournament",
+            "proportion": 0.5
           }
       ],
   "secondSelectionMethod":
