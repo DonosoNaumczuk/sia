@@ -1,5 +1,8 @@
 package ar.edu.itba.sia;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
@@ -39,12 +42,23 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 FIRST, selectionMethods, initialPopulation.size());
     }
 
-    public PriorityQueue<C> process() {
+    public PriorityQueue<C> process() throws FileNotFoundException{
         boolean flag = true;
         PriorityQueue<C> previousPopulation = currentPopulation;
         C currentBest = currentPopulation.peek();
         C previousBest = currentBest;
-        System.out.println("Best:"+currentBest.getFitness());//TODO
+        PrintWriter writer = new PrintWriter(new File("output.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("bestFitness");
+        sb.append(',');
+        sb.append("diversity");
+        sb.append(',');
+        sb.append("meanFitness");
+        sb.append(',');
+        sb.append("worstFitness");
+        sb.append('\n');
+        writer.write(sb.toString());
+        printPopulation(writer);
         while(currentBest.getFitness() < goalFitness &&
                 generationNumber < maxGenerationNumber && flag) {
             PriorityQueue<C> newGeneration;
@@ -61,7 +75,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             generationNumber++;
             currentPopulation = newGeneration;
             currentBest = currentPopulation.peek();
-            System.out.println("Best:"+currentBest.getFitness());//TODO
+            printPopulation(writer);
             if(generationNumber % numberOfGenerationsToMakeChecks == 0) {
                 /* Content check and structural check */
                 flag = previousBest.compareTo(currentBest) <= 0 && structuralCheck(currentPopulation, previousPopulation);
@@ -73,7 +87,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
     }
 
     private PriorityQueue<C> handleSecond() {
-        PriorityQueue<C> newGeneration = new PriorityQueue<>();
+        PriorityQueue<C> newGeneration = new PriorityQueue<>(Comparator.reverseOrder());
         ArrayList<C> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
@@ -177,10 +191,32 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 i++;
             }
         }
-        if(i == currentPopulation.size()) {
+        if(i >= currentPopulation.size() / 2) {
             flag = false;
         }
         return flag;
+    }
+
+    private void printPopulation(PrintWriter writer) {
+        HashSet<C> classesOfPopulation = new HashSet<>(currentPopulation);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(currentPopulation.peek().getFitness());
+        sb.append(',');
+        sb.append(classesOfPopulation.size());
+        sb.append(',');
+        double mean = 0;
+        C last = null;
+        for (C current: currentPopulation) {
+            mean += current.getFitness();
+            last = current;
+        }
+        sb.append(mean / currentPopulation.size());
+        sb.append(',');
+        sb.append(last.getFitness());
+        sb.append('\n');
+
+        writer.write(sb.toString());
     }
 }
 

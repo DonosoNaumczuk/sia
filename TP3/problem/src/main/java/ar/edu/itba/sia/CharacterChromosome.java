@@ -5,6 +5,7 @@ import ar.edu.itba.sia.interfaces.CrossoverMethod;
 import ar.edu.itba.sia.interfaces.MutationMethod;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     private double strengthP;
@@ -151,5 +152,43 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
     public ArrayList<Object> getAlleles() {
         return new ArrayList<>(alleles);
+    }
+
+    @Override
+    public int hashCode() {
+        return new Double(getFitness()).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+
+        if (object == this) {
+            return true;
+        }
+
+        if (object instanceof CharacterChromosome) {
+            CharacterChromosome otherCharacter = ((CharacterChromosome) object);
+            if(otherCharacter.getFitness() != this.getFitness()) {
+                return false;
+            }
+
+            Iterator<Object> otherAlleles = otherCharacter.alleles.iterator();
+            Iterator<Object> thisAlleles  = this.alleles.iterator();
+
+            if(((double)otherAlleles.next()) != ((double)thisAlleles.next())) {
+                return false;
+            }
+            while (thisAlleles.hasNext()) {
+                if(((Item)otherAlleles.next()).getId() != ((Item)thisAlleles.next()).getId()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
     }
 }
