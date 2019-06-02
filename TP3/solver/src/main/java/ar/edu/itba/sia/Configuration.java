@@ -1,5 +1,6 @@
 package ar.edu.itba.sia;
 
+import ar.edu.itba.sia.crossovers.AnnularCrossover;
 import ar.edu.itba.sia.crossovers.DoublePointCrossover;
 import ar.edu.itba.sia.crossovers.SinglePointCrossover;
 import ar.edu.itba.sia.crossovers.UniformCrossover;
@@ -136,7 +137,7 @@ public class Configuration {
                 ans = new UniformCrossover();
                 break;
             case "annular":
-                //TODO:
+                ans = new AnnularCrossover();
                 break;
         }
         return ans;
@@ -187,7 +188,7 @@ public class Configuration {
         SelectionMethod selectionMethod = null; //TODO
         switch (s) {
             case "elite":
-                //TODO:selectionMethod = new ;
+                selectionMethod = new EliteSelection();
                 break;
             case "roulette":
                 selectionMethod = new RouletteSelection();
