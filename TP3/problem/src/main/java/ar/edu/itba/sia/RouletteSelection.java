@@ -5,14 +5,15 @@ import java.util.ArrayList;
 public class RouletteSelection<C extends Chromosome<C>> extends SelectionMethod<C> {
     int k; // Amount of random r values
     int size; // Amount of chromosomes
-    double[] randoms                     = new double[k];
-    double[] relativeFitness             = new double[size];
-    private double[] accumulativeFitness = calculateAccumulativeFitness();
+    double[] randoms;
+    double[] relativeFitness;
+    private double[] accumulativeFitness;
 
     public ArrayList<C> select(final ArrayList<C> chromosomes, final int k) {
-        setRandomRs();
         setParametersForSelection(chromosomes, k);
-        relativeFitness = calculateRelativeFitness();
+        setRandomRs();
+        relativeFitness     = calculateRelativeFitness();
+        accumulativeFitness = calculateAccumulativeFitness();
         return doAccumulativeSelection();
     }
 
@@ -20,18 +21,20 @@ public class RouletteSelection<C extends Chromosome<C>> extends SelectionMethod<
         this.chromosomes = chromosomes;
         size             = chromosomes.size();
         this.k           = k;
+        randoms          = new double[k];
+        relativeFitness  = new double[size];
     }
 
     private double[] calculateAccumulativeFitness() {
-        accumulativeFitness = new double[size + 1];
         double q0 = 0;
         double accumulatedFitness;
 
+        accumulativeFitness = new double[size + 1];
         accumulativeFitness[0] = q0;
 
-        for (int i = 0; i < size; i++) {
-            accumulatedFitness     = accumulativeFitness[i];
-            accumulativeFitness[i] = relativeFitness[i] + accumulatedFitness;
+        for (int i = 1; i <= size; i++) {
+            accumulatedFitness     = accumulativeFitness[i - 1];
+            accumulativeFitness[i] = relativeFitness[i - 1] + accumulatedFitness;
         }
 
         return accumulativeFitness;
@@ -59,11 +62,11 @@ public class RouletteSelection<C extends Chromosome<C>> extends SelectionMethod<
         ArrayList<C> selectedList = new ArrayList<>();
         boolean selected;
 
-        for (int i = 1; i <= chromosomes.size(); i++) {
+        for (int j = 0; j < k; j++) {
             selected = false;
 
-            for (int j = 0; j < k && !selected; j++) {
-                if (accumulativeFitness[i - 1] < randoms[j] && randoms[j] < accumulativeFitness[i]) {
+            for (int i = 1; i <= size && !selected; i++) {
+                if (accumulativeFitness[i - 1] <= randoms[j] && randoms[j] < accumulativeFitness[i]) {
                     selectedList.add(chromosomes.get(i - 1)); // Actually adding the i-th chromosome to the selected list
                     // Subtracting 1 because the accumulative fitness have one more row than the chromosome fitness
                     selected = true;
@@ -75,7 +78,7 @@ public class RouletteSelection<C extends Chromosome<C>> extends SelectionMethod<
     }
 
     void setRandomRs() {
-        for (int j = 1; j <= k; j++)
+        for (int j = 0; j < k; j++)
             randoms[j] = Math.random();
     }
 }

@@ -9,7 +9,7 @@ public class UniversalSelection<C extends Chromosome<C>> extends RouletteSelecti
 
         for (int j = 1; j <= k; j++) {
             rSubJ = (r + j - 1) / k;
-            randoms[j] = rSubJ;
+            randoms[j - 1] = rSubJ;
         }
     }
 }

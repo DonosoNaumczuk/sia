@@ -195,7 +195,7 @@ public class Configuration {
             case "universal":
                 selectionMethod = new UniversalSelection();
                 break;
-            case "blotzmann":
+            case "boltzmann":
                 selectionMethod = new BoltzmannSelection();
                 break;
             case "tournament":
