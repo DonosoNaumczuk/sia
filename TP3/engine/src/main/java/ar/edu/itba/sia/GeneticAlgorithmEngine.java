@@ -85,6 +85,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 previousPopulation = currentPopulation;
             }
         }
+        writer.close();
         return currentPopulation;
     }
 

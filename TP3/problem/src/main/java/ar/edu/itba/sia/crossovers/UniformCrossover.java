@@ -36,7 +36,7 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
 
     private void exchangeAlleles(ArrayList<Object> momAlleles, ArrayList<Object> dadAlleles, int index) {
         Object aux = momAlleles.get(index);
-        momAlleles.add(dadAlleles.get(index));
-        dadAlleles.add(aux);
+        momAlleles.set(index, dadAlleles.get(index));
+        dadAlleles.set(index, aux);
     }
 }

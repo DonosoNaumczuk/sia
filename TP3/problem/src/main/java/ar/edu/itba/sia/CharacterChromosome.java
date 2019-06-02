@@ -100,7 +100,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     @Override
     public double calculateFitness() {
         initializePValues();
-        return multipliers.get(0) * this.calculateAttack() + multipliers.get(1) * calculateDefense();
+        return multipliers.get(0) * this.calculateAttack() + multipliers.get(1) * this.calculateDefense();
     }
 
     private double calculateAttack() {
@@ -139,11 +139,11 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
             this.lifeP          += currentItem.getVitality();
             i++;
         }
-        this.strengthP      = Math.tanh(0.01 * traits.get(0) * strengthP);
+        this.strengthP      = 100 * Math.tanh(0.01 * traits.get(0) * strengthP);
         this.agilityP       = Math.tanh(0.01 * traits.get(1) * agilityP);
-        this.expertiseP     = Math.tanh(0.01 * traits.get(2) * expertiseP);
-        this.resistanceP    = Math.tanh(0.01 * traits.get(3)* resistanceP);
-        this.lifeP          = Math.tanh(0.01 * traits.get(4) * lifeP);
+        this.expertiseP     = 0.6 * Math.tanh(0.01 * traits.get(2) * expertiseP);
+        this.resistanceP    = Math.tanh(0.01 * traits.get(3) * resistanceP);
+        this.lifeP          = 100 * Math.tanh(0.01 * traits.get(4) * lifeP);
     }
 
     public ArrayList<Double> getTraits() { return traits; }

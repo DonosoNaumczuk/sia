@@ -40,8 +40,8 @@ public class Configuration {
                 JSONConfigurationParser.JSONConfiguration.class);
 
         this.population                      = parserPopulation(jsonConfiguration);
-        this.maxGenerationNumber             = jsonConfiguration.cutCriteria.quantityOfGenerationToPerformChecks;
-        this.numberOfGenerationsToMakeChecks = jsonConfiguration.cutCriteria.maxGeneration;
+        this.maxGenerationNumber             = jsonConfiguration.cutCriteria.maxGeneration;
+        this.numberOfGenerationsToMakeChecks = jsonConfiguration.cutCriteria.quantityOfGenerationToPerformChecks;
         this.goalFitness                     = jsonConfiguration.cutCriteria.fitness;
         this.replaceMethod                   = parseReplaceMethod(jsonConfiguration.replaceMethod.type);
         this.selectionMethods                = parserSelectionsMethods(
