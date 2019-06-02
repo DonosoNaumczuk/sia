@@ -53,4 +53,8 @@ public abstract class MutationMethodCharacter implements MutationMethod<Characte
         alleles.set(position, newAllele);
         return alleles;
     }
+
+    public double getProbability() {
+        return probability;
+    }
 }

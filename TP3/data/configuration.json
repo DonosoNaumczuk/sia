@@ -15,12 +15,12 @@
         "quantityOfGenerationToPerformChecks" : 10000000,
         "fitness": 100000
       },
-  "crossover": "onePoint",
+  "crossover": "twoPoint",
   "mutation":
       {
-        "isMultiGen": true,
-        "isUniform": true,
-        "initProb": 0.01
+        "isMultiGen": false,
+        "isUniform": false,
+        "initProb": 0.5
       },
   "replaceMethod":
       {
@@ -30,8 +30,12 @@
   "firstSelectionMethod":
       [
           {
-            "selectionType": "tournament",
-            "proportion": 1
+            "selectionType": "roulette",
+            "proportion": 0.3
+          },
+          {
+            "selectionType": "universal",
+            "proportion": 0.7
           }
       ],
   "secondSelectionMethod":

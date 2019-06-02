@@ -1,6 +1,6 @@
 package ar.edu.itba.sia;
 
-public class BoltzmannSelection<C extends Chromosome<C>> extends AccumulativeSelection<C> {
+public class BoltzmannSelection<C extends Chromosome<C>> extends RouletteSelection<C> {
 
     @Override
     double[] calculateRelativeFitness() {

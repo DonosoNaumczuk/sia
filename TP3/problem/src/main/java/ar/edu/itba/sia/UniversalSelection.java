@@ -1,6 +1,6 @@
 package ar.edu.itba.sia;
 
-public class UniversalSelection<C extends Chromosome<C>> extends AccumulativeSelection<C> {
+public class UniversalSelection<C extends Chromosome<C>> extends RouletteSelection<C> {
 
     @Override
     void setRandomRs() {
@@ -9,7 +9,7 @@ public class UniversalSelection<C extends Chromosome<C>> extends AccumulativeSel
 
         for (int j = 1; j <= k; j++) {
             rSubJ = (r + j - 1) / k;
-            randoms[j] = rSubJ;
+            randoms[j - 1] = rSubJ;
         }
     }
 }

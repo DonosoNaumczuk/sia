@@ -56,6 +56,8 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         sb.append("meanFitness");
         sb.append(',');
         sb.append("worstFitness");
+        sb.append(',');
+        sb.append("probability");
         sb.append('\n');
         writer.write(sb.toString());
         printPopulation(writer);
@@ -107,9 +109,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                     currentPopulationArray, 1));
         }
 
-        for (C newChromosome: newGeneration) {
-            newChromosome.updateMutation();
-        }
+        newGeneration.peek().updateMutation();
 
         return newGeneration;
     }
@@ -141,9 +141,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         newGeneration.addAll(newGenerationArrayPart1);
         newGeneration.addAll(newGenerationArrayPart2);
 
-        for (C newChromosome: newGeneration) {
-            newChromosome.updateMutation();
-        }
+        newGeneration.peek().updateMutation();
 
         return newGeneration;
     }
@@ -214,6 +212,8 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         sb.append(mean / currentPopulation.size());
         sb.append(',');
         sb.append(last.getFitness());
+        sb.append(';');
+        sb.append(currentPopulation.peek().getMutationMethod().getProbability());
         sb.append('\n');
 
         writer.write(sb.toString());
