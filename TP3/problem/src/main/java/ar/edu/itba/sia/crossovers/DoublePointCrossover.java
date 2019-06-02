@@ -14,11 +14,11 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
     @Override
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
         ArrayList<ArrayList<Object>> childrenAlleles;
-        ArrayList<Object> momAlleles                       = mom.getAlleles();
-        ArrayList<Object> dadAlleles                       = dad.getAlleles();
-        Random rnd                                         = new Random();
-        int locusFirst                                     = rnd.nextInt(momAlleles.size() +  1);
-        int locusLast                                      = rnd.nextInt(momAlleles.size() +  1);
+        ArrayList<Object> momAlleles = mom.getAlleles();
+        ArrayList<Object> dadAlleles = dad.getAlleles();
+        Random rnd                   = new Random();
+        int locusFirst               = rnd.nextInt(momAlleles.size() +  1);
+        int locusLast                = rnd.nextInt(momAlleles.size() +  1);
 
         if (locusFirst > locusLast) {
             int aux    = locusFirst;
