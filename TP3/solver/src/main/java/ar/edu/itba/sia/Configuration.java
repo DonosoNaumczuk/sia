@@ -1,5 +1,8 @@
 package ar.edu.itba.sia;
 
+import ar.edu.itba.sia.crossovers.DoublePointCrossover;
+import ar.edu.itba.sia.crossovers.SinglePointCrossover;
+import ar.edu.itba.sia.crossovers.UniformCrossover;
 import ar.edu.itba.sia.interfaces.CrossoverMethod;
 import ar.edu.itba.sia.interfaces.MutationMethod;
 import ar.edu.itba.sia.mutations.MutationMethodNoUniformMultGen;
@@ -121,16 +124,16 @@ public class Configuration {
     }
 
     private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s) {
-        CrossoverMethod<CharacterChromosome> ans;
+        CrossoverMethod<CharacterChromosome> ans = null; //TODO
         switch (s) {
             case "onePoint":
-                //TODO:
+                ans = new SinglePointCrossover();
                 break;
             case "twoPoint":
-                //TODO:
+                ans = new DoublePointCrossover();
                 break;
             case "uniform":
-                //TODO:
+                ans = new UniformCrossover();
                 break;
             case "annular":
                 //TODO:
@@ -181,7 +184,7 @@ public class Configuration {
     }
 
     private static SelectionMethod parserSelectionsMethod(String s) {
-        SelectionMethod selectionMethod;
+        SelectionMethod selectionMethod = null; //TODO
         switch (s) {
             case "elite":
                 //TODO:selectionMethod = new ;
@@ -195,10 +198,10 @@ public class Configuration {
             case "blotzmann":
                 selectionMethod = new BoltzmannSelection();
                 break;
-            case "torneo":
+            case "tournament":
                 selectionMethod = new DeterministicTournamentSelection();
                 break;
-            case "torneoProb":
+            case "tournamentProb":
                 selectionMethod = new ProbabilisticTournamentSelection();
                 break;
             case "ranking":

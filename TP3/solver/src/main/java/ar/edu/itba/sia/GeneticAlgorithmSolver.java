@@ -19,6 +19,6 @@ public class GeneticAlgorithmSolver {
                     configuration.getQuantityOfFathersToSelect());
         }
 
-        //TODO: engine.process();
+        engine.process();
     }
 }

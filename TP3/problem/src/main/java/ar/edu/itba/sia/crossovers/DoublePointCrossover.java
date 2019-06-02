@@ -38,8 +38,8 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
 
         for (int i = locusFirst; i < locusLast; i++) {
             aux = alleles1.get(i);
-            alleles1.add(i, alleles2.get(i));
-            alleles2.add(i, aux);
+            alleles1.set(i, alleles2.get(i));
+            alleles2.set(i, aux);
         }
 
         childrenAlleles.add(alleles1);

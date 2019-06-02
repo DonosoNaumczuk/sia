@@ -12,10 +12,10 @@
   "cutCriteria":
       {
         "maxGeneration": 1000,
-        "quantityOfGenerationToPerformChecks" : 5,
+        "quantityOfGenerationToPerformChecks" : 1000,
         "fitness": 10000
       },
-  "crossover": "anular",
+  "crossover": "onePoint",
   "mutation":
       {
         "isMultiGen": true,
@@ -24,29 +24,21 @@
       },
   "replaceMethod":
       {
-        "type": "first",
+        "type": "second",
         "k": 50
       },
   "firstSelectionMethod":
       [
           {
-            "selectionType": "elite",
-            "proportion": 0.5
-          },
-          {
-            "selectionType": "tornament",
-            "proportion": 0.5
+            "selectionType": "ranking",
+            "proportion": 1
           }
       ],
   "secondSelectionMethod":
       [
           {
-            "selectionType": "rullete",
-            "proportion": 0.25
-          },
-          {
-            "selectionType": "elite",
-            "proportion": 0.75
+            "selectionType": "ranking",
+            "proportion": 1
           }
       ]
 }

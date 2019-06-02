@@ -7,20 +7,11 @@ import ar.edu.itba.sia.interfaces.MutationMethod;
 import java.util.ArrayList;
 
 public class CharacterChromosome extends Chromosome<CharacterChromosome> {
-    private double     strength;
-    private double     agility;
-    private double     expertise;
-    private double     resistance;
-    private double     life;
-
-    private double     atkMult;
-    private double     defMult;
-
-    private double     strengthP;
-    private double     agilityP;
-    private double     expertiseP;
-    private double     resistanceP;
-    private double     lifeP;
+    private double strengthP;
+    private double agilityP;
+    private double expertiseP;
+    private double resistanceP;
+    private double lifeP;
 
     /* Strength, Agility, Expertise, Resistance, Life */
     private ArrayList<Double> traits = new ArrayList<>();
@@ -40,24 +31,25 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         this.multipliers.addAll(multipliers);
         this.alleles.addAll(alleles);
 
-        calculateFitness();
+        super.setFitness();
     }
 
-    /*
     public CharacterChromosome(CrossoverMethod<CharacterChromosome> crossoverMethod, MutationMethod<CharacterChromosome> mutationMethod,
                                double strength, double agility, double expertise, double resistance, double life, double atkMult,
                                double defMult, double height, Boots boots, BreastPlate breastPlate, Gloves gloves, Helmet helmet,
                                Weapon weapon) {
         super(crossoverMethod, mutationMethod);
 
-        this.strength   = strength;
-        this.agility    = agility;
-        this.expertise  = expertise;
-        this.resistance = resistance;
-        this.life       = life;
+        this.traits = new ArrayList<>();
+        traits.add(strength);
+        traits.add(agility);
+        traits.add(expertise);
+        traits.add(resistance);
+        traits.add(life);
 
-        this.atkMult    = atkMult;
-        this.defMult    = defMult;
+        this.multipliers = new ArrayList<>();
+        multipliers.add(atkMult);
+        multipliers.add(defMult);
 
         this.alleles = new ArrayList<>();
         alleles.add(height);
@@ -67,9 +59,8 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         alleles.add(helmet);
         alleles.add(weapon);
 
-        calculateFitness();
+        super.setFitness();
     }
-     */
 
     /*
     public CharacterChromosome(CharacterChromosome other, ArrayList<Object> alleles) {
@@ -108,7 +99,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     @Override
     public double calculateFitness() {
         initializePValues();
-        return atkMult * this.calculateAttack() + defMult * calculateDefense();
+        return multipliers.get(0) * this.calculateAttack() + multipliers.get(1) * calculateDefense();
     }
 
     private double calculateAttack() {
@@ -147,11 +138,11 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
             this.lifeP          += currentItem.getVitality();
             i++;
         }
-        this.strengthP      = Math.tanh(0.01 * strength * strengthP);
-        this.agilityP       = Math.tanh(0.01 * agility * agilityP);
-        this.expertiseP     = Math.tanh(0.01 * expertise * expertiseP);
-        this.resistanceP    = Math.tanh(0.01 * resistance* resistanceP);
-        this.lifeP          = Math.tanh(0.01 * life * lifeP);
+        this.strengthP      = Math.tanh(0.01 * traits.get(0) * strengthP);
+        this.agilityP       = Math.tanh(0.01 * traits.get(1) * agilityP);
+        this.expertiseP     = Math.tanh(0.01 * traits.get(2) * expertiseP);
+        this.resistanceP    = Math.tanh(0.01 * traits.get(3)* resistanceP);
+        this.lifeP          = Math.tanh(0.01 * traits.get(4) * lifeP);
     }
 
     public ArrayList<Double> getTraits() { return traits; }
@@ -159,6 +150,6 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     public ArrayList<Double> getMultipliers() { return multipliers; }
 
     public ArrayList<Object> getAlleles() {
-        return alleles;
+        return new ArrayList<>(alleles);
     }
 }

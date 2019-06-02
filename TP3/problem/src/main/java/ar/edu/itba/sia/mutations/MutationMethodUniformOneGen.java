@@ -19,8 +19,8 @@ public class MutationMethodUniformOneGen extends MutationMethodCharacter {
             int position = new Random().nextInt(alleles.size());
             alleles = mutateAPosition(position, alleles);
         }
-        return new CharacterChromosome(thisChromosome, alleles);
-    }
+        return new CharacterChromosome(thisChromosome.getCrossoverMethod(), thisChromosome.getMutationMethod(),
+                thisChromosome.getTraits(), thisChromosome.getMultipliers(), alleles);    }
 
     @Override
     public void update() {}

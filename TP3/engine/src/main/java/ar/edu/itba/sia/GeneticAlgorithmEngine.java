@@ -20,7 +20,8 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                                   ReplaceMethod replaceMethod,
                                   List<List<SelectionMethod<C>>> selectionMethods,
                                   int quantityOfFathersToSelect) {
-        this.currentPopulation               = initialPopulation;//TODO:order inverted
+        this.currentPopulation               = new PriorityQueue<>(Comparator.reverseOrder());
+        this.currentPopulation.addAll(initialPopulation);
         this.generationNumber                = 0;
         this.maxGenerationNumber             = maxGenerationNumber;
         this.numberOfGenerationsToMakeChecks = numberOfGenerationsToMakeChecks;
@@ -40,9 +41,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
 
     public PriorityQueue<C> process() {
         boolean flag = true;
-        PriorityQueue<C> previousPopulation = currentPopulation;//TODO:order inverted
+        PriorityQueue<C> previousPopulation = currentPopulation;
         C currentBest = currentPopulation.peek();
         C previousBest = currentBest;
+        System.out.println("Best:"+currentBest.getFitness());//TODO
         while(currentBest.getFitness() < goalFitness &&
                 generationNumber < maxGenerationNumber && flag) {
             PriorityQueue<C> newGeneration;
@@ -59,6 +61,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             generationNumber++;
             currentPopulation = newGeneration;
             currentBest = currentPopulation.peek();
+            System.out.println("Best:"+currentBest.getFitness());//TODO
             if(generationNumber % numberOfGenerationsToMakeChecks == 0) {
                 /* Content check and structural check */
                 flag = previousBest.compareTo(currentBest) <= 0 && structuralCheck(currentPopulation, previousPopulation);
@@ -98,7 +101,8 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
     }
 
     private PriorityQueue<C> handleThird() {
-        PriorityQueue<C> newGeneration = new PriorityQueue<>();
+        PriorityQueue<C> newGeneration = new PriorityQueue<>(Comparator.reverseOrder());
+
         ArrayList<C> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
 
         //select k fathers
@@ -153,14 +157,13 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         C c2 = c1;
         while (iteratorFathers.hasNext()) {
             c2 = iteratorFathers.next();
-            sons.add(c2.crossover(c1));
-            sons.add(c1.crossover(c2));
+            sons.addAll(c2.crossover(c1));
             if(iteratorFathers.hasNext()) {
                 c1 = iteratorFathers.next();
             }
         }
         if(sons.size() != fathers.size()) { //TODO: maybe add random
-            sons.add(c1.crossover(c2));
+            sons.add(c1.crossover(c2).get(0));
         }
         return sons;
     }

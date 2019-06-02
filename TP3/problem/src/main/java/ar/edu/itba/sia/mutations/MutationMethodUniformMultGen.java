@@ -20,7 +20,8 @@ public class MutationMethodUniformMultGen extends MutationMethodCharacter {
             }
             position++;
         }
-        return new CharacterChromosome(thisChromosome, alleles);
+        return new CharacterChromosome(thisChromosome.getCrossoverMethod(), thisChromosome.getMutationMethod(),
+                thisChromosome.getTraits(), thisChromosome.getMultipliers(), alleles);
     }
 
     @Override
