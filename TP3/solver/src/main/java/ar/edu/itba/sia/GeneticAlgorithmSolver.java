@@ -3,8 +3,8 @@ package ar.edu.itba.sia;
 public class GeneticAlgorithmSolver {
 
     public static void main(String args[]) throws Exception {
-        ItemCreator.createAllFromFiles();
-        Configuration configuration = new Configuration("./data/configuration.json");//TODO: parameter of program
+        ItemCreator.createAllFromFiles(args[0]);
+        Configuration configuration = new Configuration(args[1]);
 
         GeneticAlgorithmEngine<CharacterChromosome> engine;
         if(configuration.getReplaceMethod() == ReplaceMethod.FIRST) {

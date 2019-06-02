@@ -12,11 +12,11 @@ import java.util.function.Function;
 
 public class ItemCreator {
 
-    private static String BOOTS_FILE = "problem/src/main/java/ar/edu/itba/sia/testdata/botas.tsv";
-    private static String BREAST_PLATE_FILE = "problem/src/main/java/ar/edu/itba/sia/testdata/pecheras.tsv";
-    private static String GLOVES_FILE = "problem/src/main/java/ar/edu/itba/sia/testdata/guantes.tsv";
-    private static String HELMET_FILE = "problem/src/main/java/ar/edu/itba/sia/testdata/cascos.tsv";
-    private static String WEAPON_FILE = "problem/src/main/java/ar/edu/itba/sia/testdata/armas.tsv";
+    private static String BOOTS_FILE = "/botas.tsv";
+    private static String BREAST_PLATE_FILE = "/pecheras.tsv";
+    private static String GLOVES_FILE = "/guantes.tsv";
+    private static String HELMET_FILE = "/cascos.tsv";
+    private static String WEAPON_FILE = "/armas.tsv";
 
     private static int ID_POSITION = 0;
     private static int STRENGTH_POSITION = 1;
@@ -25,16 +25,16 @@ public class ItemCreator {
     private static int RESILIENCE_POSITION = 4;
     private static int VITALITY_POSITION = 5;
 
-    public static void createAllFromFiles() {
-        createBoots();
-        createBreastPlates();
-        createGloves();
-        createHelmets();
-        createWeapons();
+    public static void createAllFromFiles(String path) {
+        createBoots(path);
+        createBreastPlates(path);
+        createGloves(path);
+        createHelmets(path);
+        createWeapons(path);
     }
 
-    private static void createBoots() {
-        Object[] objectBoots = createItemsFromTSVFile(BOOTS_FILE,
+    private static void createBoots(String path) {
+        Object[] objectBoots = createItemsFromTSVFile(path + BOOTS_FILE,
                 attr -> Item.newBoots( Integer.valueOf(attr[ID_POSITION]),
                                         Double.valueOf(attr[STRENGTH_POSITION]),
                                         Double.valueOf(attr[AGILITY_POSITION]),
@@ -46,8 +46,8 @@ public class ItemCreator {
         ItemStorage.getInstance().setBoots(boots);
     }
 
-    private static void createBreastPlates() {
-        Object[] objectBreastPlates = createItemsFromTSVFile(BREAST_PLATE_FILE,
+    private static void createBreastPlates(String path) {
+        Object[] objectBreastPlates = createItemsFromTSVFile(path + BREAST_PLATE_FILE,
                 attr -> Item.newBreastPlate( Integer.valueOf(attr[ID_POSITION]),
                                             Double.valueOf(attr[STRENGTH_POSITION]),
                                             Double.valueOf(attr[AGILITY_POSITION]),
@@ -59,8 +59,8 @@ public class ItemCreator {
         ItemStorage.getInstance().setBreastPlates(breastPlates);
     }
 
-    private static void createGloves() {
-        Object[] objectGloves = createItemsFromTSVFile(GLOVES_FILE,
+    private static void createGloves(String path) {
+        Object[] objectGloves = createItemsFromTSVFile(path + GLOVES_FILE,
                 attr -> Item.newGloves( Integer.valueOf(attr[ID_POSITION]),
                                         Double.valueOf(attr[STRENGTH_POSITION]),
                                         Double.valueOf(attr[AGILITY_POSITION]),
@@ -72,8 +72,8 @@ public class ItemCreator {
         ItemStorage.getInstance().setGloves(gloves);
     }
 
-    private static void createHelmets() {
-        Object[] objectHelmets = createItemsFromTSVFile(HELMET_FILE,
+    private static void createHelmets(String path) {
+        Object[] objectHelmets = createItemsFromTSVFile(path + HELMET_FILE,
                 attr -> Item.newHelmet( Integer.valueOf(attr[ID_POSITION]),
                                     Double.valueOf(attr[STRENGTH_POSITION]),
                                     Double.valueOf(attr[AGILITY_POSITION]),
@@ -85,8 +85,8 @@ public class ItemCreator {
         ItemStorage.getInstance().setHelmets(helmets);
     }
 
-    private static void createWeapons() {
-        Object[] objectWeapons = createItemsFromTSVFile(WEAPON_FILE,
+    private static void createWeapons(String path) {
+        Object[] objectWeapons = createItemsFromTSVFile(path + WEAPON_FILE,
                 attr -> Item.newWeapon( Integer.valueOf(attr[ID_POSITION]),
                                         Double.valueOf(attr[STRENGTH_POSITION]),
                                         Double.valueOf(attr[AGILITY_POSITION]),
