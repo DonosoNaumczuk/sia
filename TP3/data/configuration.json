@@ -11,16 +11,16 @@
   "populationQuantity": 100,
   "cutCriteria":
       {
-        "maxGeneration": 1000,
-        "quantityOfGenerationToPerformChecks" : 1000,
-        "fitness": 10000
+        "maxGeneration": 10000,
+        "quantityOfGenerationToPerformChecks" : 10000000,
+        "fitness": 100000
       },
   "crossover": "onePoint",
   "mutation":
       {
         "isMultiGen": true,
         "isUniform": true,
-        "initProb": 0.5
+        "initProb": 0.01
       },
   "replaceMethod":
       {
@@ -30,14 +30,14 @@
   "firstSelectionMethod":
       [
           {
-            "selectionType": "ranking",
+            "selectionType": "tournament",
             "proportion": 1
           }
       ],
   "secondSelectionMethod":
       [
           {
-            "selectionType": "ranking",
+            "selectionType": "tournament",
             "proportion": 1
           }
       ]
