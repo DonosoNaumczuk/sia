@@ -2,7 +2,7 @@ package ar.edu.itba.sia;
 
 import java.util.Collections;
 
-public class RankSelection<C extends Chromosome<C>> extends AccumulativeSelection<C> {
+public class RankSelection<C extends Chromosome<C>> extends RouletteSelection<C> {
 
     @Override
     double[] calculateRelativeFitness() {
