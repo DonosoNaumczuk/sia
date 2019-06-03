@@ -24,7 +24,7 @@ public class BoltzmannSelection<C extends Chromosome<C>> extends RouletteSelecti
 
     private void calculateBoltzmannFitness() {
         checkReplacementMethod();
-        double T = Math.pow(Math.E, -0.5 * generations), average; // TODO: T should be scraped from a config file
+        double T = Math.pow(Math.E, -0.0001 * generations), average; // TODO: The exp factor should be scraped from a config file
         double[] exponentialFitness = calculateExponentialFitness(T);
         boltzmannFitness = new double[size];
 
