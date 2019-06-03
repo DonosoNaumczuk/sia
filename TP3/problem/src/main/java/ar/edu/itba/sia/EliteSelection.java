@@ -11,7 +11,7 @@ public class EliteSelection<C extends Chromosome<C>> extends SelectionMethod<C> 
         individuals.sort(Comparator.reverseOrder());
 
         for (int i = 0; i < k; i++)
-            elite.set(i, individuals.get(i));
+            elite.add(individuals.get(i));
             
         return elite;
     }

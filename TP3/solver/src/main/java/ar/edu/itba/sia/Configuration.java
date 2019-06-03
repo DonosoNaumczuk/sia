@@ -47,7 +47,7 @@ public class Configuration {
         this.replaceMethod                   = parseReplaceMethod(jsonConfiguration.replaceMethod.type);
         this.selectionMethods                = parserSelectionsMethods(
                                                     jsonConfiguration.firstSelectionMethod,
-                                                    jsonConfiguration.secondSelectionMethod);
+                                                    jsonConfiguration.secondSelectionMethod, this.replaceMethod == THIRD);
         this.quantityOfFathersToSelect       = jsonConfiguration.replaceMethod.k;
     }
 
@@ -125,7 +125,7 @@ public class Configuration {
     }
 
     private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s) {
-        CrossoverMethod<CharacterChromosome> ans = null; //TODO
+        CrossoverMethod<CharacterChromosome> ans = new SinglePointCrossover();
         switch (s) {
             case "onePoint":
                 ans = new SinglePointCrossover();
@@ -164,8 +164,9 @@ public class Configuration {
 
     private static List<List<SelectionMethod<CharacterChromosome>>> parserSelectionsMethods(
             JSONConfigurationParser.JSONSelectionMethod[] s1,
-            JSONConfigurationParser.JSONSelectionMethod[] s2) {
+            JSONConfigurationParser.JSONSelectionMethod[] s2, boolean isThirdReplacementMethod) {
         List<List<SelectionMethod<CharacterChromosome>>> ans = new ArrayList<>();
+        boolean isSecondSelectionMethod = false;
 
         int i = 0;
         ArrayList<SelectionMethod<CharacterChromosome>> selectionMethods = new ArrayList<>();
@@ -173,7 +174,10 @@ public class Configuration {
         while (i < 2) {
             i++;
             for (JSONConfigurationParser.JSONSelectionMethod selectionString : selectionMethodsJson) {
-                SelectionMethod aux = parserSelectionsMethod(selectionString.selectionType);
+                if (i == 2)
+                    isSecondSelectionMethod = true;
+                SelectionMethod aux = parserSelectionsMethod(selectionString.selectionType, isSecondSelectionMethod,
+                        isThirdReplacementMethod);
                 aux.setProportion(selectionString.proportion);
                 selectionMethods.add(aux);
             }
@@ -184,8 +188,9 @@ public class Configuration {
         return ans;
     }
 
-    private static SelectionMethod parserSelectionsMethod(String s) {
-        SelectionMethod selectionMethod = null; //TODO
+    private static SelectionMethod parserSelectionsMethod(String s, boolean isSecondSelectionMethod,
+                                                          boolean isThirdReplacementMethod) {
+        SelectionMethod selectionMethod;
         switch (s) {
             case "elite":
                 selectionMethod = new EliteSelection();
@@ -197,7 +202,10 @@ public class Configuration {
                 selectionMethod = new UniversalSelection();
                 break;
             case "boltzmann":
-                selectionMethod = new BoltzmannSelection();
+                if (isThirdReplacementMethod && isSecondSelectionMethod)
+                    selectionMethod = new BoltzmannSelection(true);
+                else
+                    selectionMethod = new BoltzmannSelection(false);
                 break;
             case "tournament":
                 selectionMethod = new DeterministicTournamentSelection();
