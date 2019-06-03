@@ -39,6 +39,7 @@ The configuration file must follow the following structure:
         "fitness": INT
       },
   "crossover": [stringCrossover],
+  "crossProbability": [doubleProb],
   "mutation":
       {
         "isMultiGen": BOOLEAN,
@@ -101,6 +102,7 @@ Where:
            "fitness": 100000
          },
      "crossover": "uniform",
+     "crossProbability": 0.2,
      "mutation":
          {
            "isMultiGen": true,

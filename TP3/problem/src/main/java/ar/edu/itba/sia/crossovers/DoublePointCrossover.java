@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome> {
-    
+    double probability;
+
+    public DoublePointCrossover(double probability) {
+        this.probability = probability;
+    }
+
     @Override
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
         ArrayList<ArrayList<Object>> childrenAlleles;
@@ -26,7 +31,14 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
             locusLast  = aux;
         }
 
-        childrenAlleles = exchangeAlleles(momAlleles, dadAlleles, locusFirst, locusLast);
+        if(probability > Math.random()) {
+            childrenAlleles = exchangeAlleles(momAlleles, dadAlleles, locusFirst, locusLast);
+        }
+        else {
+            childrenAlleles = new ArrayList<>();
+            childrenAlleles.add(mom.getAlleles());
+            childrenAlleles.add(dad.getAlleles());
+        }
 
         return createChildrenFromAlleles(childrenAlleles, dad);
     }

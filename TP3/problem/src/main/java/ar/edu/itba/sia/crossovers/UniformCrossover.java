@@ -7,18 +7,26 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
+    double probability;
+
+    public UniformCrossover(double probability) {
+        this.probability = probability;
+    }
 
     @Override
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
         ArrayList<Object> alleles1 = mom.getAlleles();
         ArrayList<Object> alleles2 = dad.getAlleles();
-        int size = alleles1.size();
-        double p = 0.5; // As specified on the class pdf
-        Random rnd = new Random();
 
-        for (int i = 0; i < size; i++) {
-            if (!alleles1.get(i).equals(alleles2.get(i)) && rnd.nextDouble() < p)
-                exchangeAlleles(alleles1, alleles2, i);
+        if(probability > Math.random()) {
+            int size = alleles1.size();
+            double p = 0.5; // As specified on the class pdf
+            Random rnd = new Random();
+
+            for (int i = 0; i < size; i++) {
+                if (!alleles1.get(i).equals(alleles2.get(i)) && rnd.nextDouble() < p)
+                    exchangeAlleles(alleles1, alleles2, i);
+            }
         }
 
         return createChildren(alleles1, alleles2, dad);

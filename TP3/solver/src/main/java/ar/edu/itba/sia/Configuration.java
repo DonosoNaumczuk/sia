@@ -56,7 +56,8 @@ public class Configuration {
         PriorityQueue<CharacterChromosome> population = new PriorityQueue<>();
         ItemStorage itemStorage = ItemStorage.getInstance();
 
-        CrossoverMethod<CharacterChromosome> crossoverMethod = parserCrossoverMethod(jsonConfiguration.crossover);
+        CrossoverMethod<CharacterChromosome> crossoverMethod = parserCrossoverMethod(jsonConfiguration.crossover,
+                jsonConfiguration.crossProbability);
         MutationMethod<CharacterChromosome> mutationMethod   = parserMutationMethod(jsonConfiguration.mutation);
         double mult[]                                        = parserClass(jsonConfiguration.classType);
 
@@ -124,20 +125,20 @@ public class Configuration {
         return ans;
     }
 
-    private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s) {
+    private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s, double probability) {
         CrossoverMethod<CharacterChromosome> ans = null; //TODO
         switch (s) {
             case "onePoint":
-                ans = new SinglePointCrossover();
+                ans = new SinglePointCrossover(probability);
                 break;
             case "twoPoint":
-                ans = new DoublePointCrossover();
+                ans = new DoublePointCrossover(probability);
                 break;
             case "uniform":
-                ans = new UniformCrossover();
+                ans = new UniformCrossover(probability);
                 break;
             case "annular":
-                ans = new AnnularCrossover();
+                ans = new AnnularCrossover(probability);
                 break;
         }
         return ans;
@@ -252,6 +253,7 @@ public class Configuration {
             int populationQuantity;
             JSONCutCriteria cutCriteria;
             String crossover;
+            double crossProbability;
             JSONMutation mutation;
             JSONReplaceMethod replaceMethod;
             JSONSelectionMethod[] firstSelectionMethod;
