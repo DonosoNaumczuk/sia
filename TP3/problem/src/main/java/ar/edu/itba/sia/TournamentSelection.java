@@ -25,7 +25,7 @@ abstract class TournamentSelection<C extends Chromosome<C>> extends SelectionMet
         for (int j = 0; j < m; j++) {
             do
                 randomChromosome = chromosomes.get(rnd.nextInt(chromosomes.size()));
-            while (!randoms.add(randomChromosome)); //TODO: Plz, explain this later
+            while (!randoms.add(randomChromosome));
         }
 
         return randoms;

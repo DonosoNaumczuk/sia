@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
+import static ar.edu.itba.sia.ReplaceMethod.THIRD;
 
 public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
     private int numberOfGenerationsToMakeChecks;
@@ -65,14 +66,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 generationNumber < maxGenerationNumber && flag) {
             PriorityQueue<C> newGeneration;
 
-            switch (replaceMethod) {
-                case THIRD:
-                    newGeneration = handleThird();
-                    break;
-                default:
-                    newGeneration = handleSecond(); //SET first replace method as default
-                    break;
-            }
+            if (replaceMethod == THIRD)
+                newGeneration = handleThird();
+            else
+                newGeneration = handleSecond(); //SET first replace method as default
 
             generationNumber++;
             currentPopulation = newGeneration;
@@ -154,7 +151,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         SelectionMethod<C> s = iterator.next();
         int k;
         while(iterator.hasNext()) {
-            k = (int) s.getProportion() * quantity;
+            k = (int) (s.getProportion() * quantity);
             remaining = remaining - k;
             fathers.addAll(s.select(population, k));
             s = iterator.next();

@@ -16,6 +16,7 @@
         "fitness": 100000
       },
   "crossover": "uniform",
+  "crossProbability": 0.2,
   "mutation":
       {
         "isMultiGen": true,
@@ -24,13 +25,13 @@
       },
   "replaceMethod":
       {
-        "type": "second",
+        "type": "third",
         "k": 750
       },
   "firstSelectionMethod":
       [
           {
-            "selectionType": "boltzmann",
+            "selectionType": "elite",
             "proportion": 0.5
           },
           {
@@ -41,7 +42,7 @@
   "secondSelectionMethod":
       [
           {
-            "selectionType": "tournament",
+            "selectionType": "boltzmann",
             "proportion": 1
           }
       ]
