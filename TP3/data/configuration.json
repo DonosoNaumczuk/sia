@@ -24,13 +24,13 @@
       },
   "replaceMethod":
       {
-        "type": "second",
+        "type": "third",
         "k": 750
       },
   "firstSelectionMethod":
       [
           {
-            "selectionType": "boltzmann",
+            "selectionType": "elite",
             "proportion": 0.5
           },
           {
@@ -41,7 +41,7 @@
   "secondSelectionMethod":
       [
           {
-            "selectionType": "tournament",
+            "selectionType": "boltzmann",
             "proportion": 1
           }
       ]

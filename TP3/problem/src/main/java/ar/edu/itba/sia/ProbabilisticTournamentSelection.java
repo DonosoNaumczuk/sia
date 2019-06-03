@@ -22,8 +22,7 @@ public class ProbabilisticTournamentSelection<C extends Chromosome<C>> extends T
     }
 
     private C selectChromosome() {
-        // TODO: 5/26/2019 Should we select a new random number each iteration or should we set it beforehand?
-        double r = rnd.nextDouble(); // TODO: r € [0,1) and should be r € [0,1]
+        double r = rnd.nextDouble();
 
         if (r < 0.75) // Specified in the genetic algorithms class .pdf
             return getFittestChromosomeFromRandomSubset();
