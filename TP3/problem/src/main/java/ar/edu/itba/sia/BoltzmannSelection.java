@@ -2,11 +2,13 @@ package ar.edu.itba.sia;
 
 public class BoltzmannSelection<C extends Chromosome<C>> extends RouletteSelection<C> {
     private int generations = 0;
+    private int maxGenerations;
     private boolean isThirdReplacementMethod, isFirstCall = true;
     private double[] boltzmannFitness;
 
-    public BoltzmannSelection(final boolean isThirdReplacementMethod) {
-        this.isThirdReplacementMethod = isThirdReplacementMethod;
+    public BoltzmannSelection(final boolean isThirdReplacementMethod, final int maxGenerations) {
+        this.isThirdReplacementMethod   = isThirdReplacementMethod;
+        this.maxGenerations             = maxGenerations;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class BoltzmannSelection<C extends Chromosome<C>> extends RouletteSelecti
 
     private void calculateBoltzmannFitness() {
         checkReplacementMethod();
-        double T = Math.pow(Math.E, -0.0001 * generations), average; // TODO: The exp factor should be scraped from a config file
+        double T = Math.pow(Math.E, -(generations / (10 * maxGenerations))), average;
         double[] exponentialFitness = calculateExponentialFitness(T);
         boltzmannFitness = new double[size];
 

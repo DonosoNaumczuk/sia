@@ -48,7 +48,9 @@ public class Configuration {
         this.replaceMethod                   = parseReplaceMethod(jsonConfiguration.replaceMethod.type);
         this.selectionMethods                = parserSelectionsMethods(
                                                     jsonConfiguration.firstSelectionMethod,
-                                                    jsonConfiguration.secondSelectionMethod, this.replaceMethod == THIRD);
+                                                    jsonConfiguration.secondSelectionMethod,
+                                                    this.replaceMethod == THIRD,
+                                                    maxGenerationNumber);
         this.quantityOfFathersToSelect       = jsonConfiguration.replaceMethod.k;
     }
 
@@ -172,8 +174,8 @@ public class Configuration {
     }
 
     private static List<List<SelectionMethod<CharacterChromosome>>> parserSelectionsMethods(
-            JSONConfigurationParser.JSONSelectionMethod[] s1,
-            JSONConfigurationParser.JSONSelectionMethod[] s2, boolean isThirdReplacementMethod) {
+            JSONConfigurationParser.JSONSelectionMethod[] s1, JSONConfigurationParser.JSONSelectionMethod[] s2,
+            boolean isThirdReplacementMethod, int maxGenerationNumber) {
         List<List<SelectionMethod<CharacterChromosome>>> ans = new ArrayList<>();
         boolean isSecondSelectionMethod = false;
 
@@ -186,7 +188,7 @@ public class Configuration {
                 if (i == 2)
                     isSecondSelectionMethod = true;
                 SelectionMethod<CharacterChromosome> selectionMethod = parserSelectionsMethod(selectionString.selectionType, isSecondSelectionMethod,
-                        isThirdReplacementMethod);
+                        isThirdReplacementMethod, maxGenerationNumber);
                 selectionMethod.setProportion(selectionString.proportion);
                 selectionMethods.add(selectionMethod);
             }
@@ -198,7 +200,7 @@ public class Configuration {
     }
 
     private static SelectionMethod<CharacterChromosome> parserSelectionsMethod(String s, boolean isSecondSelectionMethod,
-                                                          boolean isThirdReplacementMethod) {
+                                                          boolean isThirdReplacementMethod, int maxGenerationNumber) {
         SelectionMethod<CharacterChromosome> selectionMethod;
         switch (s) {
             case "elite":
@@ -212,9 +214,9 @@ public class Configuration {
                 break;
             case "boltzmann":
                 if (isThirdReplacementMethod && isSecondSelectionMethod)
-                    selectionMethod = new BoltzmannSelection<>(true);
+                    selectionMethod = new BoltzmannSelection<>(true, maxGenerationNumber);
                 else
-                    selectionMethod = new BoltzmannSelection<>(false);
+                    selectionMethod = new BoltzmannSelection<>(false, maxGenerationNumber);
                 break;
             case "tournament":
                 selectionMethod = new DeterministicTournamentSelection<>();

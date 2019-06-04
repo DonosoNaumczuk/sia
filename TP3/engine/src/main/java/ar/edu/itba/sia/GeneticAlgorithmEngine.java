@@ -8,7 +8,6 @@ import java.util.*;
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
 import static ar.edu.itba.sia.ReplaceMethod.THIRD;
 
-@SuppressWarnings("ALL")
 public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
     private int numberOfGenerationsToMakeChecks;
     private PriorityQueue<C> currentPopulation;
