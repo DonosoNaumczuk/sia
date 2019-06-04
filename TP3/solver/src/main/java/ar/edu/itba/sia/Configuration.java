@@ -33,7 +33,6 @@ public class Configuration {
     private List<List<SelectionMethod<CharacterChromosome>>> selectionMethods;
     private int quantityOfFathersToSelect;
 
-
     public Configuration(String path) throws FileNotFoundException {
         FileReader reader = new FileReader(path);
         JsonParser parser = new JsonParser();

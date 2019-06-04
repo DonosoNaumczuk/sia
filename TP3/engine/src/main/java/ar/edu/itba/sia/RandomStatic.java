@@ -31,4 +31,8 @@ public class RandomStatic {
     public static double nextDouble() {
         return randomWithSetSeed.nextDouble();
     }
+
+    public static String getStringRepresentation() {
+        return seed.toString();
+    }
 }

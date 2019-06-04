@@ -52,6 +52,8 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         String s = "#generation,bestFitness,diversity,meanFitness,worstFitness,probability" + '\n';
         writer.write(s);
         printPopulation(writer);
+        printSeed();
+
         while (currentBest.getFitness() < goalFitness &&
                 generationNumber < maxGenerationNumber && flag) {
             PriorityQueue<C> newGeneration;
@@ -80,9 +82,16 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             System.out.println(currentPopulation.peek().toString());
             System.out.println();
             System.out.println();
+            System.out.println();
+            printSeed();
+            System.out.println("To replicate this run, put the seed listed below in the configuration file.");
         }
         writer.close();
         return currentPopulation;
+    }
+
+    private void printSeed() {
+        System.out.println("RANDOM SEED: " + RandomStatic.getStringRepresentation());
     }
 
     private PriorityQueue<C> handleSecond() {
