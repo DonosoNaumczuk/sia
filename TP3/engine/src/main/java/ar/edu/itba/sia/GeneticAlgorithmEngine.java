@@ -86,13 +86,13 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         }
 
         printSeed();
-        System.out.println("To replicate this run, put the seed listed below in the configuration file.");
         writer.close();
         return currentPopulation;
     }
 
     private void printSeed() {
         System.out.println("RANDOM SEED: " + RandomStatic.getStringRepresentation());
+        System.out.println("To replicate this run, put the seed listed above in the configuration file.");
     }
 
     private PriorityQueue<C> handleSecond() {
