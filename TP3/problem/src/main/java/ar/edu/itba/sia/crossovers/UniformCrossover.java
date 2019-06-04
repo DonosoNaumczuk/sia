@@ -18,7 +18,7 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
         ArrayList<Object> alleles1 = mom.getAlleles();
         ArrayList<Object> alleles2 = dad.getAlleles();
 
-        if(probability > RandomStatic.nextDouble()) {
+        if (probability > RandomStatic.nextDouble()) {
             int size = alleles1.size();
             double p = 0.5; // As specified on the class pdf
 
@@ -36,12 +36,12 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
         alleles1.set(index, alleles2.get(index));
         alleles2.set(index, aux);
     }
-    
+
     ArrayList<CharacterChromosome> createChildren(ArrayList<Object> alleles1, ArrayList<Object> alleles2,
                                                           CharacterChromosome other) {
         ArrayList<CharacterChromosome> children = new ArrayList<>();
         CharacterChromosome child1, child2;
-        
+
         child1 = new CharacterChromosome(this, other.getMutationMethod(), other.getTraits(),
                 other.getMultipliers(), alleles1);
         child2 = new CharacterChromosome(this, other.getMutationMethod(), other.getTraits(),
@@ -49,7 +49,7 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
 
         children.add(child1);
         children.add(child2);
-        
+
         return children;
     }
 }

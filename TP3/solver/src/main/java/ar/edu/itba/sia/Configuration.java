@@ -53,7 +53,7 @@ public class Configuration {
     }
 
     private void configureRandom(JSONConfigurationParser.JSONConfiguration jsonConfiguration) {
-        if(jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed != DEFAULT_SEED)
+        if (jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed != DEFAULT_SEED)
             RandomStatic.setSeed(jsonConfiguration.randomSeed);
         RandomStatic.initialize();
     }
@@ -117,13 +117,13 @@ public class Configuration {
 
     private static MutationMethod<CharacterChromosome> parserMutationMethod(JSONConfigurationParser.JSONMutation mutation) {
         MutationMethod<CharacterChromosome> ans;
-        if(mutation.isMultiGen && mutation.isUniform){
+        if (mutation.isMultiGen && mutation.isUniform){
             ans = new MutationMethodUniformMultGen(mutation.initProb);
         }
-        else if(mutation.isUniform) {
+        else if (mutation.isUniform) {
             ans = new MutationMethodUniformOneGen(mutation.initProb);
         }
-        else if(mutation.isMultiGen) {
+        else if (mutation.isMultiGen) {
             ans = new MutationMethodNoUniformMultGen(mutation.initProb);
         }
         else {
@@ -184,10 +184,10 @@ public class Configuration {
             for (JSONConfigurationParser.JSONSelectionMethod selectionString : selectionMethodsJson) {
                 if (i == 2)
                     isSecondSelectionMethod = true;
-                SelectionMethod aux = parserSelectionsMethod(selectionString.selectionType, isSecondSelectionMethod,
+                SelectionMethod<CharacterChromosome> selectionMethod = parserSelectionsMethod(selectionString.selectionType, isSecondSelectionMethod,
                         isThirdReplacementMethod);
-                aux.setProportion(selectionString.proportion);
-                selectionMethods.add(aux);
+                selectionMethod.setProportion(selectionString.proportion);
+                selectionMethods.add(selectionMethod);
             }
             ans.add(selectionMethods);
             selectionMethodsJson = s2;
@@ -196,36 +196,36 @@ public class Configuration {
         return ans;
     }
 
-    private static SelectionMethod parserSelectionsMethod(String s, boolean isSecondSelectionMethod,
+    private static SelectionMethod<CharacterChromosome> parserSelectionsMethod(String s, boolean isSecondSelectionMethod,
                                                           boolean isThirdReplacementMethod) {
-        SelectionMethod selectionMethod;
+        SelectionMethod<CharacterChromosome> selectionMethod;
         switch (s) {
             case "elite":
-                selectionMethod = new EliteSelection();
+                selectionMethod = new EliteSelection<>();
                 break;
             case "roulette":
-                selectionMethod = new RouletteSelection();
+                selectionMethod = new RouletteSelection<>();
                 break;
             case "universal":
-                selectionMethod = new UniversalSelection();
+                selectionMethod = new UniversalSelection<>();
                 break;
             case "boltzmann":
                 if (isThirdReplacementMethod && isSecondSelectionMethod)
-                    selectionMethod = new BoltzmannSelection(true);
+                    selectionMethod = new BoltzmannSelection<>(true);
                 else
-                    selectionMethod = new BoltzmannSelection(false);
+                    selectionMethod = new BoltzmannSelection<>(false);
                 break;
             case "tournament":
-                selectionMethod = new DeterministicTournamentSelection();
+                selectionMethod = new DeterministicTournamentSelection<>();
                 break;
             case "tournamentProb":
-                selectionMethod = new ProbabilisticTournamentSelection();
+                selectionMethod = new ProbabilisticTournamentSelection<>();
                 break;
             case "ranking":
-                selectionMethod = new RankSelection();
+                selectionMethod = new RankSelection<>();
                 break;
             default:
-                throw new IllegalArgumentException("wrong selection method");
+                throw new IllegalArgumentException("Wrong selection method");
         }
         return selectionMethod;
     }

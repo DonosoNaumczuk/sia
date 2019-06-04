@@ -27,7 +27,7 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
             locusLast  = aux;
         }
 
-        if(probability > RandomStatic.nextDouble()) {
+        if (probability > RandomStatic.nextDouble()) {
             childrenAlleles = exchangeAlleles(momAlleles, dadAlleles, locusFirst, locusLast);
         }
         else {

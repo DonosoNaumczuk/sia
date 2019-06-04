@@ -12,18 +12,18 @@ import java.util.function.Function;
 
 public class ItemCreator {
 
-    private static String BOOTS_FILE = "/botas.tsv";
+    private static String BOOTS_FILE        = "/botas.tsv";
     private static String BREAST_PLATE_FILE = "/pecheras.tsv";
-    private static String GLOVES_FILE = "/guantes.tsv";
-    private static String HELMET_FILE = "/cascos.tsv";
-    private static String WEAPON_FILE = "/armas.tsv";
+    private static String GLOVES_FILE       = "/guantes.tsv";
+    private static String HELMET_FILE       = "/cascos.tsv";
+    private static String WEAPON_FILE       = "/armas.tsv";
 
-    private static int ID_POSITION = 0;
-    private static int STRENGTH_POSITION = 1;
-    private static int AGILITY_POSITION = 2;
-    private static int EXPERTISE_POSITION = 3;
-    private static int RESILIENCE_POSITION = 4;
-    private static int VITALITY_POSITION = 5;
+    private static int ID_POSITION          = 0;
+    private static int STRENGTH_POSITION    = 1;
+    private static int AGILITY_POSITION     = 2;
+    private static int EXPERTISE_POSITION   = 3;
+    private static int RESILIENCE_POSITION  = 4;
+    private static int VITALITY_POSITION    = 5;
 
     public static void createAllFromFiles(String path) {
         createBoots(path);

@@ -14,7 +14,7 @@ public class MutationMethodUniformOneGen extends MutationMethodCharacter {
     @Override
     public CharacterChromosome mutate(CharacterChromosome thisChromosome) {
         ArrayList<Object> alleles = thisChromosome.getAlleles();
-        if(RandomStatic.nextDouble() < probability) {
+        if (RandomStatic.nextDouble() < probability) {
             int position = RandomStatic.nextInt(alleles.size());
             alleles = mutateAPosition(position, alleles);
         }

@@ -15,7 +15,7 @@ public class ItemStorage {
     private ItemStorage() { }
 
     public static ItemStorage getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new ItemStorage();
         return instance;
     }

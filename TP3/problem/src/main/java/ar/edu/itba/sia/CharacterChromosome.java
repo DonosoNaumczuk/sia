@@ -36,7 +36,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     }
 
     public CharacterChromosome(CrossoverMethod<CharacterChromosome> crossoverMethod, MutationMethod<CharacterChromosome> mutationMethod,
-                               double strength, double agility, double expertise, double resistance, double life, double atkMult,
+                               double strength, double agility, double expertise, double resistance, double life, double attackMult,
                                double defMult, double height, Boots boots, BreastPlate breastPlate, Gloves gloves, Helmet helmet,
                                Weapon weapon) {
         super(crossoverMethod, mutationMethod);
@@ -49,7 +49,7 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
         traits.add(life);
 
         this.multipliers = new ArrayList<>();
-        multipliers.add(atkMult);
+        multipliers.add(attackMult);
         multipliers.add(defMult);
 
         this.alleles = new ArrayList<>();
@@ -62,25 +62,6 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
         super.setFitness();
     }
-
-    /*
-    public CharacterChromosome(CharacterChromosome other, ArrayList<Object> alleles) {
-        super(other);
-
-        this.strength   = other.strength;
-        this.agility    = other.agility;
-        this.expertise  = other.expertise;
-        this.resistance = other.resistance;
-        this.life       = other.life;
-
-        this.atkMult    = other.atkMult;
-        this.defMult    = other.defMult;
-
-        this.alleles = alleles;
-
-        calculateFitness();
-    }
-     */
 
     @Override
     public CharacterChromosome mutate() {
@@ -104,14 +85,14 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     }
 
     private double calculateAttack() {
-        return (agilityP + expertiseP) * strengthP * atkMultFromHeight();
+        return (agilityP + expertiseP) * strengthP * attackMultFromHeight();
     }
 
     private double calculateDefense() {
         return (resistanceP + expertiseP) * lifeP * defMultFromHeight();
     }
 
-    private double atkMultFromHeight() {
+    private double attackMultFromHeight() {
         double height = (double)alleles.get(0);//TODO:check
         return 0.5 - Math.pow((3 * height - 5), 4) + Math.pow((3 * height - 5), 2) + height / 2;
     }
@@ -171,18 +152,18 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
         if (object instanceof CharacterChromosome) {
             CharacterChromosome otherCharacter = ((CharacterChromosome) object);
-            if(otherCharacter.getFitness() != this.getFitness()) {
+            if (otherCharacter.getFitness() != this.getFitness()) {
                 return false;
             }
 
             Iterator<Object> otherAlleles = otherCharacter.alleles.iterator();
             Iterator<Object> thisAlleles  = this.alleles.iterator();
 
-            if(((double)otherAlleles.next()) != ((double)thisAlleles.next())) {
+            if (((double) otherAlleles.next()) != ((double) thisAlleles.next())) {
                 return false;
             }
             while (thisAlleles.hasNext()) {
-                if(((Item)otherAlleles.next()).getId() != ((Item)thisAlleles.next()).getId()) {
+                if (((Item) otherAlleles.next()).getId() != ((Item) thisAlleles.next()).getId()) {
                     return false;
                 }
             }

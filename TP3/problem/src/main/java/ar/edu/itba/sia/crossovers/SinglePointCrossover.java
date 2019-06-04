@@ -15,7 +15,7 @@ public class SinglePointCrossover extends DoublePointCrossover {
         ArrayList<ArrayList<Object>> childrenAlleles;
         int size = mom.getAlleles().size();
         int locus = RandomStatic.nextInt(size + 1);
-        if(probability > RandomStatic.nextDouble()) {
+        if (probability > RandomStatic.nextDouble()) {
             childrenAlleles = exchangeAlleles(mom.getAlleles(), dad.getAlleles(), locus, size);
         }
         else {

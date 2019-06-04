@@ -8,6 +8,7 @@ import java.util.*;
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
 import static ar.edu.itba.sia.ReplaceMethod.THIRD;
 
+@SuppressWarnings("ALL")
 public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
     private int numberOfGenerationsToMakeChecks;
     private PriorityQueue<C> currentPopulation;
@@ -49,20 +50,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         C currentBest = currentPopulation.peek();
         C previousBest = currentBest;
         PrintWriter writer = new PrintWriter(new File("output.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("bestFitness");
-        sb.append(',');
-        sb.append("diversity");
-        sb.append(',');
-        sb.append("meanFitness");
-        sb.append(',');
-        sb.append("worstFitness");
-        sb.append(',');
-        sb.append("probability");
-        sb.append('\n');
-        writer.write(sb.toString());
+        String s = "#generation,bestFitness,diversity,meanFitness,worstFitness,probability" + '\n';
+        writer.write(s);
         printPopulation(writer);
-        while(currentBest.getFitness() < goalFitness &&
+        while (currentBest.getFitness() < goalFitness &&
                 generationNumber < maxGenerationNumber && flag) {
             PriorityQueue<C> newGeneration;
 
@@ -75,7 +66,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             currentPopulation = newGeneration;
             currentBest = currentPopulation.peek();
             printPopulation(writer);
-            if(generationNumber % numberOfGenerationsToMakeChecks == 0) {
+            if (generationNumber % numberOfGenerationsToMakeChecks == 0) {
                 /* Content check and structural check */
                 flag = previousBest.compareTo(currentBest) <= 0 && structuralCheck(currentPopulation, previousPopulation);
                 previousBest = currentBest;
@@ -101,7 +92,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             newGeneration.add(son.mutate());
         }
 
-        if(currentPopulation.size() != quantityOfFathersToSelect) {
+        if (currentPopulation.size() != quantityOfFathersToSelect) {
             //select N-k form population
             newGeneration.addAll(selectK(currentPopulation.size() - quantityOfFathersToSelect,
                     currentPopulationArray, 1));
@@ -150,7 +141,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         Iterator<SelectionMethod<C>> iterator = selectionMethods.get(type).iterator();
         SelectionMethod<C> s = iterator.next();
         int k;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             k = (int) (s.getProportion() * quantity);
             remaining = remaining - k;
             fathers.addAll(s.select(population, k));
@@ -168,11 +159,11 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         while (iteratorFathers.hasNext()) {
             c2 = iteratorFathers.next();
             sons.addAll(c2.crossover(c1));
-            if(iteratorFathers.hasNext()) {
+            if (iteratorFathers.hasNext()) {
                 c1 = iteratorFathers.next();
             }
         }
-        if(sons.size() != fathers.size()) { //TODO: maybe add random
+        if (sons.size() != fathers.size()) { //TODO: maybe add random
             sons.add(c1.crossover(c2).get(0));
         }
         return sons;
@@ -183,30 +174,33 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         boolean flag = true;
         int i = 0;
         for (C c:currentPopulation) {
-            if(previousPopulation.contains(c)) {
+            if (previousPopulation.contains(c)) {
                 i++;
             }
         }
-        if(i >= currentPopulation.size() / 2) {
+        if (i >= currentPopulation.size() / 2) {
             flag = false;
         }
         return flag;
     }
 
     private void printPopulation(PrintWriter writer) {
-        HashSet<C> classesOfPopulation = new HashSet<>(currentPopulation);
+        HashSet<C> classesOfPopulation  = new HashSet<>(currentPopulation);
+        double mean                     = 0;
+        C last                          = null;
+
+        for (C current : currentPopulation) {
+            mean += current.getFitness();
+            last = current;
+        }
 
         StringBuilder sb = new StringBuilder();
+        sb.append(generationNumber);
+        sb.append(',');
         sb.append(currentPopulation.peek().getFitness());
         sb.append(',');
         sb.append(classesOfPopulation.size());
         sb.append(',');
-        double mean = 0;
-        C last = null;
-        for (C current: currentPopulation) {
-            mean += current.getFitness();
-            last = current;
-        }
         sb.append(mean / currentPopulation.size());
         sb.append(',');
         sb.append(last.getFitness());

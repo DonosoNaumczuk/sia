@@ -14,7 +14,7 @@ public class AnnularCrossover extends UniformCrossover {
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
         ArrayList<Object> alleles1 = mom.getAlleles();
         ArrayList<Object> alleles2 = dad.getAlleles();
-        if(probability > RandomStatic.nextDouble()) {
+        if (probability > RandomStatic.nextDouble()) {
             int size = alleles1.size();
             int locus = RandomStatic.nextInt(size);
             int l = RandomStatic.nextInt(size / 2) + 1;

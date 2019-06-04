@@ -16,7 +16,7 @@ public abstract class MutationMethodCharacter implements MutationMethod<Characte
         this.probability = probability;
     }
 
-    /*package*/ ArrayList<Object> mutateAPosition(int position, ArrayList<Object> alleles) {
+    ArrayList<Object> mutateAPosition(int position, ArrayList<Object> alleles) {
         Object newAllele;
         switch (position) {
             case 0:
@@ -48,7 +48,7 @@ public abstract class MutationMethodCharacter implements MutationMethod<Characte
                 newAllele        = weapons[rndWeapon];
                 break;
             default:
-                newAllele = null;//TODO: se pudre
+                throw new IllegalArgumentException("Invalid allele position");
         }
         alleles.set(position, newAllele);
         return alleles;

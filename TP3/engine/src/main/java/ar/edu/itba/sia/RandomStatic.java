@@ -8,8 +8,8 @@ public class RandomStatic {
     private static Long seed;
 
     public static void initialize() {
-        if(randomWithSetSeed == null) {
-            if(seed == null)
+        if (randomWithSetSeed == null) {
+            if (seed == null)
                 randomWithSetSeed = new Random();
             else
                 randomWithSetSeed = new Random(seed);
@@ -17,7 +17,7 @@ public class RandomStatic {
     }
 
     public static void setSeed(Long randomSeed) {
-        if(seed == null)
+        if (seed == null)
             seed = randomSeed;
     }
 
