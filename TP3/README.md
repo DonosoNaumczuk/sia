@@ -82,7 +82,7 @@ Where:
 * doubleProb = is a DOUBLE tha exist in the [0,1] interval
 * stringReplaceMethod = ["first" | "second" | "third"]
 * stringSelection =  ["elite" | "roulette" | "universal" | "boltzmann" | "tournament" | "tournamentProb" | "ranking"]
-* randomSeed is the seed to be used for random numbers, -1 indicates the default seed used by java.util.Random
+* randomSeed is the seed to be used for random numbers, -1 indicates to set the seed randomly
 
 ### Example
 ```
