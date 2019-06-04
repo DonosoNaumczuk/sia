@@ -3,6 +3,10 @@ package ar.edu.itba.sia;
 public class GeneticAlgorithmSolver {
 
     public static void main(String args[]) throws Exception {
+        System.out.println();
+        System.out.println("Loading configuration...");
+        System.out.println("It can take a few seconds.");
+        System.out.println();
         ItemCreator.createAllFromFiles(args[0]);
         Configuration configuration = new Configuration(args[1]);
 

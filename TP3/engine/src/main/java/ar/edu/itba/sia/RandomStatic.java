@@ -20,10 +20,6 @@ public class RandomStatic {
             seed = randomSeed;
     }
 
-    public static Long getSeed() {
-        return seed;
-    }
-
     public static int nextInt(int bound)  {
         return randomWithSetSeed.nextInt(bound);
     }
