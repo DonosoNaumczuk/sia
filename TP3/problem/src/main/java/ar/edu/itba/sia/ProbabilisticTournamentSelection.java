@@ -22,7 +22,7 @@ public class ProbabilisticTournamentSelection<C extends Chromosome<C>> extends T
     }
 
     private C selectChromosome() {
-        double r = rnd.nextDouble();
+        double r = RandomStatic.nextDouble();
 
         if (r < 0.75) // Specified in the genetic algorithms class .pdf
             return getFittestChromosomeFromRandomSubset();

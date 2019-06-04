@@ -1,12 +1,10 @@
 package ar.edu.itba.sia;
 
-import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 abstract class TournamentSelection<C extends Chromosome<C>> extends SelectionMethod<C> {
     int m; // Amount of randomly chosen individuals
-    Random rnd = new Random(); // Random instance helper
 
     C getFittestChromosomeFromRandomSubset() {
         SortedSet<C> randoms = createRandomSubset();
@@ -24,7 +22,7 @@ abstract class TournamentSelection<C extends Chromosome<C>> extends SelectionMet
 
         for (int j = 0; j < m; j++) {
             do
-                randomChromosome = chromosomes.get(rnd.nextInt(chromosomes.size()));
+                randomChromosome = chromosomes.get(RandomStatic.nextInt(chromosomes.size()));
             while (!randoms.add(randomChromosome));
         }
 

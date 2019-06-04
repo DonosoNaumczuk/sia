@@ -1,10 +1,10 @@
 package ar.edu.itba.sia.crossovers;
 
 import ar.edu.itba.sia.CharacterChromosome;
+import ar.edu.itba.sia.RandomStatic;
 import ar.edu.itba.sia.interfaces.CrossoverMethod;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
     double probability;
@@ -21,10 +21,9 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
         if(probability > Math.random()) {
             int size = alleles1.size();
             double p = 0.5; // As specified on the class pdf
-            Random rnd = new Random();
 
             for (int i = 0; i < size; i++) {
-                if (!alleles1.get(i).equals(alleles2.get(i)) && rnd.nextDouble() < p)
+                if (!alleles1.get(i).equals(alleles2.get(i)) && RandomStatic.nextDouble() < p)
                     exchangeAlleles(alleles1, alleles2, i);
             }
         }

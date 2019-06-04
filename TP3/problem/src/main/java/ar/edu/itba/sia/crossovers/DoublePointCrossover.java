@@ -1,13 +1,10 @@
 package ar.edu.itba.sia.crossovers;
 
 import ar.edu.itba.sia.CharacterChromosome;
-import ar.edu.itba.sia.Chromosome;
-import ar.edu.itba.sia.interfaces.Crossable;
+import ar.edu.itba.sia.RandomStatic;
 import ar.edu.itba.sia.interfaces.CrossoverMethod;
-import ar.edu.itba.sia.interfaces.MutationMethod;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome> {
     double probability;
@@ -21,9 +18,8 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
         ArrayList<ArrayList<Object>> childrenAlleles;
         ArrayList<Object> momAlleles = mom.getAlleles();
         ArrayList<Object> dadAlleles = dad.getAlleles();
-        Random rnd                   = new Random();
-        int locusFirst               = rnd.nextInt(momAlleles.size() +  1);
-        int locusLast                = rnd.nextInt(momAlleles.size() +  1);
+        int locusFirst               = RandomStatic.nextInt(momAlleles.size() +  1);
+        int locusLast                = RandomStatic.nextInt(momAlleles.size() +  1);
 
         if (locusFirst > locusLast) {
             int aux    = locusFirst;
@@ -31,7 +27,7 @@ public class DoublePointCrossover implements CrossoverMethod<CharacterChromosome
             locusLast  = aux;
         }
 
-        if(probability > Math.random()) {
+        if(probability > RandomStatic.nextDouble()) {
             childrenAlleles = exchangeAlleles(momAlleles, dadAlleles, locusFirst, locusLast);
         }
         else {

@@ -79,6 +79,6 @@ public class RouletteSelection<C extends Chromosome<C>> extends SelectionMethod<
 
     void setRandomRs() {
         for (int j = 0; j < k; j++)
-            randoms[j] = Math.random();
+            randoms[j] = RandomStatic.nextDouble();
     }
 }

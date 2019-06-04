@@ -31,7 +31,7 @@
   "firstSelectionMethod":
       [
           {
-            "selectionType": "elite",
+            "selectionType": "boltzmann",
             "proportion": 0.5
           },
           {
@@ -42,8 +42,9 @@
   "secondSelectionMethod":
       [
           {
-            "selectionType": "boltzmann",
+            "selectionType": "elite",
             "proportion": 1
           }
-      ]
+      ],
+  "randomSeed" : 1161041016610111511610111511683101101100
 }

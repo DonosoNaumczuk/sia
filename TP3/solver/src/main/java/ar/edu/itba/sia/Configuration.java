@@ -18,7 +18,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Random;
 
 import static ar.edu.itba.sia.ReplaceMethod.FIRST;
 import static ar.edu.itba.sia.ReplaceMethod.SECOND;
@@ -39,6 +38,7 @@ public class Configuration {
         JsonParser parser = new JsonParser();
         JSONConfigurationParser.JSONConfiguration jsonConfiguration = new Gson().fromJson(parser.parse(reader),
                 JSONConfigurationParser.JSONConfiguration.class);
+        configureRandom(jsonConfiguration);
 
         this.population                      = parserPopulation(jsonConfiguration);
         this.maxGenerationNumber             = jsonConfiguration.cutCriteria.maxGeneration;
@@ -49,6 +49,12 @@ public class Configuration {
                                                     jsonConfiguration.firstSelectionMethod,
                                                     jsonConfiguration.secondSelectionMethod, this.replaceMethod == THIRD);
         this.quantityOfFathersToSelect       = jsonConfiguration.replaceMethod.k;
+    }
+
+    private void configureRandom(JSONConfigurationParser.JSONConfiguration jsonConfiguration) {
+        if(!jsonConfiguration.randomSeed.equals("") && jsonConfiguration.randomSeed != null)
+            RandomStatic.setSeed(jsonConfiguration.randomSeed);
+        RandomStatic.initialize();
     }
 
     private static PriorityQueue<CharacterChromosome> parserPopulation(
@@ -65,15 +71,15 @@ public class Configuration {
         CharacterChromosome currentCharacter;
         int rndBoots, rndBreastPlate, rndGloves, rndHelmet, rndWeapon;
         while (i < jsonConfiguration.populationQuantity) {
-            rndBoots         = new Random().nextInt(itemStorage.getBoots().length);
-            rndBreastPlate   = new Random().nextInt(itemStorage.getBreastPlates().length);
-            rndGloves        = new Random().nextInt(itemStorage.getGloves().length);
-            rndHelmet        = new Random().nextInt(itemStorage.getHelmets().length);
-            rndWeapon        = new Random().nextInt(itemStorage.getHelmets().length);
+            rndBoots         = RandomStatic.nextInt(itemStorage.getBoots().length);
+            rndBreastPlate   = RandomStatic.nextInt(itemStorage.getBreastPlates().length);
+            rndGloves        = RandomStatic.nextInt(itemStorage.getGloves().length);
+            rndHelmet        = RandomStatic.nextInt(itemStorage.getHelmets().length);
+            rndWeapon        = RandomStatic.nextInt(itemStorage.getHelmets().length);
             currentCharacter = new CharacterChromosome(crossoverMethod, mutationMethod, jsonConfiguration.multipliers.strength,
                     jsonConfiguration.multipliers.agility, jsonConfiguration.multipliers.expertise,
                     jsonConfiguration.multipliers.resistance, jsonConfiguration.multipliers.life, mult[0], mult[1],
-                    1.3 + Math.random() * (2 - 1.3), itemStorage.getBoots()[rndBoots],
+                    1.3 + RandomStatic.nextDouble() * (2 - 1.3), itemStorage.getBoots()[rndBoots],
                     itemStorage.getBreastPlates()[rndBreastPlate], itemStorage.getGloves()[rndGloves],
                     itemStorage.getHelmets()[rndHelmet], itemStorage.getWeapons()[rndWeapon]);
             population.add(currentCharacter);
@@ -266,6 +272,7 @@ public class Configuration {
             JSONReplaceMethod replaceMethod;
             JSONSelectionMethod[] firstSelectionMethod;
             JSONSelectionMethod[] secondSelectionMethod;
+            Long randomSeed;
         }
 
         public static class JSONMultiplier {

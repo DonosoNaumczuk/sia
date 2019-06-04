@@ -1,9 +1,9 @@
 package ar.edu.itba.sia.crossovers;
 
 import ar.edu.itba.sia.CharacterChromosome;
+import ar.edu.itba.sia.RandomStatic;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class SinglePointCrossover extends DoublePointCrossover {
     public SinglePointCrossover(double probability) {
@@ -13,9 +13,8 @@ public class SinglePointCrossover extends DoublePointCrossover {
     @Override
     public ArrayList<CharacterChromosome> crossover(CharacterChromosome mom, CharacterChromosome dad) {
         ArrayList<ArrayList<Object>> childrenAlleles;
-        Random rnd = new Random();
         int size = mom.getAlleles().size();
-        int locus = rnd.nextInt(size + 1);
+        int locus = RandomStatic.nextInt(size + 1);
         if(probability > Math.random()) {
             childrenAlleles = exchangeAlleles(mom.getAlleles(), dad.getAlleles(), locus, size);
         }

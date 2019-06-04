@@ -3,11 +3,11 @@ package ar.edu.itba.sia.mutations;
 
 import ar.edu.itba.sia.CharacterChromosome;
 import ar.edu.itba.sia.ItemStorage;
+import ar.edu.itba.sia.RandomStatic;
 import ar.edu.itba.sia.equipment.*;
 import ar.edu.itba.sia.interfaces.MutationMethod;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class MutationMethodCharacter implements MutationMethod<CharacterChromosome> {
     double probability;
@@ -24,27 +24,27 @@ public abstract class MutationMethodCharacter implements MutationMethod<Characte
                 break;
             case 1:
                 Boots[] boots = ItemStorage.getInstance().getBoots();
-                int rndBoots  = new Random().nextInt(boots.length);
+                int rndBoots  = RandomStatic.nextInt(boots.length);
                 newAllele     = boots[rndBoots];
                 break;
             case 2:
                 BreastPlate[] breastPlates = ItemStorage.getInstance().getBreastPlates();
-                int rndBreastPlate         = new Random().nextInt(breastPlates.length);
+                int rndBreastPlate         = RandomStatic.nextInt(breastPlates.length);
                 newAllele                  = breastPlates[rndBreastPlate];
                 break;
             case 3:
                 Gloves[] gloves = ItemStorage.getInstance().getGloves();
-                int rndGloves   = new Random().nextInt(gloves.length);
+                int rndGloves   = RandomStatic.nextInt(gloves.length);
                 newAllele       = gloves[rndGloves];
                 break;
             case 4:
                 Helmet[] helmets = ItemStorage.getInstance().getHelmets();
-                int rndHelmet    = new Random().nextInt(helmets.length);
+                int rndHelmet    = RandomStatic.nextInt(helmets.length);
                 newAllele        = helmets[rndHelmet];
                 break;
             case 5:
                 Weapon[] weapons = ItemStorage.getInstance().getWeapons();
-                int rndWeapon    = new Random().nextInt(weapons.length);
+                int rndWeapon    = RandomStatic.nextInt(weapons.length);
                 newAllele        = weapons[rndWeapon];
                 break;
             default:
