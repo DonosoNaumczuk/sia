@@ -172,4 +172,24 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Fitness: ").append(getFitness()).append('\n');
+        sb.append('\n');
+        sb.append("Strength: ").append(traits.get(0)).append('\n');
+        sb.append("Agility: ").append(traits.get(1)).append('\n');
+        sb.append("Expertise: ").append(traits.get(2)).append('\n');
+        sb.append("Resistance: ").append(traits.get(3)).append('\n');
+        sb.append("Life: ").append(traits.get(4)).append('\n');
+        sb.append('\n');
+        sb.append("Height: ");
+
+        for (Object allele : alleles) {
+            sb.append(allele.toString()).append('\n').append('\n').append('\n');
+        }
+
+        return sb.toString();
+    }
 }

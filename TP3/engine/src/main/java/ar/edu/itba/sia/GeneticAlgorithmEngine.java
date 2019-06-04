@@ -71,6 +71,15 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 previousBest = currentBest;
                 previousPopulation = currentPopulation;
             }
+
+            /* Prints generation and best of population of this generation */
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////");
+            System.out.println("Generation #" + generationNumber);
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////");
+            System.out.println();
+            System.out.println(currentPopulation.peek().toString());
+            System.out.println();
+            System.out.println();
         }
         writer.close();
         return currentPopulation;
