@@ -93,12 +93,12 @@ public class CharacterChromosome extends Chromosome<CharacterChromosome> {
     }
 
     private double attackMultFromHeight() {
-        double height = (double)alleles.get(0);//TODO:check
+        double height = (double) alleles.get(0);
         return 0.5 - Math.pow((3 * height - 5), 4) + Math.pow((3 * height - 5), 2) + height / 2;
     }
 
     private double defMultFromHeight() {
-        double height = (double)alleles.get(0);//TODO:check
+        double height = (double) alleles.get(0);
         return 2 + Math.pow((3 * height - 5), 4) - Math.pow((3 * height - 5), 2) - height / 2;
     }
 

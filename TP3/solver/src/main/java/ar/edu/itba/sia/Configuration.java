@@ -53,8 +53,9 @@ public class Configuration {
     }
 
     private void configureRandom(JSONConfigurationParser.JSONConfiguration jsonConfiguration) {
-        if (jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed != DEFAULT_SEED)
+        if (jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed.equals(DEFAULT_SEED)) {
             RandomStatic.setSeed(jsonConfiguration.randomSeed);
+        }
         RandomStatic.initialize();
     }
 
@@ -110,7 +111,7 @@ public class Configuration {
                 ans[1] = 0.3;
                 break;
             default:
-                throw new IllegalArgumentException("wrong class type");
+                throw new IllegalArgumentException("Wrong class type");
         }
         return ans;
     }

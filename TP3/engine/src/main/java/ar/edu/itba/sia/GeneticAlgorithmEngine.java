@@ -163,7 +163,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
                 c1 = iteratorFathers.next();
             }
         }
-        if (sons.size() != fathers.size()) { //TODO: maybe add random
+        if (sons.size() != fathers.size()) {
             sons.add(c1.crossover(c2).get(0));
         }
         return sons;

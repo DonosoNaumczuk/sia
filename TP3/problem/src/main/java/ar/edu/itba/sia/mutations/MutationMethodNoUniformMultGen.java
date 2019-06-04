@@ -11,7 +11,8 @@ public class MutationMethodNoUniformMultGen extends MutationMethodUniformMultGen
     }
 
     @Override
-    public void update() {//TODO: check
+    public void update() {
+        /* Probability function: SIGMOID, TODO: check if exist a better option */
         probability = initProbability * (1 - 2 * ((1/( 1 + Math.pow(Math.E,(-0.01 * x)))) - 0.5));
         x++;
     }
