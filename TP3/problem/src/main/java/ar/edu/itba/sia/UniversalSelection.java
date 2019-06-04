@@ -4,7 +4,7 @@ public class UniversalSelection<C extends Chromosome<C>> extends RouletteSelecti
 
     @Override
     void setRandomRs() {
-        double r = Math.random();
+        double r = RandomStatic.nextDouble();
         double rSubJ;
 
         for (int j = 1; j <= k; j++) {

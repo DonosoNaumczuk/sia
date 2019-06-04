@@ -20,7 +20,7 @@ public abstract class MutationMethodCharacter implements MutationMethod<Characte
         Object newAllele;
         switch (position) {
             case 0:
-                newAllele = 1.3 + Math.random() * (2 - 1.3);
+                newAllele = 1.3 + RandomStatic.nextDouble() * (2 - 1.3);
                 break;
             case 1:
                 Boots[] boots = ItemStorage.getInstance().getBoots();

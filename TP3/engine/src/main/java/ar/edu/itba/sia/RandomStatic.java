@@ -11,7 +11,8 @@ public class RandomStatic {
         if(randomWithSetSeed == null) {
             if(seed == null)
                 randomWithSetSeed = new Random();
-            randomWithSetSeed = new Random(seed);
+            else
+                randomWithSetSeed = new Random(seed);
         }
     }
 

@@ -1,50 +1,50 @@
 {
   "classType": "warrior",
   "multipliers":
-      {
-        "strength": 0.8,
-        "agility": 0.9,
-        "expertise": 0.9,
-        "resistance": 1.2,
-        "life": 1.1
-      },
+  {
+    "strength": 0.8,
+    "agility": 0.9,
+    "expertise": 0.9,
+    "resistance": 1.2,
+    "life": 1.1
+  },
   "populationQuantity": 1000,
   "cutCriteria":
-      {
-        "maxGeneration": 1000,
-        "quantityOfGenerationToPerformChecks" : 10000000,
-        "fitness": 100000
-      },
+  {
+    "maxGeneration": 1000,
+    "quantityOfGenerationToPerformChecks" : 10000000,
+    "fitness": 100000
+  },
   "crossover": "uniform",
   "crossProbability": 0.2,
   "mutation":
-      {
-        "isMultiGen": true,
-        "isUniform": true,
-        "initProb": 0.1
-      },
+  {
+    "isMultiGen": true,
+    "isUniform": true,
+    "initProb": 0.1
+  },
   "replaceMethod":
-      {
-        "type": "third",
-        "k": 750
-      },
+  {
+    "type": "third",
+    "k": 750
+  },
   "firstSelectionMethod":
-      [
-          {
-            "selectionType": "boltzmann",
-            "proportion": 0.5
-          },
-          {
-            "selectionType": "tournament",
-            "proportion": 0.5
-          }
-      ],
+  [
+    {
+      "selectionType": "elite",
+      "proportion": 0.5
+    },
+    {
+      "selectionType": "tournament",
+      "proportion": 0.5
+    }
+  ],
   "secondSelectionMethod":
-      [
-          {
-            "selectionType": "elite",
-            "proportion": 1
-          }
-      ],
+  [
+    {
+      "selectionType": "boltzmann",
+      "proportion": 1
+    }
+  ],
   "randomSeed" : 1161041016610111511610111511683101101100
 }

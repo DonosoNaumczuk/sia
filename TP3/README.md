@@ -72,7 +72,8 @@ The configuration file must follow the following structure:
             "selectionType": [stringSelection],
             "proportion": [doubleProb]
           }
-      ]
+      ],
+  "randomSeed": [longSeed]
 }
 ```
 Where:
@@ -81,6 +82,7 @@ Where:
 * doubleProb = is a DOUBLE tha exist in the [0,1] interval
 * stringReplaceMethod = ["first" | "second" | "third"]
 * stringSelection =  ["elite" | "roulette" | "universal" | "boltzmann" | "tournament" | "tournamentProb" | "ranking"]
+* randomSeed is the seed to be used for random numbers, -1 indicates the default seed used by java.util.Random
 
 ### Example
 ```
@@ -132,5 +134,6 @@ Where:
                "proportion": 1
              }
          ]
+     "randomSeed" : 1161041016610111511610111511683101101100
 }
 ```

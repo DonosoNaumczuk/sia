@@ -1,6 +1,7 @@
 package ar.edu.itba.sia.mutations;
 
 import ar.edu.itba.sia.CharacterChromosome;
+import ar.edu.itba.sia.RandomStatic;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class MutationMethodUniformMultGen extends MutationMethodCharacter {
         ArrayList<Object> alleles = thisChromosome.getAlleles();
         int position = 0;
         while (position < alleles.size()) {
-            if (Math.random() < probability) {
+            if (RandomStatic.nextDouble() < probability) {
                 alleles = mutateAPosition(position, alleles);
             }
             position++;

@@ -18,7 +18,7 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
         ArrayList<Object> alleles1 = mom.getAlleles();
         ArrayList<Object> alleles2 = dad.getAlleles();
 
-        if(probability > Math.random()) {
+        if(probability > RandomStatic.nextDouble()) {
             int size = alleles1.size();
             double p = 0.5; // As specified on the class pdf
 

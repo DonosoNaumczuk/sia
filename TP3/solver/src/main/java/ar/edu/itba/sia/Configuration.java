@@ -24,6 +24,7 @@ import static ar.edu.itba.sia.ReplaceMethod.SECOND;
 import static ar.edu.itba.sia.ReplaceMethod.THIRD;
 
 public class Configuration {
+    private static final Long DEFAULT_SEED = -1L;
     private int numberOfGenerationsToMakeChecks;
     private PriorityQueue<CharacterChromosome> population;
     private int maxGenerationNumber;
@@ -52,7 +53,7 @@ public class Configuration {
     }
 
     private void configureRandom(JSONConfigurationParser.JSONConfiguration jsonConfiguration) {
-        if(!jsonConfiguration.randomSeed.equals("") && jsonConfiguration.randomSeed != null)
+        if(jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed != DEFAULT_SEED)
             RandomStatic.setSeed(jsonConfiguration.randomSeed);
         RandomStatic.initialize();
     }
