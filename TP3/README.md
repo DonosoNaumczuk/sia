@@ -6,7 +6,7 @@ The only thing you need is to have ```java 1.8``` and ```maven``` installed in y
 ## Run instructions
 * Open a terminal, move to ```sia/TP3/``` and type `mvn package`. 
 * Then run
-  ```./geneticAlgorithm.sh [pathToItemTSV] [pathToConfiguration]```
+  ```./geneticAlgorithm.sh [pathToItemTSVFolder] [pathToConfigurationFile]```
 
     Where the pathToItemTSV must be a path to a folder containing the following files:
     * armas.tsv
