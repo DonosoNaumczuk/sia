@@ -10,15 +10,18 @@ public class RandomStatic {
     public static void initialize() {
         if (randomWithSetSeed == null) {
             if (seed == null)
-                randomWithSetSeed = new Random();
-            else
-                randomWithSetSeed = new Random(seed);
+                seed = System.currentTimeMillis();
+            randomWithSetSeed = new Random(seed);
         }
     }
 
     public static void setSeed(Long randomSeed) {
         if (seed == null)
             seed = randomSeed;
+    }
+
+    public static Long getSeed() {
+        return seed;
     }
 
     public static int nextInt(int bound)  {
