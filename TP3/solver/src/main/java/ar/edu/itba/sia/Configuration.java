@@ -55,7 +55,7 @@ public class Configuration {
     }
 
     private void configureRandom(JSONConfigurationParser.JSONConfiguration jsonConfiguration) {
-        if (jsonConfiguration.randomSeed != null && jsonConfiguration.randomSeed.equals(DEFAULT_SEED)) {
+        if (jsonConfiguration.randomSeed != null && !jsonConfiguration.randomSeed.equals(DEFAULT_SEED)) {
             RandomStatic.setSeed(jsonConfiguration.randomSeed);
         }
         RandomStatic.initialize();
