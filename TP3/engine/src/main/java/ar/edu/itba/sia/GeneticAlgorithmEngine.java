@@ -83,9 +83,10 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
             System.out.println();
             System.out.println();
             System.out.println();
-            printSeed();
-            System.out.println("To replicate this run, put the seed listed below in the configuration file.");
         }
+
+        printSeed();
+        System.out.println("To replicate this run, put the seed listed below in the configuration file.");
         writer.close();
         return currentPopulation;
     }
