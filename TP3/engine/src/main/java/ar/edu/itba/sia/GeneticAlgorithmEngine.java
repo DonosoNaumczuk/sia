@@ -222,7 +222,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         sb.append(mean / currentPopulation.size());
         sb.append(',');
         sb.append(last.getFitness());
-        sb.append(';');
+        sb.append(',');
         sb.append(currentPopulation.peek().getMutationMethod().getProbability());
         sb.append('\n');
 
