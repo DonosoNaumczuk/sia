@@ -12,20 +12,21 @@
   "cutCriteria":
   {
     "maxGeneration": 10000,
-    "quantityOfGenerationToPerformChecks" : 10000000,
+    "quantityOfGenerationToPerformChecks": 10000000,
     "fitness": 100000
   },
   "crossover": "twoPoint",
   "crossProbability": 0.6,
+  "uniformProbability": 0.5,
   "mutation":
   {
-    "isMultiGen": true,
+    "isMultiGen": false,
     "isUniform": true,
     "initProb": 0.1
   },
   "replaceMethod":
   {
-    "type": "third",
+    "type": "second",
     "k": 500
   },
   "firstSelectionMethod":

@@ -43,6 +43,7 @@ The configuration file must follow the following structure:
       },
   "crossover": [stringCrossover],
   "crossProbability": [doubleProb],
+  "uniformProbability": [doubleProb],
   "mutation":
       {
         "isMultiGen": BOOLEAN,
@@ -108,6 +109,7 @@ Where:
          },
      "crossover": "uniform",
      "crossProbability": 0.2,
+     "uniformProbability": 0.5,
      "mutation":
          {
            "isMultiGen": true,

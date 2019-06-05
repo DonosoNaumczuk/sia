@@ -6,8 +6,8 @@ import ar.edu.itba.sia.RandomStatic;
 import java.util.ArrayList;
 
 public class AnnularCrossover extends UniformCrossover {
-    public AnnularCrossover(double probability) {
-        super(probability);
+    public AnnularCrossover(double probability, double p) {
+        super(probability, p);
     }
 
     @Override
