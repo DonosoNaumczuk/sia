@@ -8,9 +8,11 @@ import java.util.ArrayList;
 
 public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
     double probability;
+    double p;
 
-    public UniformCrossover(double probability) {
+    public UniformCrossover(double probability, double p) {
         this.probability = probability;
+        this.p           = p;
     }
 
     @Override
@@ -20,12 +22,10 @@ public class UniformCrossover implements CrossoverMethod<CharacterChromosome> {
 
         if (probability > RandomStatic.nextDouble()) {
             int size = alleles1.size();
-            double p = 0.5; // As specified on the class pdf
 
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++)
                 if (!alleles1.get(i).equals(alleles2.get(i)) && RandomStatic.nextDouble() < p)
                     exchangeAlleles(alleles1, alleles2, i);
-            }
         }
 
         return createChildren(alleles1, alleles2, dad);

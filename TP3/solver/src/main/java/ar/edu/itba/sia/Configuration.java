@@ -23,7 +23,7 @@ import static ar.edu.itba.sia.ReplaceMethod.FIRST;
 import static ar.edu.itba.sia.ReplaceMethod.SECOND;
 import static ar.edu.itba.sia.ReplaceMethod.THIRD;
 
-public class Configuration {
+class Configuration {
     private static final Long DEFAULT_SEED = -1L;
     private int numberOfGenerationsToMakeChecks;
     private PriorityQueue<CharacterChromosome> population;
@@ -33,7 +33,7 @@ public class Configuration {
     private List<List<SelectionMethod<CharacterChromosome>>> selectionMethods;
     private int quantityOfFathersToSelect;
 
-    public Configuration(String path) throws FileNotFoundException {
+    Configuration(String path) throws FileNotFoundException {
         FileReader reader = new FileReader(path);
         JsonParser parser = new JsonParser();
         JSONConfigurationParser.JSONConfiguration jsonConfiguration = new Gson().fromJson(parser.parse(reader),
@@ -66,9 +66,9 @@ public class Configuration {
         ItemStorage itemStorage = ItemStorage.getInstance();
 
         CrossoverMethod<CharacterChromosome> crossoverMethod = parserCrossoverMethod(jsonConfiguration.crossover,
-                jsonConfiguration.crossProbability);
+                jsonConfiguration.crossProbability, jsonConfiguration.uniformProbability);
         MutationMethod<CharacterChromosome> mutationMethod   = parserMutationMethod(jsonConfiguration.mutation);
-        double mult[]                                        = parserClass(jsonConfiguration.classType);
+        double[] mult                                        = parserClass(jsonConfiguration.classType);
 
         int i = 0;
         CharacterChromosome currentCharacter;
@@ -134,7 +134,8 @@ public class Configuration {
         return ans;
     }
 
-    private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s, double probability) {
+    private static CrossoverMethod<CharacterChromosome> parserCrossoverMethod(String s, double probability,
+                                                                              double uniformProb) {
         CrossoverMethod<CharacterChromosome> ans = new SinglePointCrossover(probability);
         switch (s) {
             case "onePoint":
@@ -144,10 +145,10 @@ public class Configuration {
                 ans = new DoublePointCrossover(probability);
                 break;
             case "uniform":
-                ans = new UniformCrossover(probability);
+                ans = new UniformCrossover(probability, uniformProb);
                 break;
             case "annular":
-                ans = new AnnularCrossover(probability);
+                ans = new AnnularCrossover(probability, uniformProb);
                 break;
         }
         return ans;
@@ -232,31 +233,31 @@ public class Configuration {
         return selectionMethod;
     }
 
-    public int getNumberOfGenerationsToMakeChecks() {
+    int getNumberOfGenerationsToMakeChecks() {
         return numberOfGenerationsToMakeChecks;
     }
 
-    public PriorityQueue<CharacterChromosome> getPopulation() {
+    PriorityQueue<CharacterChromosome> getPopulation() {
         return population;
     }
 
-    public int getMaxGenerationNumber() {
+    int getMaxGenerationNumber() {
         return maxGenerationNumber;
     }
 
-    public int getGoalFitness() {
+    int getGoalFitness() {
         return goalFitness;
     }
 
-    public ReplaceMethod getReplaceMethod() {
+    ReplaceMethod getReplaceMethod() {
         return replaceMethod;
     }
 
-    public List<List<SelectionMethod<CharacterChromosome>>> getSelectionMethods() {
+    List<List<SelectionMethod<CharacterChromosome>>> getSelectionMethods() {
         return selectionMethods;
     }
 
-    public int getQuantityOfFathersToSelect() {
+    int getQuantityOfFathersToSelect() {
         return quantityOfFathersToSelect;
     }
 
@@ -264,13 +265,14 @@ public class Configuration {
      * A class just to make JSON parsing easier
      */
     public static class JSONConfigurationParser {
-        public static class JSONConfiguration {
+        static class JSONConfiguration {
             String classType;
             JSONMultiplier multipliers;
             int populationQuantity;
             JSONCutCriteria cutCriteria;
             String crossover;
             double crossProbability;
+            double uniformProbability;
             JSONMutation mutation;
             JSONReplaceMethod replaceMethod;
             JSONSelectionMethod[] firstSelectionMethod;
@@ -278,7 +280,7 @@ public class Configuration {
             Long randomSeed;
         }
 
-        public static class JSONMultiplier {
+        static class JSONMultiplier {
             double strength;
             double agility;
             double expertise;
@@ -286,24 +288,24 @@ public class Configuration {
             double life;
         }
 
-        public static class JSONCutCriteria {
+        static class JSONCutCriteria {
             int maxGeneration;
             int quantityOfGenerationToPerformChecks;
             int fitness;
         }
 
-        public static class JSONMutation {
+        static class JSONMutation {
             boolean isMultiGen;
             boolean isUniform;
             double initProb;
         }
 
-        public static class JSONReplaceMethod {
+        static class JSONReplaceMethod {
             String type;
             int k;
         }
 
-        public static  class JSONSelectionMethod {
+        static  class JSONSelectionMethod {
             String selectionType;
             double proportion;
         }

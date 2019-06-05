@@ -12,11 +12,12 @@
   "cutCriteria":
   {
     "maxGeneration": 10000,
-    "quantityOfGenerationToPerformChecks" : 10000000,
+    "quantityOfGenerationToPerformChecks": 10000000,
     "fitness": 100000
   },
   "crossover": "twoPoint",
   "crossProbability": 0.6,
+  "uniformProbability": 0.5,
   "mutation":
   {
     "isMultiGen": false,
@@ -42,5 +43,5 @@
       "proportion": 1
     }
   ],
-  "randomSeed" : 1559702205841
+  "randomSeed": 1559702205841
 }
