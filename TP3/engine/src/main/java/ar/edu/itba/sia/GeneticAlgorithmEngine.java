@@ -49,7 +49,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
         C currentBest = currentPopulation.peek();
         C previousBest = currentBest;
         PrintWriter writer = new PrintWriter(new File("output.csv"));
-        String s = "#generation,bestFitness,diversity,meanFitness,worstFitness,probability" + '\n';
+        String s = "#generation, bestFitness, diversity, meanFitness, worstFitness, probability" + '\n';
         writer.write(s);
         printPopulation(writer);
         printSeed();
@@ -214,15 +214,15 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generationNumber);
-        sb.append(',');
+        sb.append(", ");
         sb.append(currentPopulation.peek().getFitness());
-        sb.append(',');
+        sb.append(", ");
         sb.append(classesOfPopulation.size());
-        sb.append(',');
+        sb.append(", ");
         sb.append(mean / currentPopulation.size());
-        sb.append(',');
+        sb.append(", ");
         sb.append(last.getFitness());
-        sb.append(',');
+        sb.append(", ");
         sb.append(currentPopulation.peek().getMutationMethod().getProbability());
         sb.append('\n');
 
