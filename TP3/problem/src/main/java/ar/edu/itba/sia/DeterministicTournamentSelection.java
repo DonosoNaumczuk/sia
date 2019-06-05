@@ -9,12 +9,12 @@ public class DeterministicTournamentSelection<C extends Chromosome<C>> extends T
     }
 
     public ArrayList<C> select(final ArrayList<C> chromosomes, final int k) {
-        ArrayList<C> selectedList   = new ArrayList<>();
-        this.chromosomes            = chromosomes;
+        ArrayList<C> selectedList      = new ArrayList<>();
+        ArrayList<C> uniqueChromosomes = new ArrayList<>(new HashSet<>(chromosomes));
         C fittestInRandomSet;
 
         for (int i = 0; i < k; i++) {
-            fittestInRandomSet = getFittestChromosomeFromRandomSubset();
+            fittestInRandomSet = getFittestChromosomeFromRandomSubset(uniqueChromosomes);
             selectedList.add(fittestInRandomSet);
         }
 

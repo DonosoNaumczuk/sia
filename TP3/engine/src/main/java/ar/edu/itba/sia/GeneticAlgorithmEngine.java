@@ -97,7 +97,7 @@ public class GeneticAlgorithmEngine<C extends Chromosome<C>> {
 
     private PriorityQueue<C> handleSecond() {
         PriorityQueue<C> newGeneration = new PriorityQueue<>(Comparator.reverseOrder());
-        ArrayList<C> currentPopulationArray = new ArrayList<>(new ArrayList<>(currentPopulation));
+        ArrayList<C> currentPopulationArray = new ArrayList<>(currentPopulation);
 
         //select k fathers
         ArrayList<C> fathers = selectK(quantityOfFathersToSelect, currentPopulationArray, 0);
