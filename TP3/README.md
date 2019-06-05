@@ -1,10 +1,13 @@
 # sia-tp3-geneticAlgorithm
 
+## Documentation
+You can find the Presentation and the Report at ```documentation/``` directory.
+
 ## Prerequisites
 The only thing you need is to have ```java 1.8``` and ```maven``` installed in your computer.
 
 ## Run instructions
-* Open a terminal, move to ```sia/TP3/``` and type `mvn package`. 
+* Open a terminal, move to ```sia/TP3/``` and type `mvn package`.
 * Then run
   ```./geneticAlgorithm.sh [pathToItemTSVFolder] [pathToConfigurationFile]```
 
@@ -14,9 +17,9 @@ The only thing you need is to have ```java 1.8``` and ```maven``` installed in y
     * casco.tsv
     * guantes.tsv
     * pecheras.tsv
-    
+
     Where the pathToConfiguration must be the path to a configuration file, decribe in the next section.
-    
+
 ## Configuration
 
 The configuration file must follow the following structure:

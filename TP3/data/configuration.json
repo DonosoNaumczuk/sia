@@ -11,12 +11,12 @@
   "populationQuantity": 1000,
   "cutCriteria":
   {
-    "maxGeneration": 1000,
+    "maxGeneration": 10000,
     "quantityOfGenerationToPerformChecks" : 10000000,
     "fitness": 100000
   },
-  "crossover": "uniform",
-  "crossProbability": 0.2,
+  "crossover": "twoPoint",
+  "crossProbability": 0.6,
   "mutation":
   {
     "isMultiGen": true,
@@ -26,25 +26,21 @@
   "replaceMethod":
   {
     "type": "third",
-    "k": 750
+    "k": 500
   },
   "firstSelectionMethod":
   [
     {
-      "selectionType": "elite",
-      "proportion": 0.5
-    },
-    {
-      "selectionType": "tournament",
-      "proportion": 0.5
+      "selectionType": "roulette",
+      "proportion": 1
     }
   ],
   "secondSelectionMethod":
   [
     {
-      "selectionType": "boltzmann",
+      "selectionType": "roulette",
       "proportion": 1
     }
   ],
-  "randomSeed" : 1559702205841
+  "randomSeed": -1
 }
